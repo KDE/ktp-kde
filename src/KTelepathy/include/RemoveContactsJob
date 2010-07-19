@@ -1,0 +1,7 @@
+#ifndef LIB_TELEPATHY_BRIDGE_REMOVE_CONTACTS_JOB_PRETTY_H
+#define LIB_TELEPATHY_BRIDGE_REMOVE_CONTACTS_JOB_PRETTY_H
+
+#include <KTelepathy/remove-contacts-job.h>
+
+#endif
+// vim:set ft=cpp:

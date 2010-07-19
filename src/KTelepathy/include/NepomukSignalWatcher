@@ -1,0 +1,7 @@
+#ifndef LIB_TELEPATHY_BRIDGE_NEPOMUK_SIGNAL_WATCHER_PRETTY_H
+#define LIB_TELEPATHY_BRIDGE_NEPOMUK_SIGNAL_WATCHER_PRETTY_H
+
+#include <KTelepathy/nepomuk-signal-watcher.h>
+
+#endif
+// vim:set ft=cpp:

@@ -1,0 +1,7 @@
+#ifndef LIB_TELEPATHY_BRIDGE_GROUPED_CONTACTS_PROXY_MODEL_PRETTY_H
+#define LIB_TELEPATHY_BRIDGE_GROUPED_CONTACTS_PROXY_MODEL_PRETTY_H
+
+#include <KTelepathy/grouped-contacts-proxy-model.h>
+
+#endif
+// vim:set ft=cpp:

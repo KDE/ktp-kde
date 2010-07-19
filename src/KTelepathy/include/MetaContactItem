@@ -1,0 +1,7 @@
+#ifndef LIB_TELEPATHY_BRIDGE_META_CONTACT_ITEM_PRETTY_H
+#define LIB_TELEPATHY_BRIDGE_META_CONTACT_ITEM_PRETTY_H
+
+#include <KTelepathy/meta-contact-item.h>
+
+#endif
+// vim:set ft=cpp:

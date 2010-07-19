@@ -1,0 +1,7 @@
+#ifndef LIB_TELEPATHY_BRIDGE_ADD_CONTACTS_TO_GROUP_JOB_PRETTY_H
+#define LIB_TELEPATHY_BRIDGE_ADD_CONTACTS_TO_GROUP_JOB_PRETTY_H
+
+#include <KTelepathy/add-contacts-to-group-job.h>
+
+#endif
+// vim:set ft=cpp:

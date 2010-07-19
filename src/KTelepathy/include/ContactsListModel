@@ -1,0 +1,7 @@
+#ifndef LIB_TELEPATHY_BRIDGE_CONTACTS_LIST_MODEL_PRETTY_H
+#define LIB_TELEPATHY_BRIDGE_CONTACTS_LIST_MODEL_PRETTY_H
+
+#include <KTelepathy/contacts-list-model.h>
+
+#endif
+// vim:set ft=cpp:
