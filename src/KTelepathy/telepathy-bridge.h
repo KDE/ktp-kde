@@ -19,8 +19,8 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#ifndef TELEPATHY_BRIDGE_H
-#define TELEPATHY_BRIDGE_H
+#ifndef LIBKTELEPATHY_TELEPATHY_BRIDGE_H
+#define LIBKTELEPATHY_TELEPATHY_BRIDGE_H
 
 #include <kdemacros.h>
 #include <QtCore/QObject>
@@ -460,4 +460,4 @@ private:
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(TelepathyBridge::RemovalModes)
 
-#endif // TELEPATHY_BRIDGE_P
+#endif // LIBKTELEPATHY_TELEPATHY_BRIDGE_P

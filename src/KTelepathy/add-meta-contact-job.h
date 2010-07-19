@@ -19,8 +19,8 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#ifndef ADD_META_CONTACT_JOB_H
-#define ADD_META_CONTACT_JOB_H
+#ifndef LIBKTELEPATHY_ADD_META_CONTACT_JOB_H
+#define LIBKTELEPATHY_ADD_META_CONTACT_JOB_H
 
 #include <kdemacros.h>
 
@@ -47,4 +47,4 @@ public:
     virtual void start();
 };
 
-#endif // ADD_META_CONTACT_JOB_H
+#endif // LIBKTELEPATHY_ADD_META_CONTACT_JOB_H

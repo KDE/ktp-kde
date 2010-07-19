@@ -19,8 +19,8 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#ifndef NEPOMUK_SIGNAL_WATCHER_H
-#define NEPOMUK_SIGNAL_WATCHER_H
+#ifndef LIBKTELEPATHY_NEPOMUK_SIGNAL_WATCHER_H
+#define LIBKTELEPATHY_NEPOMUK_SIGNAL_WATCHER_H
 
 #include <kdemacros.h>
 
@@ -85,5 +85,5 @@ private:
 };
 
 
-#endif  // Header guard
+#endif // LIBKTELEPATHY_NEPOMUK_SIGNAL_WATCHER_H
 

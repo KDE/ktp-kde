@@ -19,8 +19,8 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#ifndef TELEPATHY_CONTACTSLIST_PROTOTYPE_ABSTRACT_TREE_ITEM_H
-#define TELEPATHY_CONTACTSLIST_PROTOTYPE_ABSTRACT_TREE_ITEM_H
+#ifndef LIBKTELEPATHY_ABSTRACT_TREE_ITEM_H
+#define LIBKTELEPATHY_ABSTRACT_TREE_ITEM_H
 
 #include <kdemacros.h>
 
@@ -46,5 +46,5 @@ private:
 };
 
 
-#endif // Header guard
+#endif // LIBKTELEPATHY_ABSTRACT_TREE_ITEM_H
 

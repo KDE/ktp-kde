@@ -19,8 +19,8 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#ifndef TELEPATHY_ACCOUNT_PROXY_H
-#define TELEPATHY_ACCOUNT_PROXY_H
+#ifndef LIBKTELEPATHY_TELEPATHY_ACCOUNT_PROXY_H
+#define LIBKTELEPATHY_TELEPATHY_ACCOUNT_PROXY_H
 
 #include <kdemacros.h>
 
@@ -54,4 +54,4 @@ private:
     Q_PRIVATE_SLOT(d_func(), void __k__onConnectionReady(Tp::PendingOperation*))
 };
 
-#endif // TELEPATHY_ACCOUNT_PROXY_H
+#endif // LIBKTELEPATHY_TELEPATHY_ACCOUNT_PROXY_H

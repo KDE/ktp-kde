@@ -19,8 +19,8 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#ifndef TELEPATHY_BASE_JOB_P_H
-#define TELEPATHY_BASE_JOB_P_H
+#ifndef LIBKTELEPATHY_TELEPATHY_BASE_JOB_P_H
+#define LIBKTELEPATHY_TELEPATHY_BASE_JOB_P_H
 
 #include "telepathy-base-job.h"
 
@@ -49,4 +49,4 @@ public:
     void __k__doEmitResult();
 };
 
-#endif
+#endif // LIBKTELEPATHY_TELEPATHY_BASE_JOB_P_H

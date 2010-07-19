@@ -19,8 +19,8 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#ifndef TELEPATHY_BRIDGE_P_H
-#define TELEPATHY_BRIDGE_P_H
+#ifndef LIBKTELEPATHY_TELEPATHY_BRIDGE_P_H
+#define LIBKTELEPATHY_TELEPATHY_BRIDGE_P_H
 
 #include "telepathy-bridge.h"
 
@@ -48,4 +48,4 @@ public:
     void __k__onAccountCreated(const QString &path);
 };
 
-#endif
+#endif // LIBKTELEPATHY_TELEPATHY_BRIDGE_P_H
