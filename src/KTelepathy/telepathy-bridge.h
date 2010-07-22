@@ -24,6 +24,7 @@
 
 #include <kdemacros.h>
 #include <QtCore/QObject>
+#include <TelepathyQt4/Channel>
 
 namespace Nepomuk {
 class PersonContact;
@@ -428,6 +429,56 @@ public:
     KJob *addMetaContact(const QString &name, const QList< Nepomuk::PersonContact > contacts);
 
     /**
+     * \brief Accepts a file transfer
+     *
+     * This function attempts to accept a file transfer. It will return a valid KJob ready to be started.
+     *
+     * \param channel The Tp::IncomingFileTransferChannelPtr
+     * \param filename The url where the file should be saved
+     *
+     * \returns  A valid KJob ready to be started
+     *
+     * \note Please remember that KJob has to be explicitly started using KJob::start(),
+     *       differently from Tp::PendingOperation.
+     *
+     * \todo Use QUrl or KUrl instead of QString?
+     */
+    KJob* acceptFileTransfer(Tp::ChannelPtr channel, QString filename);
+
+    /**
+     * \brief Offers a file transfer to a Nepomuk::PersonContact
+     *
+     * This function attempts to offer a file transfer. It will return a valid KJob ready to be started.
+     *
+     * \param contact The contact that will receive the file
+     * \param filename The url of the file
+     *
+     * \returns  A valid KJob ready to be started
+     *
+     * \note Please remember that KJob has to be explicitly started using KJob::start(),
+     *       differently from Tp::PendingOperation.
+     *
+     * \todo Use QUrl or KUrl instead of QString?
+     */
+    KJob* offerFileTransfer(const Nepomuk::PersonContact& contact, QString filename);
+    /**
+     * \brief Offers a file transfer to a Nepomuk::Person
+     *
+     * This function attempts to offer a file transfer. It will return a valid KJob ready to be started.
+     *
+     * \param metacontact The metacontact that will receive the file
+     * \param filename The url of the file
+     *
+     * \returns  A valid KJob ready to be started
+     *
+     * \note Please remember that KJob has to be explicitly started using KJob::start(),
+     *       differently from Tp::PendingOperation.
+     *
+     * \todo Use QUrl or KUrl instead of QString?
+     */
+     KJob* offerFileTransfer(const Nepomuk::Person& metacontact, QString filename);
+
+    /**
      * \returns whether TelepathyBridge is ready to be used or not. This function will return true after a successful \c init().
      *
      * \see init
@@ -456,6 +507,8 @@ private:
     friend class AddContactsToGroupJobPrivate;
     friend class RemoveContactsJobPrivate;
     friend class AddContactJobPrivate;
+    friend class AcceptFileTransferJobPrivate;
+    friend class OfferFileTransferJobPrivate;
 };
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(TelepathyBridge::RemovalModes)

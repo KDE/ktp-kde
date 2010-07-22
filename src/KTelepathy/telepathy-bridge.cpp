@@ -38,6 +38,8 @@
 #include "remove-contacts-job.h"
 #include "add-contact-job.h"
 #include "add-meta-contact-job.h"
+#include "accept-file-transfer-job.h"
+#include "offer-file-transfer-job.h"
 
 #include <TelepathyQt4/AccountManager>
 #include <TelepathyQt4/PendingReady>
@@ -461,5 +463,19 @@ KJob* TelepathyBridge::addMetaContact(const QString& name, const QList< Nepomuk:
     return new AddMetaContactJob(name, contacts, this);
 }
 
+KJob* TelepathyBridge::acceptFileTransfer(Tp::ChannelPtr channel, QString filename)
+{
+    return new AcceptFileTransferJob(channel, filename, this);
+}
+
+KJob* TelepathyBridge::offerFileTransfer(const Nepomuk::PersonContact& contact, QString filename)
+{
+    return new OfferFileTransferJob(contact, filename, this);
+}
+
+KJob* TelepathyBridge::offerFileTransfer(const Nepomuk::Person& metacontact, QString filename)
+{
+    return new OfferFileTransferJob(metacontact, filename, this);
+}
 
 #include "telepathy-bridge.moc"

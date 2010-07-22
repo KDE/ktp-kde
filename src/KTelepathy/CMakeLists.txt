@@ -45,6 +45,7 @@ soprano_add_ontology (telepathy_ontology_SRCS
 
 set (ktelepathy_SRCS
      abstract-tree-item.cpp
+     accept-file-transfer-job.cpp
      add-contact-job.cpp
      add-contacts-to-group-job.cpp
      add-meta-contact-job.cpp
@@ -53,6 +54,7 @@ set (ktelepathy_SRCS
      grouped-contacts-proxy-model.cpp
      meta-contact-item.cpp
      nepomuk-signal-watcher.cpp
+     offer-file-transfer-job.cpp
      remove-contacts-from-group-job.cpp
      remove-contacts-job.cpp
      telepathy-account-proxy.cpp
@@ -62,6 +64,7 @@ set (ktelepathy_SRCS
 
 set (ktelepathy_INST_HDRS
      abstract-tree-item.h
+     accept-file-transfer-job.h
      add-contact-job.h
      add-contacts-to-group-job.h
      add-meta-contact-job.h
@@ -70,6 +73,7 @@ set (ktelepathy_INST_HDRS
      grouped-contacts-proxy-model.h
      meta-contact-item.h
      nepomuk-signal-watcher.h
+     offer-file-transfer-job.h
      remove-contacts-from-group-job.h
      remove-contacts-job.h
      telepathy-account-proxy.h
@@ -79,6 +83,7 @@ set (ktelepathy_INST_HDRS
 
 set (ktelepathy_PRETTY_HDRS
      include/AbstractTreeItem
+     include/AcceptFileTransferJob
      include/AddContactJob
      include/AddContactsToGroupJob
      include/AddMetaContactJob
@@ -87,6 +92,7 @@ set (ktelepathy_PRETTY_HDRS
      include/GroupedContactsProxyModel
      include/MetaContactItem
      include/NepomukSignalWatcher
+     include/OfferFileTransferJob
      include/RemoveContactsFromGroupJob
      include/RemoveContactsJob
      include/TelepathyAccountProxy
