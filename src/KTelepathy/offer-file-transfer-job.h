@@ -67,6 +67,7 @@ class KDE_EXPORT OfferFileTransferJob : public TelepathyBaseJob
         virtual ~OfferFileTransferJob();
 
         virtual void start();
+        virtual bool doKill();
 };
 
 #endif // LIBKTELEPATHY_OFFER_FILE_TRANSFER_JOB_H

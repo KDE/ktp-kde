@@ -69,8 +69,7 @@ class OfferFileTransferJobPrivate : public TelepathyBaseJobPrivate
 
         bool findBestContactFromMetaContact();
 
-        bool __tmp__transferStarted;
-        bool __tmp__transferCompleted;
+        bool transferStarted;
 };
 
 
@@ -81,6 +80,7 @@ OfferFileTransferJob::OfferFileTransferJob(const Nepomuk::PersonContact& contact
     Q_D(OfferFileTransferJob);
 
     d->contact = contact;
+    setCapabilities(KJob::Killable);
 }
 
 OfferFileTransferJob::OfferFileTransferJob(const Nepomuk::Person& metacontact, QString filename, QObject* parent)
@@ -89,6 +89,7 @@ OfferFileTransferJob::OfferFileTransferJob(const Nepomuk::Person& metacontact, Q
     Q_D(OfferFileTransferJob);
 
     d->metacontact = metacontact;
+    setCapabilities(KJob::Killable);
 }
 
 
@@ -119,6 +120,13 @@ void OfferFileTransferJob::start()
     }
 }
 
+bool OfferFileTransferJob::doKill()
+{
+    kDebug() << i18n("Killing file transfer");
+    //TODO suspend the transfer?
+    QTimer::singleShot(0, this, SLOT(__k__doEmitResult()));
+    return true;
+}
 
 OfferFileTransferJobPrivate::OfferFileTransferJobPrivate(OfferFileTransferJob* parent, OfferFileTransferJob::ProcessingMode m, QString f)
     : TelepathyBaseJobPrivate(parent),
@@ -177,7 +185,7 @@ void OfferFileTransferJobPrivate::__k__offerFileTransferContact()
             if (1) {
                 uint contactHandle = i.value().first()->handle()[0];
 
-                __tmp__transferStarted = true;
+                transferStarted = true;
                 QFileInfo fileInfo(filename);
 
                 QVariantMap request;
@@ -198,6 +206,8 @@ void OfferFileTransferJobPrivate::__k__offerFileTransferContact()
         }
     }
     //TODO error file transfer not supported
+    q->setError(TelepathyBridge::InvalidOperationError);
+    q->setErrorText(i18n("File transfer not supported"));
     QTimer::singleShot(0, q, SLOT(__k__doEmitResult()));
 }
 
@@ -211,6 +221,8 @@ void OfferFileTransferJobPrivate::__k__offerFileTransferMetaContact()
 
     Q_Q(OfferFileTransferJob);
     //TODO error file transfer not supported
+    q->setError(TelepathyBridge::InvalidOperationError);
+    q->setErrorText(i18n("File transfer not supported"));
     QTimer::singleShot(0, q, SLOT(__k__doEmitResult()));
 }
 
@@ -220,8 +232,12 @@ void OfferFileTransferJobPrivate::__k__onFileTransferChannelCreated(Tp::PendingO
     Q_Q(OfferFileTransferJob);
 
     if (op->isError()) {
-        kWarning() << i18n("Unable to create stream tube channel") << "-" <<
+        kWarning() << i18n("Unable to create file transfer channel") << "-" <<
             op->errorName() << ": " << op->errorMessage();
+        //TODO Error number
+        q->setError(TelepathyBridge::InvalidOperationError);
+        q->setErrorText(i18n("Unable to create file transfer channel ready"));
+        QTimer::singleShot(0, q, SLOT(__k__doEmitResult()));
         return;
     }
 
@@ -247,9 +263,12 @@ void OfferFileTransferJobPrivate::__k__onFileTransferChannelReady(Tp::PendingOpe
     Q_Q(OfferFileTransferJob);
 
     if (op->isError()) {
-        kWarning() << i18n("Unable to make stream tube channel ready") << "-" <<
+        kWarning() << i18n("Unable to make file transfer channel ready") << "-" <<
             op->errorName() << ": " << op->errorMessage();
-        return;
+        //TODO Error number
+        q->setError(TelepathyBridge::InvalidOperationError);
+        q->setErrorText(i18n("Unable to make file transfer channel ready"));
+        QTimer::singleShot(0, q, SLOT(__k__doEmitResult()));
     }
 
     kDebug() << i18n("File transfer channel ready!");
@@ -266,6 +285,7 @@ void OfferFileTransferJobPrivate::__k__onFileTransferChannelReady(Tp::PendingOpe
     operations.clear();
 
     Tp::PendingOperation* provideFileOperation = channel->provideFile(&file);
+    Q_UNUSED(provideFileOperation)
 //    q->connect(provideFileOperation, SIGNAL(finished(Tp::PendingOperation*)),
 //               q, SLOT(__k__onProvideFileFinished(Tp::PendingOperation*)));
 //    addOperation(provideFileOperation);
@@ -279,12 +299,38 @@ void OfferFileTransferJobPrivate::__k__onFileTransferChannelStateChanged(Tp::Fil
     kDebug() << i18n("File transfer channel state changed to") << state << i18n("with reason") << stateReason;
     Q_EMIT q->infoMessage(q, i18n("File transfer channel state changed"));
 
-    __tmp__transferCompleted = (state == Tp::FileTransferStateCompleted);
-    if (__tmp__transferCompleted) {
-        kDebug() << i18n("Transfer completed!");
-        Q_EMIT q->infoMessage(q, i18n("Transfer completed!"));
-
-        QTimer::singleShot(0, q, SLOT(__k__doEmitResult())); //TODO here?
+//TODO better handling
+/*
+case Tp::FileTransferStateChangeReasonNone:
+case Tp:: FileTransferStateChangeReasonRequested:
+case Tp::FileTransferStateChangeReasonLocalStopped:
+case Tp::FileTransferStateChangeReasonRemoteStopped:
+case Tp::FileTransferStateChangeReasonLocalError:
+case Tp::FileTransferStateChangeReasonRemoteError:
+*/
+    switch (state)
+    {
+        case Tp::FileTransferStateNone:
+            // This is bad
+            kWarning() << i18n("An error occourred.");
+            q->setError(TelepathyBridge::InvalidOperationError);
+            QTimer::singleShot(0, q, SLOT(__k__doEmitResult()));
+        case Tp::FileTransferStateCompleted:
+            kDebug() << i18n("Transfer completed");
+            Q_EMIT q->infoMessage(q, i18n("Transfer completed"));
+            QTimer::singleShot(0, q, SLOT(__k__doEmitResult())); //TODO here?
+            break;
+        case Tp::FileTransferStateCancelled:
+            kWarning() << i18n("Transfer was cancelled.");
+            q->setError(TelepathyBridge::InvalidOperationError); //TODO
+            q->setErrorText(i18n("Transfer was cancelled."));
+            QTimer::singleShot(0, q, SLOT(__k__doEmitResult()));
+            break;
+        case Tp::FileTransferStatePending:
+        case Tp::FileTransferStateAccepted:
+        case Tp::FileTransferStateOpen:
+        default:
+            break;
     }
 }
 
@@ -294,7 +340,8 @@ void OfferFileTransferJobPrivate::__k__onFileTransferChannelTransferredBytesChan
     Q_Q(OfferFileTransferJob);
 
     kDebug() << i18n("Tranferred bytes") << count << " - " << ((int) (((double) count / channel->size()) * 100)) << "%" << i18n("done");
-    Q_EMIT q->infoMessage(q, i18n("Tranferred bytes"));
+    q->setProcessedAmount(KJob::Bytes, count);
+//    Q_EMIT q->infoMessage(q, i18n("Tranferred bytes"));
 }
 
 
@@ -305,6 +352,9 @@ void OfferFileTransferJobPrivate::__k__onInvalidated()
     kWarning() << i18n("File transfer invalidated!");
     Q_EMIT q->infoMessage(q, i18n("File transfer invalidated!"));
 
+    //TODO error file transfer not supported
+    q->setError(TelepathyBridge::InvalidOperationError);
+    q->setErrorText(i18n("File transfer invalidated"));
     QTimer::singleShot(0, q, SLOT(__k__doEmitResult()));
 }
 
