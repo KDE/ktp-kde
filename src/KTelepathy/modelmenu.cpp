@@ -31,6 +31,8 @@ ModelMenu::ModelMenu(QWidget * parent)
     , m_model(0)
 {
     connect(this, SIGNAL(aboutToShow()), this, SLOT(aboutToShow()));
+    connect(this, SIGNAL(triggered(QAction*)), this, SLOT(triggered(QAction*)));
+    connect(this, SIGNAL(hovered(QAction*)), this, SLOT(hovered(QAction*)));
 }
 
 bool ModelMenu::prePopulated()
@@ -159,9 +161,6 @@ void ModelMenu::createMenu(const QModelIndex &parent, int max, QMenu *parentMenu
     int end = m_model->rowCount(parent);
     if (max != -1)
         end = qMin(max, end);
-
-    connect(menu, SIGNAL(triggered(QAction*)), this, SLOT(triggered(QAction*)));
-    connect(menu, SIGNAL(hovered(QAction*)), this, SLOT(hovered(QAction*)));
 
     for (int i = 0; i < end; ++i) {
         QModelIndex idx = m_model->index(i, 0, parent);
