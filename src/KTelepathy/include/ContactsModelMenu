@@ -1,0 +1,7 @@
+#ifndef LIBKTELEPATHY_CONTACTS_MODELMENU_PRETTY_H
+#define LIBKTELEPATHY_CONTACTS_MODELMENU_PRETTY_H
+
+#include <KTelepathy/contacts-modelmenu.h>
+
+#endif
+// vim:set ft=cpp:

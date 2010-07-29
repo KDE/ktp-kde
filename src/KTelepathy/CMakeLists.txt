@@ -51,6 +51,7 @@ set (ktelepathy_SRCS
      add-meta-contact-job.cpp
      contact-item.cpp
      contacts-list-model.cpp
+     contacts-modelmenu.cpp
      grouped-contacts-proxy-model.cpp
      meta-contact-item.cpp
      modelmenu.cpp
@@ -71,6 +72,7 @@ set (ktelepathy_INST_HDRS
      add-meta-contact-job.h
      contact-item.h
      contacts-list-model.h
+     contacts-modelmenu.h
      grouped-contacts-proxy-model.h
      meta-contact-item.h
      modelmenu.h
@@ -91,6 +93,7 @@ set (ktelepathy_PRETTY_HDRS
      include/AddMetaContactJob
      include/ContactItem
      include/ContactsListModel
+     include/ContactsModelMenu
      include/GroupedContactsProxyModel
      include/MetaContactItem
      include/ModelMenu
