@@ -16,14 +16,15 @@
  */
 
 
-#ifndef MODELMENU_H
-#define MODELMENU_H
+#ifndef LIBKTELEPATHY_MODELMENU_H
+#define LIBKTELEPATHY_MODELMENU_H
 
 #include <QtGui/QMenu>
 #include <QtCore/QAbstractItemModel>
+#include <kdemacros.h>
 
 // A QMenu that is dynamically populated from a QAbstractItemModel
-class ModelMenu : public QMenu
+class KDE_EXPORT ModelMenu : public QMenu
 {
     Q_OBJECT
 
@@ -78,5 +79,4 @@ private:
     QPersistentModelIndex m_root;
 };
 
-#endif // MODELMENU_H
-
+#endif //  LIBKTELEPATHY_MODELMENU_H

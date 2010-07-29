@@ -53,6 +53,7 @@ set (ktelepathy_SRCS
      contacts-list-model.cpp
      grouped-contacts-proxy-model.cpp
      meta-contact-item.cpp
+     modelmenu.cpp
      nepomuk-signal-watcher.cpp
      offer-file-transfer-job.cpp
      remove-contacts-from-group-job.cpp
@@ -72,6 +73,7 @@ set (ktelepathy_INST_HDRS
      contacts-list-model.h
      grouped-contacts-proxy-model.h
      meta-contact-item.h
+     modelmenu.h
      nepomuk-signal-watcher.h
      offer-file-transfer-job.h
      remove-contacts-from-group-job.h
@@ -91,6 +93,7 @@ set (ktelepathy_PRETTY_HDRS
      include/ContactsListModel
      include/GroupedContactsProxyModel
      include/MetaContactItem
+     include/ModelMenu
      include/NepomukSignalWatcher
      include/OfferFileTransferJob
      include/RemoveContactsFromGroupJob

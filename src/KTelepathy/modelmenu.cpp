@@ -19,7 +19,7 @@
 #include "modelmenu.h"
 
 #include <QtCore/QAbstractItemModel>
-#include <qdebug.h>
+#include <KDebug>
 
 ModelMenu::ModelMenu(QWidget * parent)
     : QMenu(parent)
@@ -35,76 +35,91 @@ ModelMenu::ModelMenu(QWidget * parent)
 
 bool ModelMenu::prePopulated()
 {
+    kDebug();
     return false;
 }
 
 void ModelMenu::postPopulated()
 {
+    kDebug();
 }
 
 void ModelMenu::setModel(QAbstractItemModel *model)
 {
+    kDebug();
     m_model = model;
 }
 
 QAbstractItemModel *ModelMenu::model() const
 {
+    kDebug();
     return m_model;
 }
 
 void ModelMenu::setMaxRows(int max)
 {
+    kDebug();
     m_maxRows = max;
 }
 
 int ModelMenu::maxRows() const
 {
+    kDebug();
     return m_maxRows;
 }
 
 void ModelMenu::setFirstSeparator(int offset)
 {
+    kDebug();
     m_firstSeparator = offset;
 }
 
 int ModelMenu::firstSeparator() const
 {
+    kDebug();
     return m_firstSeparator;
 }
 
 void ModelMenu::setRootIndex(const QModelIndex &index)
 {
+    kDebug();
     m_root = index;
 }
 
 QModelIndex ModelMenu::rootIndex() const
 {
+    kDebug();
     return m_root;
 }
 
 void ModelMenu::setHoverRole(int role)
 {
+    kDebug();
     m_hoverRole = role;
 }
 
 int ModelMenu::hoverRole() const
 {
+    kDebug();
     return m_hoverRole;
 }
 
 void ModelMenu::setSeparatorRole(int role)
 {
+    kDebug();
     m_separatorRole = role;
 }
 
 int ModelMenu::separatorRole() const
 {
+    kDebug();
     return m_separatorRole;
 }
 
 Q_DECLARE_METATYPE(QModelIndex)
 void ModelMenu::aboutToShow()
 {
+    kDebug();
     if (QMenu *menu = qobject_cast<QMenu*>(sender())) {
         QVariant v = menu->menuAction()->data();
         if (v.canConvert<QModelIndex>()) {
@@ -127,6 +142,7 @@ void ModelMenu::aboutToShow()
 
 void ModelMenu::createMenu(const QModelIndex &parent, int max, QMenu *parentMenu, QMenu *menu)
 {
+    kDebug();
     if (!menu) {
         QString title = parent.data().toString();
         menu = new QMenu(title, this);
@@ -165,6 +181,7 @@ void ModelMenu::createMenu(const QModelIndex &parent, int max, QMenu *parentMenu
 
 QAction *ModelMenu::makeAction(const QModelIndex &index)
 {
+    kDebug();
     QIcon icon = qvariant_cast<QIcon>(index.data(Qt::DecorationRole));
     QAction *action = makeAction(icon, index.data().toString(), this);
     QVariant v;
@@ -175,6 +192,7 @@ QAction *ModelMenu::makeAction(const QModelIndex &index)
 
 QAction *ModelMenu::makeAction(const QIcon &icon, const QString &text, QObject *parent)
 {
+    kDebug();
     QFontMetrics fm(font());
     if (-1 == m_maxWidth)
         m_maxWidth = fm.width(QLatin1Char('m')) * 30;
@@ -184,6 +202,7 @@ QAction *ModelMenu::makeAction(const QIcon &icon, const QString &text, QObject *
 
 void ModelMenu::triggered(QAction *action)
 {
+    kDebug();
     QVariant v = action->data();
     if (v.canConvert<QModelIndex>()) {
         QModelIndex idx = qvariant_cast<QModelIndex>(v);
@@ -193,6 +212,7 @@ void ModelMenu::triggered(QAction *action)
 
 void ModelMenu::hovered(QAction *action)
 {
+    kDebug();
     QVariant v = action->data();
     if (v.canConvert<QModelIndex>()) {
         QModelIndex idx = qvariant_cast<QModelIndex>(v);
