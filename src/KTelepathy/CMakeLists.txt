@@ -46,6 +46,8 @@ soprano_add_ontology (telepathy_ontology_SRCS
 set (ktelepathy_SRCS
      abstract-tree-item.cpp
      accept-file-transfer-job.cpp
+     account-item.cpp
+     accounts-model.cpp
      add-contact-job.cpp
      add-contacts-to-group-job.cpp
      add-meta-contact-job.cpp
@@ -67,6 +69,8 @@ set (ktelepathy_SRCS
 set (ktelepathy_INST_HDRS
      abstract-tree-item.h
      accept-file-transfer-job.h
+     account-item.h
+     accounts-model.h
      add-contact-job.h
      add-contacts-to-group-job.h
      add-meta-contact-job.h
@@ -88,6 +92,8 @@ set (ktelepathy_INST_HDRS
 set (ktelepathy_PRETTY_HDRS
      include/AbstractTreeItem
      include/AcceptFileTransferJob
+     include/AccountItem
+     include/AccountsModel
      include/AddContactJob
      include/AddContactsToGroupJob
      include/AddMetaContactJob
