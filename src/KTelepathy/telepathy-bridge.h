@@ -27,7 +27,6 @@
 #include <QtCore/QVariantMap>
 #include <QtNetwork/QHostAddress>
 #include <TelepathyQt4/Channel>
-#include <QtCore/QVariantMap>
 
 namespace Nepomuk {
 class PersonContact;
@@ -44,6 +43,7 @@ class KJob;
 
 class QUrl;
 class QStringList;
+class QLocalServer;
 class QTcpServer;
 
 class TelepathyBridgePrivate;
@@ -506,6 +506,114 @@ public:
      KJob* offerFileTransfer(const Nepomuk::Person& metacontact, QString filename);
 
     /**
+     * \brief Offers a StreamTube on a local socket
+     *
+     * This function attempts to offer a StreamTube on a local socket to the specified contact.
+     * It will return a valid KJob ready to be started.
+     *
+     * \param contact The contact the StreamTube should be offered to
+     * \param requireCredentials TODO drdanz
+     * \param parameters TODO drdanz
+     *
+     * \returns A valid KJob ready to be started
+     *
+     * \note Please remember that KJob has to be explicitly started using KJob::start(),
+     *       differently from Tp::PendingOperation.
+     */
+    KJob* offerLocalStreamTube(const Nepomuk::PersonContact& contact, bool requireCredentials = false, const QVariantMap& parameters = QVariantMap());
+    /**
+     * \brief Offers a StreamTube on a local socket
+     *
+     * This function attempts to offer a StreamTube on a local socket to the specified contact.
+     * It will return a valid KJob ready to be started.
+     * This overload lets you specify a socket address that will be used for the connection.
+     *
+     * \param contact The contact the StreamTube should be offered to
+     * \param socketAddress The socket address to be used for the connection
+     * \param requireCredentials TODO drdanz
+     * \param parameters TODO drdanz
+     *
+     * \returns A valid KJob ready to be started
+     *
+     * \note Please remember that KJob has to be explicitly started using KJob::start(),
+     *       differently from Tp::PendingOperation.
+     */
+    KJob* offerLocalStreamTube(const Nepomuk::PersonContact& contact, const QByteArray& socketAddress, bool requireCredentials = false, const QVariantMap& parameters = QVariantMap());
+    /**
+     * \brief Offers a StreamTube on a local socket
+     *
+     * This function attempts to offer a StreamTube on a local socket to the specified contact.
+     * It will return a valid KJob ready to be started.
+     * This overload lets you specify an existing local server that will be used for the connection.
+     *
+     * \param contact The contact the StreamTube should be offered to
+     * \param server The local server to be used for the connection
+     * \param requireCredentials TODO drdanz
+     * \param parameters TODO drdanz
+     *
+     * \returns A valid KJob ready to be started
+     *
+     * \note Please remember that KJob has to be explicitly started using KJob::start(),
+     *       differently from Tp::PendingOperation.
+     */
+    KJob* offerLocalStreamTube(const Nepomuk::PersonContact& contact, QLocalServer* server, bool requireCredentials = false, const QVariantMap& parameters = QVariantMap());
+    /**
+     * \brief Offers a StreamTube on a local socket
+     *
+     * This function attempts to offer a StreamTube on a local socket to the specified metacontact.
+     * The best/preferred account is automatically chosen
+     * It will return a valid KJob ready to be started.
+     *
+     * \param contact The contact the StreamTube should be offered to
+     * \param requireCredentials TODO drdanz
+     * \param parameters TODO drdanz
+     *
+     * \returns A valid KJob ready to be started
+     *
+     * \note Please remember that KJob has to be explicitly started using KJob::start(),
+     *       differently from Tp::PendingOperation.
+     */
+    KJob* offerLocalStreamTube(const Nepomuk::Person& metacontact, bool requireCredentials = false, const QVariantMap& parameters = QVariantMap());
+    /**
+     * \brief Offers a StreamTube on a local socket
+     *
+     * This function attempts to offer a StreamTube on a local socket to the specified metacontact.
+     * The best/preferred account is automatically chosen
+     * It will return a valid KJob ready to be started.
+     * This overload lets you specify a socket address that will be used for the connection
+     *
+     * \param contact The contact the StreamTube should be offered to
+     * \param socketAddress The socket address to be used for the connection
+     * \param requireCredentials TODO drdanz
+     * \param parameters TODO drdanz
+     *
+     * \returns A valid KJob ready to be started
+     *
+     * \note Please remember that KJob has to be explicitly started using KJob::start(),
+     *       differently from Tp::PendingOperation.
+     */
+    KJob* offerLocalStreamTube(const Nepomuk::Person& metacontact, const QByteArray& socketAddress, bool requireCredentials = false, const QVariantMap& parameters = QVariantMap());
+    /**
+     * \brief Offers a StreamTube on a local socket
+     *
+     * This function attempts to offer a StreamTube on a local socket to the specified metacontact.
+     * The best/preferred account is automatically chosen
+     * It will return a valid KJob ready to be started.
+     * This overload lets you specify an existing local server that will be used for the connection.
+     *
+     * \param contact The contact the StreamTube should be offered to
+     * \param server The local server to be used for the connection
+     * \param requireCredentials TODO drdanz
+     * \param parameters TODO drdanz
+     *
+     * \returns A valid KJob ready to be started
+     *
+     * \note Please remember that KJob has to be explicitly started using KJob::start(),
+     *       differently from Tp::PendingOperation.
+     */
+    KJob* offerLocalStreamTube(const Nepomuk::Person& metacontact, QLocalServer* server, bool requireCredentials = false, const QVariantMap& parameters = QVariantMap());
+
+    /**
      * \brief Offers a StreamTube on a tcp socket
      *
      * This function attempts to offer a StreamTube on a tcp socket to the specified contact.
@@ -639,6 +747,7 @@ private:
     friend class AcceptTcpStreamTubeJobPrivate;
     friend class OfferDBusTubeJobPrivate;
     friend class OfferFileTransferJobPrivate;
+    friend class OfferLocalStreamTubeJobPrivate;
     friend class OfferTcpStreamTubeJobPrivate;
 };
 

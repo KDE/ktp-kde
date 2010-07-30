@@ -1,0 +1,7 @@
+#ifndef LIBKTELEPATHY_OFFER_LOCAL_STREAMTUBE_JOB_PRETTY_H
+#define LIBKTELEPATHY_OFFER_LOCAL_STREAMTUBE_JOB_PRETTY_H
+
+#include <KTelepathy/offer-local-streamtube-job.h>
+
+#endif
+// vim:set ft=cpp:

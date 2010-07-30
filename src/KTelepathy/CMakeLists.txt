@@ -62,6 +62,7 @@ set (ktelepathy_SRCS
      nepomuk-signal-watcher.cpp
      offer-dbustube-job.cpp
      offer-file-transfer-job.cpp
+     offer-local-streamtube-job.cpp
      offer-tcp-streamtube-job.cpp
      remove-contacts-from-group-job.cpp
      remove-contacts-job.cpp
@@ -89,6 +90,7 @@ set (ktelepathy_INST_HDRS
      nepomuk-signal-watcher.h
      offer-dbustube-job.h
      offer-file-transfer-job.h
+     offer-local-streamtube-job.h
      offer-tcp-streamtube-job.h
      remove-contacts-from-group-job.h
      remove-contacts-job.h
@@ -116,6 +118,7 @@ set (ktelepathy_PRETTY_HDRS
      include/NepomukSignalWatcher
      include/OfferDBusTubeJob
      include/OfferFileTransferJob
+     include/OfferLocalStreamTubeJob
      include/OfferTcpStreamTubeJob
      include/RemoveContactsFromGroupJob
      include/RemoveContactsJob

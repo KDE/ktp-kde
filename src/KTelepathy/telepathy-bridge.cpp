@@ -43,6 +43,7 @@
 #include "accept-tcp-streamtube-job.h"
 #include "offer-dbustube-job.h"
 #include "offer-file-transfer-job.h"
+#include "offer-local-streamtube-job.h"
 #include "offer-tcp-streamtube-job.h"
 
 #include <TelepathyQt4/AccountManager>
@@ -500,6 +501,36 @@ KJob* TelepathyBridge::offerFileTransfer(const Nepomuk::PersonContact& contact, 
 KJob* TelepathyBridge::offerFileTransfer(const Nepomuk::Person& metacontact, QString filename)
 {
     return new OfferFileTransferJob(metacontact, filename, this);
+}
+
+KJob* TelepathyBridge::offerLocalStreamTube(const Nepomuk::PersonContact& contact, bool requireCredentials, const QVariantMap& parameters)
+{
+    return new OfferLocalStreamTubeJob(contact, requireCredentials, parameters);
+}
+
+KJob* TelepathyBridge::offerLocalStreamTube(const Nepomuk::PersonContact& contact, const QByteArray& socketAddress, bool requireCredentials, const QVariantMap& parameters)
+{
+    return new OfferLocalStreamTubeJob(contact, socketAddress, requireCredentials, parameters);
+}
+
+KJob* TelepathyBridge::offerLocalStreamTube(const Nepomuk::PersonContact& contact, QLocalServer* server, bool requireCredentials, const QVariantMap& parameters)
+{
+    return new OfferLocalStreamTubeJob(contact, server, requireCredentials, parameters);
+}
+
+KJob* TelepathyBridge::offerLocalStreamTube(const Nepomuk::Person& metacontact, bool requireCredentials, const QVariantMap& parameters)
+{
+    return new OfferLocalStreamTubeJob(metacontact, requireCredentials, parameters);
+}
+
+KJob* TelepathyBridge::offerLocalStreamTube(const Nepomuk::Person& metacontact, const QByteArray& socketAddress, bool requireCredentials, const QVariantMap& parameters)
+{
+    return new OfferLocalStreamTubeJob(metacontact, socketAddress, requireCredentials, parameters);
+}
+
+KJob* TelepathyBridge::offerLocalStreamTube(const Nepomuk::Person& metacontact, QLocalServer* server, bool requireCredentials, const QVariantMap& parameters)
+{
+    return new OfferLocalStreamTubeJob(metacontact, server, requireCredentials, parameters);
 }
 
 KJob* TelepathyBridge::offerTcpStreamTube(const Nepomuk::PersonContact& contact, const QVariantMap& parameters)
