@@ -24,6 +24,8 @@
 
 #include <kdemacros.h>
 #include <QtCore/QObject>
+#include <QtCore/QVariantMap>
+#include <QtNetwork/QHostAddress>
 #include <TelepathyQt4/Channel>
 
 namespace Nepomuk {
@@ -446,6 +448,24 @@ public:
     KJob* acceptFileTransfer(Tp::ChannelPtr channel, QString filename);
 
     /**
+     * \brief Accepts a StreamTube on a tcp socket
+     *
+     * This function attempts to accept a StreamTube on a tcp socket.
+     * It will return a valid KJob ready to be started.
+     *
+     * \param channel TODO drdanz
+     * \param allowedAddress TODO drdanz
+     * \param allowedPort TODO drdanz
+     * \param parameters TODO drdanz
+     *
+     * \returns A valid KJob ready to be started
+     *
+     * \note Please remember that KJob has to be explicitly started using KJob::start(),
+     *       differently from Tp::PendingOperation.
+     */
+    KJob* acceptTcpStreamTube(Tp::ChannelPtr channel, const QHostAddress& allowedAddress = QHostAddress::Any, quint16 allowedPort = 0, const QVariantMap& parameters = QVariantMap());
+
+    /**
      * \brief Offers a file transfer to a Nepomuk::PersonContact
      *
      * This function attempts to offer a file transfer. It will return a valid KJob ready to be started.
@@ -508,6 +528,7 @@ private:
     friend class RemoveContactsJobPrivate;
     friend class AddContactJobPrivate;
     friend class AcceptFileTransferJobPrivate;
+    friend class AcceptTcpStreamTubeJobPrivate;
     friend class OfferFileTransferJobPrivate;
 };
 

@@ -46,6 +46,7 @@ soprano_add_ontology (telepathy_ontology_SRCS
 set (ktelepathy_SRCS
      abstract-tree-item.cpp
      accept-file-transfer-job.cpp
+     accept-tcp-streamtube-job.cpp
      account-item.cpp
      accounts-model.cpp
      add-contact-job.cpp
@@ -69,6 +70,7 @@ set (ktelepathy_SRCS
 set (ktelepathy_INST_HDRS
      abstract-tree-item.h
      accept-file-transfer-job.h
+     accept-tcp-streamtube-job.h
      account-item.h
      accounts-model.h
      add-contact-job.h
@@ -92,6 +94,7 @@ set (ktelepathy_INST_HDRS
 set (ktelepathy_PRETTY_HDRS
      include/AbstractTreeItem
      include/AcceptFileTransferJob
+     include/AcceptTcpStreamTubeJob
      include/AccountItem
      include/AccountsModel
      include/AddContactJob

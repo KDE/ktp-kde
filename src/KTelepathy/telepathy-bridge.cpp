@@ -39,6 +39,7 @@
 #include "add-contact-job.h"
 #include "add-meta-contact-job.h"
 #include "accept-file-transfer-job.h"
+#include "accept-tcp-streamtube-job.h"
 #include "offer-file-transfer-job.h"
 
 #include <TelepathyQt4/AccountManager>
@@ -466,6 +467,11 @@ KJob* TelepathyBridge::addMetaContact(const QString& name, const QList< Nepomuk:
 KJob* TelepathyBridge::acceptFileTransfer(Tp::ChannelPtr channel, QString filename)
 {
     return new AcceptFileTransferJob(channel, filename, this);
+}
+
+KJob* TelepathyBridge::acceptTcpStreamTube(Tp::ChannelPtr channel, const QHostAddress& allowedAddress, quint16 allowedPort, const QVariantMap& parameters)
+{
+    return new AcceptTcpStreamTubeJob(channel, allowedAddress, allowedPort, parameters);
 }
 
 KJob* TelepathyBridge::offerFileTransfer(const Nepomuk::PersonContact& contact, QString filename)
