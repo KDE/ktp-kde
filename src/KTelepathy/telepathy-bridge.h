@@ -27,6 +27,7 @@
 #include <QtCore/QVariantMap>
 #include <QtNetwork/QHostAddress>
 #include <TelepathyQt4/Channel>
+#include <QtCore/QVariantMap>
 
 namespace Nepomuk {
 class PersonContact;
@@ -450,6 +451,9 @@ public:
      */
     KJob* acceptFileTransfer(Tp::ChannelPtr channel, QString filename);
 
+    KJob* offerDBusTube(const Nepomuk::PersonContact& contact, const QVariantMap& parameters = QVariantMap());
+    KJob* offerDBusTube(const Nepomuk::Person& metacontact, const QVariantMap& parameters = QVariantMap());
+
     /**
      * \brief Accepts a StreamTube on a tcp socket
      *
@@ -633,6 +637,7 @@ private:
     friend class AcceptDBusTubeJobPrivate;
     friend class AcceptFileTransferJobPrivate;
     friend class AcceptTcpStreamTubeJobPrivate;
+    friend class OfferDBusTubeJobPrivate;
     friend class OfferFileTransferJobPrivate;
     friend class OfferTcpStreamTubeJobPrivate;
 };

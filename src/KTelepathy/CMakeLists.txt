@@ -60,6 +60,7 @@ set (ktelepathy_SRCS
      meta-contact-item.cpp
      modelmenu.cpp
      nepomuk-signal-watcher.cpp
+     offer-dbustube-job.cpp
      offer-file-transfer-job.cpp
      offer-tcp-streamtube-job.cpp
      remove-contacts-from-group-job.cpp
@@ -86,6 +87,7 @@ set (ktelepathy_INST_HDRS
      meta-contact-item.h
      modelmenu.h
      nepomuk-signal-watcher.h
+     offer-dbustube-job.h
      offer-file-transfer-job.h
      offer-tcp-streamtube-job.h
      remove-contacts-from-group-job.h
@@ -112,6 +114,7 @@ set (ktelepathy_PRETTY_HDRS
      include/MetaContactItem
      include/ModelMenu
      include/NepomukSignalWatcher
+     include/OfferDBusTubeJob
      include/OfferFileTransferJob
      include/OfferTcpStreamTubeJob
      include/RemoveContactsFromGroupJob
