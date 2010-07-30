@@ -432,7 +432,9 @@ public:
      */
     KJob *addMetaContact(const QString &name, const QList< Nepomuk::PersonContact > contacts);
 
+#ifdef WITH_DBUSTUBES
     KJob* acceptDBusTube(Tp::ChannelPtr channel, const QVariantMap& parameters = QVariantMap()); //TODO drdanz comments
+#endif // WITH_DBUSTUBES
 
     /**
      * \brief Accepts a file transfer
@@ -451,9 +453,7 @@ public:
      */
     KJob* acceptFileTransfer(Tp::ChannelPtr channel, QString filename);
 
-    KJob* offerDBusTube(const Nepomuk::PersonContact& contact, const QVariantMap& parameters = QVariantMap());
-    KJob* offerDBusTube(const Nepomuk::Person& metacontact, const QVariantMap& parameters = QVariantMap());
-
+#ifdef WITH_STREAMTUBES
     /**
      * \brief Accepts a StreamTube on a tcp socket
      *
@@ -471,6 +471,12 @@ public:
      *       differently from Tp::PendingOperation.
      */
     KJob* acceptTcpStreamTube(Tp::ChannelPtr channel, const QHostAddress& allowedAddress = QHostAddress::Any, quint16 allowedPort = 0, const QVariantMap& parameters = QVariantMap());
+#endif // WITH_STREAMTUBES
+
+#ifdef WITH_DBUSTUBES
+    KJob* offerDBusTube(const Nepomuk::PersonContact& contact, const QVariantMap& parameters = QVariantMap());
+    KJob* offerDBusTube(const Nepomuk::Person& metacontact, const QVariantMap& parameters = QVariantMap());
+#endif // WITH_DBUSTUBES
 
     /**
      * \brief Offers a file transfer to a Nepomuk::PersonContact
@@ -505,6 +511,7 @@ public:
      */
      KJob* offerFileTransfer(const Nepomuk::Person& metacontact, QString filename);
 
+#ifdef WITH_STREAMTUBES
     /**
      * \brief Offers a StreamTube on a local socket
      *
@@ -712,6 +719,7 @@ public:
      *       differently from Tp::PendingOperation.
      */
     KJob* offerTcpStreamTube(const Nepomuk::Person& metacontact, QTcpServer* server, const QVariantMap& parameters = QVariantMap());
+#endif // WITH_STREAMTUBES
 
     /**
      * \returns whether TelepathyBridge is ready to be used or not. This function will return true after a successful \c init().

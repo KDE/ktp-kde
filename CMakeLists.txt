@@ -36,4 +36,7 @@ if (NOT TELEPATHY_TRIG_SOURCE)
     )
 endif (NOT TELEPATHY_TRIG_SOURCE)
 
+option (WITH_STREAMTUBES "Enables compilation of streamtubes jobs." OFF)
+option (WITH_DBUSTUBES "Enables compilation of dbustubes jobs." OFF)
+
 add_subdirectory (src)

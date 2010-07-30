@@ -45,9 +45,7 @@ soprano_add_ontology (telepathy_ontology_SRCS
 
 set (ktelepathy_SRCS
      abstract-tree-item.cpp
-     accept-dbustube-job.cpp
      accept-file-transfer-job.cpp
-     accept-tcp-streamtube-job.cpp
      account-item.cpp
      accounts-model.cpp
      add-contact-job.cpp
@@ -60,10 +58,8 @@ set (ktelepathy_SRCS
      meta-contact-item.cpp
      modelmenu.cpp
      nepomuk-signal-watcher.cpp
-     offer-dbustube-job.cpp
+
      offer-file-transfer-job.cpp
-     offer-local-streamtube-job.cpp
-     offer-tcp-streamtube-job.cpp
      remove-contacts-from-group-job.cpp
      remove-contacts-job.cpp
      telepathy-account-proxy.cpp
@@ -73,9 +69,8 @@ set (ktelepathy_SRCS
 
 set (ktelepathy_INST_HDRS
      abstract-tree-item.h
-     accept-dbustube-job.h
+
      accept-file-transfer-job.h
-     accept-tcp-streamtube-job.h
      account-item.h
      accounts-model.h
      add-contact-job.h
@@ -88,10 +83,7 @@ set (ktelepathy_INST_HDRS
      meta-contact-item.h
      modelmenu.h
      nepomuk-signal-watcher.h
-     offer-dbustube-job.h
      offer-file-transfer-job.h
-     offer-local-streamtube-job.h
-     offer-tcp-streamtube-job.h
      remove-contacts-from-group-job.h
      remove-contacts-job.h
      telepathy-account-proxy.h
@@ -101,9 +93,7 @@ set (ktelepathy_INST_HDRS
 
 set (ktelepathy_PRETTY_HDRS
      include/AbstractTreeItem
-     include/AcceptDBusTubeJob
      include/AcceptFileTransferJob
-     include/AcceptTcpStreamTubeJob
      include/AccountItem
      include/AccountsModel
      include/AddContactJob
@@ -116,17 +106,55 @@ set (ktelepathy_PRETTY_HDRS
      include/MetaContactItem
      include/ModelMenu
      include/NepomukSignalWatcher
-     include/OfferDBusTubeJob
      include/OfferFileTransferJob
-     include/OfferLocalStreamTubeJob
-     include/OfferTcpStreamTubeJob
      include/RemoveContactsFromGroupJob
      include/RemoveContactsJob
      include/TelepathyAccountProxy
      include/TelepathyBaseJob
      include/TelepathyBridge
 )
- 
+
+if (WITH_STREAMTUBES)
+    add_definitions(-DWITH_STREAMTUBES)
+    set (ktelepathy_SRCS
+         ${ktelepathy_SRCS}
+         accept-tcp-streamtube-job.cpp
+         offer-local-streamtube-job.cpp
+         offer-tcp-streamtube-job.cpp
+    )
+    set (ktelepathy_INST_HDRS
+         ${ktelepathy_INST_HDRS}
+         accept-tcp-streamtube-job.h
+         offer-local-streamtube-job.h
+         offer-tcp-streamtube-job.h
+    )
+    set (ktelepathy_PRETTY_HDRS
+         ${ktelepathy_PRETTY_HDRS}
+         include/AcceptTcpStreamTubeJob
+         include/OfferLocalStreamTubeJob
+         include/OfferTcpStreamTubeJob
+    )
+endif (WITH_STREAMTUBES)
+
+if (WITH_DBUSTUBES)
+    add_definitions(-DWITH_DBUSTUBES)
+    set (ktelepathy_SRCS
+         ${ktelepathy_SRCS}
+         accept-dbustube-job.cpp
+         offer-dbustube-job.cpp
+    )
+    set (ktelepathy_INST_HDRS
+         ${ktelepathy_INST_HDRS}
+         accept-dbustube-job.h
+         offer-dbustube-job.h
+    )
+    set (ktelepathy_PRETTY_HDRS
+         ${ktelepathy_PRETTY_HDRS}
+         include/AcceptDBusTubeJob
+         include/OfferDBusTubeJob
+    )
+endif (WITH_DBUSTUBES)
+
 kde4_add_library (ktelepathy
                   SHARED
                   ${telepathynie_SRCS}

@@ -38,13 +38,21 @@
 #include "remove-contacts-job.h"
 #include "add-contact-job.h"
 #include "add-meta-contact-job.h"
-#include "accept-dbustube-job.h"
+#ifdef WITH_DBUSTUBES
+ #include "accept-dbustube-job.h"
+#endif // WITH_DBUSTUBES
 #include "accept-file-transfer-job.h"
-#include "accept-tcp-streamtube-job.h"
-#include "offer-dbustube-job.h"
+#ifdef WITH_STREAMTUBES
+ #include "accept-tcp-streamtube-job.h"
+#endif // WITH_STREAMTUBES
+#ifdef WITH_DBUSTUBES
+ #include "offer-dbustube-job.h"
+#endif // WITH_DBUSTUBES
 #include "offer-file-transfer-job.h"
-#include "offer-local-streamtube-job.h"
-#include "offer-tcp-streamtube-job.h"
+#ifdef WITH_STREAMTUBES
+ #include "offer-local-streamtube-job.h"
+ #include "offer-tcp-streamtube-job.h"
+#endif // WITH_STREAMTUBES
 
 #include <TelepathyQt4/AccountManager>
 #include <TelepathyQt4/PendingReady>
@@ -468,21 +476,26 @@ KJob* TelepathyBridge::addMetaContact(const QString& name, const QList< Nepomuk:
     return new AddMetaContactJob(name, contacts, this);
 }
 
+#ifdef WITH_DBUSTUBES
 KJob* TelepathyBridge::TelepathyBridge::acceptDBusTube(Tp::ChannelPtr channel, const QVariantMap& parameters)
 {
     return new AcceptDBusTubeJob(channel, parameters, this);
 }
+#endif // WITH_DBUSTUBES
 
 KJob* TelepathyBridge::acceptFileTransfer(Tp::ChannelPtr channel, QString filename)
 {
     return new AcceptFileTransferJob(channel, filename, this);
 }
 
+#ifdef WITH_STREAMTUBES
 KJob* TelepathyBridge::acceptTcpStreamTube(Tp::ChannelPtr channel, const QHostAddress& allowedAddress, quint16 allowedPort, const QVariantMap& parameters)
 {
     return new AcceptTcpStreamTubeJob(channel, allowedAddress, allowedPort, parameters);
 }
+#endif // WITH_STREAMTUBES
 
+#ifdef WITH_DBUSTUBES
 KJob* TelepathyBridge::offerDBusTube(const Nepomuk::PersonContact& contact, const QVariantMap& parameters)
 {
     return new OfferDBusTubeJob(contact, parameters, this);
@@ -492,6 +505,7 @@ KJob* TelepathyBridge::offerDBusTube(const Nepomuk::Person& metacontact, const Q
 {
     return new OfferDBusTubeJob(metacontact, parameters, this);
 }
+#endif // WITH_DBUSTUBES
 
 KJob* TelepathyBridge::offerFileTransfer(const Nepomuk::PersonContact& contact, QString filename)
 {
@@ -503,6 +517,7 @@ KJob* TelepathyBridge::offerFileTransfer(const Nepomuk::Person& metacontact, QSt
     return new OfferFileTransferJob(metacontact, filename, this);
 }
 
+#ifdef WITH_STREAMTUBES
 KJob* TelepathyBridge::offerLocalStreamTube(const Nepomuk::PersonContact& contact, bool requireCredentials, const QVariantMap& parameters)
 {
     return new OfferLocalStreamTubeJob(contact, requireCredentials, parameters);
@@ -562,5 +577,6 @@ KJob* TelepathyBridge::offerTcpStreamTube(const Nepomuk::Person& metacontact, QT
 {
     return new OfferTcpStreamTubeJob(metacontact, server, parameters, this);
 }
+#endif // WITH_STREAMTUBES
 
 #include "telepathy-bridge.moc"
