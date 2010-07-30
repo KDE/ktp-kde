@@ -60,6 +60,7 @@ set (ktelepathy_SRCS
      modelmenu.cpp
      nepomuk-signal-watcher.cpp
      offer-file-transfer-job.cpp
+     offer-tcp-streamtube-job.cpp
      remove-contacts-from-group-job.cpp
      remove-contacts-job.cpp
      telepathy-account-proxy.cpp
@@ -84,6 +85,7 @@ set (ktelepathy_INST_HDRS
      modelmenu.h
      nepomuk-signal-watcher.h
      offer-file-transfer-job.h
+     offer-tcp-streamtube-job.h
      remove-contacts-from-group-job.h
      remove-contacts-job.h
      telepathy-account-proxy.h
@@ -108,6 +110,7 @@ set (ktelepathy_PRETTY_HDRS
      include/ModelMenu
      include/NepomukSignalWatcher
      include/OfferFileTransferJob
+     include/OfferTcpStreamTubeJob
      include/RemoveContactsFromGroupJob
      include/RemoveContactsJob
      include/TelepathyAccountProxy

@@ -41,6 +41,7 @@
 #include "accept-file-transfer-job.h"
 #include "accept-tcp-streamtube-job.h"
 #include "offer-file-transfer-job.h"
+#include "offer-tcp-streamtube-job.h"
 
 #include <TelepathyQt4/AccountManager>
 #include <TelepathyQt4/PendingReady>
@@ -482,6 +483,36 @@ KJob* TelepathyBridge::offerFileTransfer(const Nepomuk::PersonContact& contact, 
 KJob* TelepathyBridge::offerFileTransfer(const Nepomuk::Person& metacontact, QString filename)
 {
     return new OfferFileTransferJob(metacontact, filename, this);
+}
+
+KJob* TelepathyBridge::offerTcpStreamTube(const Nepomuk::PersonContact& contact, const QVariantMap& parameters)
+{
+    return new OfferTcpStreamTubeJob(contact, parameters, this);
+}
+
+KJob* TelepathyBridge::offerTcpStreamTube(const Nepomuk::PersonContact& contact, const QHostAddress& hostAddress, quint16 port, const QVariantMap& parameters)
+{
+    return new OfferTcpStreamTubeJob(contact, hostAddress, port, parameters, this);
+}
+
+KJob* TelepathyBridge::offerTcpStreamTube(const Nepomuk::PersonContact& contact, QTcpServer* server, const QVariantMap& parameters)
+{
+    return new OfferTcpStreamTubeJob(contact, server, parameters, this);
+}
+
+KJob* TelepathyBridge::offerTcpStreamTube(const Nepomuk::Person& metacontact, const QVariantMap& parameters)
+{
+    return new OfferTcpStreamTubeJob(metacontact, parameters, this);
+}
+
+KJob* TelepathyBridge::offerTcpStreamTube(const Nepomuk::Person& metacontact, const QHostAddress& hostAddress, quint16 port, const QVariantMap& parameters)
+{
+    return new OfferTcpStreamTubeJob(metacontact, hostAddress, port, parameters, this);
+}
+
+KJob* TelepathyBridge::offerTcpStreamTube(const Nepomuk::Person& metacontact, QTcpServer* server, const QVariantMap& parameters)
+{
+    return new OfferTcpStreamTubeJob(metacontact, server, parameters, this);
 }
 
 #include "telepathy-bridge.moc"

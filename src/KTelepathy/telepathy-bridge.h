@@ -43,6 +43,7 @@ class KJob;
 
 class QUrl;
 class QStringList;
+class QTcpServer;
 
 class TelepathyBridgePrivate;
 /**
@@ -499,6 +500,106 @@ public:
      KJob* offerFileTransfer(const Nepomuk::Person& metacontact, QString filename);
 
     /**
+     * \brief Offers a StreamTube on a tcp socket
+     *
+     * This function attempts to offer a StreamTube on a tcp socket to the specified contact.
+     * It will return a valid KJob ready to be started.
+     *
+     * \param contact The contact the StreamTube should be offered to
+     * \param parameters TODO drdanz
+     *
+     * \returns A valid KJob ready to be started
+     *
+     * \note Please remember that KJob has to be explicitly started using KJob::start(),
+     *       differently from Tp::PendingOperation.
+     */
+    KJob* offerTcpStreamTube(const Nepomuk::PersonContact& contact, const QVariantMap& parameters = QVariantMap());
+    /**
+     * \brief Offers a StreamTube on a tcp socket
+     *
+     * This function attempts to offer a StreamTube on a tcp socket to the specified contact.
+     * It will return a valid KJob ready to be started.
+     * This overload lets you specify a tcp host address and a port that will be used for the connection.
+     *
+     * \param contact The contact the StreamTube should be offered to
+     * \param hostAddress The host address to be used for the connection
+     * \param port The port to be used for the connection
+     * \param parameters TODO drdanz
+     *
+     * \returns A valid KJob ready to be started
+     *
+     * \note Please remember that KJob has to be explicitly started using KJob::start(),
+     *       differently from Tp::PendingOperation.
+     */
+    KJob* offerTcpStreamTube(const Nepomuk::PersonContact& contact, const QHostAddress& hostAddress, quint16 port = 0, const QVariantMap& parameters = QVariantMap());
+    /**
+     * \brief Offers a StreamTube on a tcp socket
+     *
+     * This function attempts to offer a StreamTube on a tcp socket to the specified contact.
+     * It will return a valid KJob ready to be started.
+     * This overload lets you specify an existing tcp server that will be used for the connection.
+     *
+     * \param contact The contact the StreamTube should be offered to
+     * \param server The tcp server to be used for the connection
+     * \param parameters TODO drdanz
+     *
+     * \returns A valid KJob ready to be started
+     *
+     * \note Please remember that KJob has to be explicitly started using KJob::start(),
+     *       differently from Tp::PendingOperation.
+     */
+    KJob* offerTcpStreamTube(const Nepomuk::PersonContact& contact, QTcpServer* server, const QVariantMap& parameters = QVariantMap());
+    /**
+     * \brief Offers a StreamTube on a tcp socket
+     *
+     * This function attempts to offer a StreamTube on a tcp socket to the specified metacontact.
+     * The best/preferred account is automatically chosen
+     * It will return a valid KJob ready to be started.
+     *
+     * \param contact The metacontact the StreamTube should be offered to
+     * \param parameters TODO drdanz
+     *
+     * \returns A valid KJob ready to be started
+     *
+     * \note Please remember that KJob has to be explicitly started using KJob::start(),
+     *       differently from Tp::PendingOperation.
+     */
+    KJob* offerTcpStreamTube(const Nepomuk::Person& metacontact, const QVariantMap& parameters = QVariantMap());
+    /**
+     * \brief Offers a StreamTube on a tcp socket
+     *
+     * This function attempts to offer a StreamTube on a tcp socket to the specified metacontact.
+     * The best/preferred account is automatically chosen
+     * It will return a valid KJob ready to be started.
+     *
+     * \param contact The metacontact the StreamTube should be offered to
+     * \param parameters TODO drdanz
+     *
+     * \returns A valid KJob ready to be started
+     *
+     * \note Please remember that KJob has to be explicitly started using KJob::start(),
+     *       differently from Tp::PendingOperation.
+     */
+    KJob* offerTcpStreamTube(const Nepomuk::Person& metacontact, const QHostAddress& hostAddress, quint16 port = 0, const QVariantMap& parameters = QVariantMap());
+    /**
+     * \brief Offers a StreamTube on a tcp socket
+     *
+     * This function attempts to offer a StreamTube on a tcp socket to the specified metacontact.
+     * The best/preferred account is automatically chosen
+     * It will return a valid KJob ready to be started.
+     * This overload lets you specify an existing tcp server that will be used for the connection.
+     *
+     * \param contact The metacontact the StreamTube should be offered to
+     * \param parameters TODO drdanz
+     *
+     * \returns A valid KJob ready to be started
+     *
+     * \note Please remember that KJob has to be explicitly started using KJob::start(),
+     *       differently from Tp::PendingOperation.
+     */
+    KJob* offerTcpStreamTube(const Nepomuk::Person& metacontact, QTcpServer* server, const QVariantMap& parameters = QVariantMap());
+
+    /**
      * \returns whether TelepathyBridge is ready to be used or not. This function will return true after a successful \c init().
      *
      * \see init
@@ -530,6 +631,7 @@ private:
     friend class AcceptFileTransferJobPrivate;
     friend class AcceptTcpStreamTubeJobPrivate;
     friend class OfferFileTransferJobPrivate;
+    friend class OfferTcpStreamTubeJobPrivate;
 };
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(TelepathyBridge::RemovalModes)
