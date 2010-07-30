@@ -170,7 +170,7 @@ void MetaContactItem::onEntriesRemoved(const QList< QUrl > &entries)
         }
     }
 
-    emit dirty();
+    Q_EMIT dirty();
 }
 
 void MetaContactItem::onNewEntries(const QList< Nepomuk::Query::Result > &entries)
@@ -189,7 +189,7 @@ void MetaContactItem::onNewEntries(const QList< Nepomuk::Query::Result > &entrie
         connect(item, SIGNAL(dirty()), this, SIGNAL(dirty()));
     }
 
-    emit dirty();
+    Q_EMIT dirty();
 }
 
 QString MetaContactItem::displayName() const
