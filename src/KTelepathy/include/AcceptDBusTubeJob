@@ -1,0 +1,7 @@
+#ifndef LIBKTELEPATHY_ACCEPT_DBUSTUBE_JOB_PRETTY_H
+#define LIBKTELEPATHY_ACCEPT_DBUSTUBE_JOB_PRETTY_H
+
+#include <KTelepathy/accept-dbustube-job.h>
+
+#endif
+// vim:set ft=cpp:

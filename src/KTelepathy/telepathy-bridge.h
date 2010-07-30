@@ -431,6 +431,8 @@ public:
      */
     KJob *addMetaContact(const QString &name, const QList< Nepomuk::PersonContact > contacts);
 
+    KJob* acceptDBusTube(Tp::ChannelPtr channel, const QVariantMap& parameters = QVariantMap()); //TODO drdanz comments
+
     /**
      * \brief Accepts a file transfer
      *
@@ -628,6 +630,7 @@ private:
     friend class AddContactsToGroupJobPrivate;
     friend class RemoveContactsJobPrivate;
     friend class AddContactJobPrivate;
+    friend class AcceptDBusTubeJobPrivate;
     friend class AcceptFileTransferJobPrivate;
     friend class AcceptTcpStreamTubeJobPrivate;
     friend class OfferFileTransferJobPrivate;

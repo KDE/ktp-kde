@@ -38,6 +38,7 @@
 #include "remove-contacts-job.h"
 #include "add-contact-job.h"
 #include "add-meta-contact-job.h"
+#include "accept-dbustube-job.h"
 #include "accept-file-transfer-job.h"
 #include "accept-tcp-streamtube-job.h"
 #include "offer-file-transfer-job.h"
@@ -463,6 +464,11 @@ KJob* TelepathyBridge::addContact(const Nepomuk::IMAccount& account, const QStri
 KJob* TelepathyBridge::addMetaContact(const QString& name, const QList< Nepomuk::PersonContact > contacts)
 {
     return new AddMetaContactJob(name, contacts, this);
+}
+
+KJob* TelepathyBridge::TelepathyBridge::acceptDBusTube(Tp::ChannelPtr channel, const QVariantMap& parameters)
+{
+    return new AcceptDBusTubeJob(channel, parameters, this);
 }
 
 KJob* TelepathyBridge::acceptFileTransfer(Tp::ChannelPtr channel, QString filename)
