@@ -40,3 +40,4 @@ option (WITH_STREAMTUBES "Enables compilation of streamtubes jobs." OFF)
 option (WITH_DBUSTUBES "Enables compilation of dbustubes jobs." OFF)
 
 add_subdirectory (src)
+add_subdirectory (icons)
