@@ -523,7 +523,7 @@ KJob* TelepathyBridge::offerLocalStreamTube(const Nepomuk::PersonContact& contac
     return new OfferLocalStreamTubeJob(contact, requireCredentials, parameters);
 }
 
-KJob* TelepathyBridge::offerLocalStreamTube(const Nepomuk::PersonContact& contact, const QByteArray& socketAddress, bool requireCredentials, const QVariantMap& parameters)
+KJob* TelepathyBridge::offerLocalStreamTube(const Nepomuk::PersonContact& contact, const QString& socketAddress, bool requireCredentials, const QVariantMap& parameters)
 {
     return new OfferLocalStreamTubeJob(contact, socketAddress, requireCredentials, parameters);
 }
@@ -538,7 +538,7 @@ KJob* TelepathyBridge::offerLocalStreamTube(const Nepomuk::Person& metacontact, 
     return new OfferLocalStreamTubeJob(metacontact, requireCredentials, parameters);
 }
 
-KJob* TelepathyBridge::offerLocalStreamTube(const Nepomuk::Person& metacontact, const QByteArray& socketAddress, bool requireCredentials, const QVariantMap& parameters)
+KJob* TelepathyBridge::offerLocalStreamTube(const Nepomuk::Person& metacontact, const QString& socketAddress, bool requireCredentials, const QVariantMap& parameters)
 {
     return new OfferLocalStreamTubeJob(metacontact, socketAddress, requireCredentials, parameters);
 }

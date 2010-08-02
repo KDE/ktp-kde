@@ -545,7 +545,7 @@ public:
      * \note Please remember that KJob has to be explicitly started using KJob::start(),
      *       differently from Tp::PendingOperation.
      */
-    KJob* offerLocalStreamTube(const Nepomuk::PersonContact& contact, const QByteArray& socketAddress, bool requireCredentials = false, const QVariantMap& parameters = QVariantMap());
+    KJob* offerLocalStreamTube(const Nepomuk::PersonContact& contact, const QString& socketAddress, bool requireCredentials = false, const QVariantMap& parameters = QVariantMap());
     /**
      * \brief Offers a StreamTube on a local socket
      *
@@ -599,7 +599,7 @@ public:
      * \note Please remember that KJob has to be explicitly started using KJob::start(),
      *       differently from Tp::PendingOperation.
      */
-    KJob* offerLocalStreamTube(const Nepomuk::Person& metacontact, const QByteArray& socketAddress, bool requireCredentials = false, const QVariantMap& parameters = QVariantMap());
+    KJob* offerLocalStreamTube(const Nepomuk::Person& metacontact, const QString& socketAddress, bool requireCredentials = false, const QVariantMap& parameters = QVariantMap());
     /**
      * \brief Offers a StreamTube on a local socket
      *

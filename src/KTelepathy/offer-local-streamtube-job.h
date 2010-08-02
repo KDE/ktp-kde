@@ -69,10 +69,10 @@ class KDE_EXPORT OfferLocalStreamTubeJob : public TelepathyBaseJob
 
     public:
         OfferLocalStreamTubeJob(const Nepomuk::PersonContact& contact, bool requireCredentials = false, const QVariantMap& parameters = *new QVariantMap(), QObject* parent = 0);
-        OfferLocalStreamTubeJob(const Nepomuk::PersonContact& contact, const QByteArray& socketAddress, bool requireCredentials = false, const QVariantMap& parameters = *new QVariantMap(), QObject* parent = 0);
+        OfferLocalStreamTubeJob(const Nepomuk::PersonContact& contact, const QString& socketAddress, bool requireCredentials = false, const QVariantMap& parameters = *new QVariantMap(), QObject* parent = 0);
         OfferLocalStreamTubeJob(const Nepomuk::PersonContact& contact, QLocalServer* server, bool requireCredentials = false, const QVariantMap& parameters = *new QVariantMap(), QObject* parent = 0);
         OfferLocalStreamTubeJob(const Nepomuk::Person& metacontact, bool requireCredentials = false, const QVariantMap& parameters = *new QVariantMap(), QObject* parent = 0);
-        OfferLocalStreamTubeJob(const Nepomuk::Person& metacontact, const QByteArray& socketAddress, bool requireCredentials = false, const QVariantMap& parameters = QVariantMap(), QObject* parent = 0);
+        OfferLocalStreamTubeJob(const Nepomuk::Person& metacontact, const QString& socketAddress, bool requireCredentials = false, const QVariantMap& parameters = QVariantMap(), QObject* parent = 0);
         OfferLocalStreamTubeJob(const Nepomuk::Person& metacontact, QLocalServer* server, bool requireCredentials = false, const QVariantMap& parameters = *new QVariantMap(), QObject* parent = 0);
 
         virtual ~OfferLocalStreamTubeJob();

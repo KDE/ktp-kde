@@ -48,7 +48,7 @@ class OfferLocalStreamTubeJobPrivate : public TelepathyBaseJobPrivate
     Q_DECLARE_PUBLIC(OfferLocalStreamTubeJob)
 
     public:
-        OfferLocalStreamTubeJobPrivate(OfferLocalStreamTubeJob* parent, OfferLocalStreamTubeJob::ProcessingMode m, const QVariantMap& p, const QByteArray& s);
+        OfferLocalStreamTubeJobPrivate(OfferLocalStreamTubeJob* parent, OfferLocalStreamTubeJob::ProcessingMode m, const QVariantMap& p, const QString& s);
         virtual ~OfferLocalStreamTubeJobPrivate();
 
         OfferLocalStreamTubeJob::ProcessingMode mode;
@@ -59,7 +59,7 @@ class OfferLocalStreamTubeJobPrivate : public TelepathyBaseJobPrivate
 
         bool requireCredentials;
         const QVariantMap& parameters;
-        const QByteArray& socketAddress;
+        const QString& socketAddress;
         QLocalServer* server;
 
         // Operation Q_PRIVATE_SLOTS
@@ -83,7 +83,7 @@ OfferLocalStreamTubeJob::OfferLocalStreamTubeJob(const Nepomuk::PersonContact& c
                                                  bool requireCredentials,
                                                  const QVariantMap& parameters,
                                                  QObject* parent)
-    : TelepathyBaseJob(*new OfferLocalStreamTubeJobPrivate(this, OfferLocalStreamTubeContactMode, parameters, *new QByteArray()), parent)
+    : TelepathyBaseJob(*new OfferLocalStreamTubeJobPrivate(this, OfferLocalStreamTubeContactMode, parameters, *new QString()), parent)
 {
     Q_D(OfferLocalStreamTubeJob);
 
@@ -95,7 +95,7 @@ OfferLocalStreamTubeJob::OfferLocalStreamTubeJob(const Nepomuk::PersonContact& c
 
 
 OfferLocalStreamTubeJob::OfferLocalStreamTubeJob(const Nepomuk::PersonContact& contact,
-                                                 const QByteArray& socketAddress,
+                                                 const QString& socketAddress,
                                                  bool requireCredentials,
                                                  const QVariantMap& parameters,
                                                  QObject* parent)
@@ -116,7 +116,7 @@ OfferLocalStreamTubeJob::OfferLocalStreamTubeJob(const Nepomuk::PersonContact& c
                                                  bool requireCredentials,
                                                  const QVariantMap& parameters,
                                                  QObject* parent)
-    : TelepathyBaseJob(*new OfferLocalStreamTubeJobPrivate(this, OfferLocalStreamTubeContactLocalServerMode, parameters, *new QByteArray()), parent)
+    : TelepathyBaseJob(*new OfferLocalStreamTubeJobPrivate(this, OfferLocalStreamTubeContactLocalServerMode, parameters, *new QString()), parent)
 
 {
     Q_D(OfferLocalStreamTubeJob);
@@ -134,7 +134,7 @@ OfferLocalStreamTubeJob::OfferLocalStreamTubeJob(const Nepomuk::Person& metacont
                                                  bool requireCredentials,
                                                  const QVariantMap& parameters,
                                                  QObject* parent)
-    : TelepathyBaseJob(*new OfferLocalStreamTubeJobPrivate(this, OfferLocalStreamTubeMetaContactMode, parameters, *new QByteArray()), parent)
+    : TelepathyBaseJob(*new OfferLocalStreamTubeJobPrivate(this, OfferLocalStreamTubeMetaContactMode, parameters, *new QString()), parent)
 {
     Q_D(OfferLocalStreamTubeJob);
 
@@ -146,7 +146,7 @@ OfferLocalStreamTubeJob::OfferLocalStreamTubeJob(const Nepomuk::Person& metacont
 
 
 OfferLocalStreamTubeJob::OfferLocalStreamTubeJob(const Nepomuk::Person& metacontact,
-                                                 const QByteArray& socketAddress,
+                                                 const QString& socketAddress,
                                                  bool requireCredentials,
                                                  const QVariantMap& parameters,
                                                  QObject* parent)
@@ -166,7 +166,7 @@ OfferLocalStreamTubeJob::OfferLocalStreamTubeJob(const Nepomuk::Person& metacont
                                                  bool requireCredentials,
                                                  const QVariantMap& parameters,
                                                  QObject* parent)
-    : TelepathyBaseJob(*new OfferLocalStreamTubeJobPrivate(this, OfferLocalStreamTubeContactLocalServerMode, parameters, *new QByteArray()), parent)
+    : TelepathyBaseJob(*new OfferLocalStreamTubeJobPrivate(this, OfferLocalStreamTubeContactLocalServerMode, parameters, *new QString()), parent)
 {
     Q_D(OfferLocalStreamTubeJob);
 
@@ -233,7 +233,7 @@ Tp::OutgoingStreamTubeChannelPtr OfferLocalStreamTubeJob::outgoingStreamTubeChan
 }
 
 
-OfferLocalStreamTubeJobPrivate::OfferLocalStreamTubeJobPrivate(OfferLocalStreamTubeJob* parent, OfferLocalStreamTubeJob::ProcessingMode m, const QVariantMap& p, const QByteArray& s)
+OfferLocalStreamTubeJobPrivate::OfferLocalStreamTubeJobPrivate(OfferLocalStreamTubeJob* parent, OfferLocalStreamTubeJob::ProcessingMode m, const QVariantMap& p, const QString& s)
     : TelepathyBaseJobPrivate(parent),
       mode(m),
       parameters(p),
