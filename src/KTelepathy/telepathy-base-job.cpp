@@ -97,7 +97,7 @@ void TelepathyBaseJobPrivate::__k__doEmitResult()
 
         QList< QPair< QString, QString > >::const_iterator i;
         for (i = telepathyErrors.constBegin(); i != telepathyErrors.constEnd(); ++i) {
-            errorMessage.append('\n');
+            errorMessage.append(QLatin1Char('\n'));
             errorMessage.append(i18nc("The following format is: ' - <error name>: <error message>'", " - %1: %2",
                                       (*i).first, (*i).second));
         }

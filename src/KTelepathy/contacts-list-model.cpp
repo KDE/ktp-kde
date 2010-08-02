@@ -114,12 +114,12 @@ ContactsListModel::ContactsListModel(QObject *parent)
         ComparisonTerm buddyTerm(Telepathy::isBuddyOf(),
                                  impcgoterm);
         // set the name of the variable (i.e. the buddies) to be able to match it later
-        buddyTerm.setVariableName("t");
+        buddyTerm.setVariableName(QLatin1String("t"));
 
         // same comparison, other property, but use the same variable name to match them
         ComparisonTerm ppterm(Telepathy::publishesPresenceTo(),
                               ResourceTypeTerm(NCO::IMAccount()));
-        ppterm.setVariableName("t");
+        ppterm.setVariableName(QLatin1String("t"));
 
         // combine both to complete the matching of the im account ?account
         AndTerm accountTerm(ResourceTypeTerm(NCO::IMAccount()),
@@ -127,7 +127,7 @@ ContactsListModel::ContactsListModel(QObject *parent)
 
         // match the account and select it for the results
         ComparisonTerm imaccountTerm(NCO::hasIMAccount(), accountTerm);
-        imaccountTerm.setVariableName("account");
+        imaccountTerm.setVariableName(QLatin1String("account"));
 
         // and finally the exclusion of those person contacts that already have a pimo person attached
         ComparisonTerm personTerm(PIMO::groundingOccurrence(),
@@ -154,7 +154,7 @@ void ContactsListModel::onContactsQueryNewEntries(const QList<Nepomuk::Query::Re
     // Iterate over all the IMAccounts/PersonContacts found.
     foreach (const Nepomuk::Query::Result &result, entries) {
         Nepomuk::PersonContact foundPersonContact(result.resource());
-        Nepomuk::IMAccount foundIMAccount(result.additionalBinding("account").toUrl());
+        Nepomuk::IMAccount foundIMAccount(result.additionalBinding(QLatin1String("account")).toUrl());
         kDebug() << "New resource added: " << foundPersonContact << foundIMAccount;
 
         // Create a fake metacontact to hold this item.
@@ -361,7 +361,7 @@ QVariant ContactsListModel::headerData(int section, Qt::Orientation orientation,
     Q_UNUSED(section);
 
     if (orientation == Qt::Horizontal && role == Qt::DisplayRole) {
-        return QVariant("Contact Name");
+        return QVariant(i18n("Contact Name"));
     }
 
     return QVariant();

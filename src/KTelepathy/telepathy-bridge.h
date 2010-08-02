@@ -474,8 +474,8 @@ public:
 #endif // WITH_STREAMTUBES
 
 #ifdef WITH_DBUSTUBES
-    KJob* offerDBusTube(const Nepomuk::PersonContact& contact, const QString serviceName = "org.kde.KTelepathy.DefaultServiceName", const QVariantMap& parameters = QVariantMap());
-    KJob* offerDBusTube(const Nepomuk::Person& metacontact, const QString serviceName = "org.kde.KTelepathy.DefaultServiceName", const QVariantMap& parameters = QVariantMap());
+    KJob* offerDBusTube(const Nepomuk::PersonContact& contact, const QString serviceName = QLatin1String("org.kde.KTelepathy.DefaultServiceName"), const QVariantMap& parameters = QVariantMap());
+    KJob* offerDBusTube(const Nepomuk::Person& metacontact, const QString serviceName = QLatin1String("org.kde.KTelepathy.DefaultServiceName"), const QVariantMap& parameters = QVariantMap());
 #endif // WITH_DBUSTUBES
 
     /**

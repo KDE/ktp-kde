@@ -239,7 +239,7 @@ QVariant AccountsModel::headerData(int section, Qt::Orientation orientation, int
     Q_UNUSED(section);
 
     if (orientation == Qt::Horizontal && role == Qt::DisplayRole) {
-        return QVariant("Account Name");
+        return QVariant(i18n("Account Name"));
     }
 
     return QVariant();

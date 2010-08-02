@@ -177,7 +177,7 @@ TelepathyAccountProxy* TelepathyBridgePrivate::accountProxyForAccount(const Nepo
     TelepathyAccountProxy *proxy = 0;
     foreach (TelepathyAccountProxy *account, accountProxies) {
         if (account->isReady()) {
-            if (account->account().data()->parameters().value("account") == imAccount.imIDs().first()) {
+            if (account->account().data()->parameters().value(QLatin1String("account")) == imAccount.imIDs().first()) {
                 proxy = account;
             }
         }
@@ -198,7 +198,7 @@ QList< TelepathyAccountProxy* > TelepathyBridgePrivate::accountProxiesForContact
             foreach (TelepathyAccountProxy *proxyAccount, accountProxies) {
                 if (proxyAccount->isReady()) {
                     foreach (const QString &imID, buddyAccount.imIDs()) {
-                        if (proxyAccount->account().data()->parameters().value("account") == imID) {
+                        if (proxyAccount->account().data()->parameters().value(QLatin1String("account")) == imID) {
                             retlist << proxyAccount;
                         }
                     }

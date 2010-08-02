@@ -74,22 +74,22 @@ void AccountItem::updatePresenceIcon()
 
     switch (statusTypes.first()) {
     case Tp::ConnectionPresenceTypeAvailable:
-        iconName = "user-online";
+        iconName = QLatin1String("user-online");
         break;
     case Tp::ConnectionPresenceTypeAway:
-        iconName = "user-away";
+        iconName = QLatin1String("user-away");
         break;
     case Tp::ConnectionPresenceTypeExtendedAway:
-        iconName = "user-away-extended";
+        iconName = QLatin1String("user-away-extended");
         break;
     case Tp::ConnectionPresenceTypeHidden:
-        iconName = "user-invisible";
+        iconName = QLatin1String("user-invisible");
         break;
     case Tp::ConnectionPresenceTypeBusy:
-        iconName = "user-busy";
+        iconName = QLatin1String("user-busy");
         break;
     default:
-        iconName = "user-offline";
+        iconName = QLatin1String("user-offline");
         break;
     }
 

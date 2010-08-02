@@ -118,12 +118,12 @@ void MetaContactItem::setPimoPerson(const Nepomuk::Person& pimoPerson)
         ComparisonTerm buddyTerm(Telepathy::isBuddyOf(),
                                  impcgoterm);
         // set the name of the variable (i.e. the buddies) to be able to match it later
-        buddyTerm.setVariableName("t");
+        buddyTerm.setVariableName(QLatin1String("t"));
 
         // same comparison, other property, but use the same variable name to match them
         ComparisonTerm ppterm(Telepathy::publishesPresenceTo(),
                               ResourceTypeTerm(NCO::IMAccount()));
-        ppterm.setVariableName("t");
+        ppterm.setVariableName(QLatin1String("t"));
 
         // combine both to complete the matching of the im account ?account
         AndTerm accountTerm(ResourceTypeTerm(NCO::IMAccount()),
@@ -131,7 +131,7 @@ void MetaContactItem::setPimoPerson(const Nepomuk::Person& pimoPerson)
 
         // match the account and select it for the results
         ComparisonTerm imaccountTerm(NCO::hasIMAccount(), accountTerm);
-        imaccountTerm.setVariableName("account");
+        imaccountTerm.setVariableName(QLatin1String("account"));
 
         // the result must be a groundingOccurrence of pimoPerson
         ComparisonTerm personTerm(PIMO::groundingOccurrence(),
@@ -179,7 +179,7 @@ void MetaContactItem::onNewEntries(const QList< Nepomuk::Query::Result > &entrie
     // Iterate over all the IMAccounts/PersonContacts found.
     foreach (const Nepomuk::Query::Result &result, entries) {
         Nepomuk::PersonContact foundPersonContact(result.resource());
-        Nepomuk::IMAccount foundIMAccount(result.additionalBinding("account").toUrl());
+        Nepomuk::IMAccount foundIMAccount(result.additionalBinding(QLatin1String("account")).toUrl());
         kDebug() << "New resource added";
 
         // Create the contact item itself, parenting it to this metacontact.

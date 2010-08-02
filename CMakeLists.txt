@@ -14,6 +14,7 @@ include (MacroLibrary)
 
 add_definitions (${KDE4_DEFINITIONS}
                  -DDISABLE_NEPOMUK_LEGACY
+                 -DQT_NO_CAST_FROM_ASCII
 )
 
 include_directories (${KDE4_INCLUDES}
