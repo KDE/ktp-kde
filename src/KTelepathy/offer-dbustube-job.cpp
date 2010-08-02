@@ -50,7 +50,14 @@ class OfferDBusTubeJobPrivate : public TelepathyBaseJobPrivate
     Q_DECLARE_PUBLIC(OfferDBusTubeJob)
 
     public:
-        OfferDBusTubeJobPrivate(OfferDBusTubeJob* parent, OfferDBusTubeJob::ProcessingMode m, const QVariantMap& p);
+        OfferDBusTubeJobPrivate(OfferDBusTubeJob* parent,
+                                const Nepomuk::PersonContact& contact,
+                                const QLatin1String serviceName,
+                                const QVariantMap& p);
+        OfferDBusTubeJobPrivate(OfferDBusTubeJob* parent,
+                                const Nepomuk::Person& metacontact,
+                                const QLatin1String serviceName,
+                                const QVariantMap& p);
         virtual ~OfferDBusTubeJobPrivate();
 
         OfferDBusTubeJob::ProcessingMode mode;
@@ -58,6 +65,7 @@ class OfferDBusTubeJobPrivate : public TelepathyBaseJobPrivate
         Tp::OutgoingDBusTubeChannelPtr channel;
         Nepomuk::PersonContact contact;
         Nepomuk::Person metacontact;
+        QLatin1String serviceName;
 
         const QVariantMap parameters;
         QDBusConnection connection;
@@ -78,56 +86,30 @@ class OfferDBusTubeJobPrivate : public TelepathyBaseJobPrivate
 };
 
 OfferDBusTubeJob::OfferDBusTubeJob(const Nepomuk::PersonContact& contact,
-                                             const QVariantMap& parameters,
-                                             QObject* parent)
-    : TelepathyBaseJob(*new OfferDBusTubeJobPrivate(this, OfferDBusTubeContactMode, parameters), parent)
+                                   const QLatin1String serviceName,
+                                   const QVariantMap& parameters,
+                                   QObject* parent)
+    : TelepathyBaseJob(*new OfferDBusTubeJobPrivate(this,
+                                                    contact,
+                                                    serviceName,
+                                                    parameters),
+                       parent)
 {
-    Q_D(OfferDBusTubeJob);
-
-    d->contact = contact;
 }
 
-
-/* TODO?
-OfferDBusTubeJob::OfferDBusTubeJob(const Nepomuk::PersonContact& contact,
-                                             QServer* server,
-                                             const QVariantMap& parameters,
-                                             QObject* parent)
-    : TelepathyBaseJob(*new OfferDBusTubeJobPrivate(this, OfferDBusTubeContactServerMode, parameters), parent)
-
-{
-    Q_D(OfferDBusTubeJob);
-
-    d->contact = contact;
-    if (!server->isListening())
-        kWarning() << "Server is not listening"; //TODO
-    d->server = server;
-}
-*/
 
 OfferDBusTubeJob::OfferDBusTubeJob(const Nepomuk::Person& metacontact,
-                                             const QVariantMap& parameters,
-                                             QObject* parent)
-    : TelepathyBaseJob(*new OfferDBusTubeJobPrivate(this, OfferDBusTubeMetaContactMode, parameters), parent)
+                                   const QLatin1String serviceName,
+                                   const QVariantMap& parameters,
+                                   QObject* parent)
+    : TelepathyBaseJob(*new OfferDBusTubeJobPrivate(this,
+                                                    metacontact,
+                                                    serviceName,
+                                                    parameters),
+                       parent)
 {
-    Q_D(OfferDBusTubeJob);
-
-    d->metacontact = metacontact;
 }
 
-/* TODO?
-OfferDBusTubeJob::OfferDBusTubeJob(const Nepomuk::Person& metacontact,
-                                             QServer* server,
-                                             const QVariantMap& parameters,
-                                             QObject* parent)
-    : TelepathyBaseJob(*new OfferDBusTubeJobPrivate(this, OfferDBusTubeMetaContactServerMode, parameters), parent)
-{
-    Q_D(OfferDBusTubeJob);
-
-    d->metacontact = metacontact;
-    d->server = server;
-}
-*/
 
 OfferDBusTubeJob::~OfferDBusTubeJob()
 {
@@ -176,15 +158,37 @@ Tp::OutgoingDBusTubeChannelPtr OfferDBusTubeJob::outgoingDBusTubeChannel()
     return d->channel;
 }
 
-
-OfferDBusTubeJobPrivate::OfferDBusTubeJobPrivate(OfferDBusTubeJob* parent, OfferDBusTubeJob::ProcessingMode m, const QVariantMap& p)
+OfferDBusTubeJobPrivate::OfferDBusTubeJobPrivate(OfferDBusTubeJob* parent,
+                                                 const Nepomuk::PersonContact& c,
+                                                 const QLatin1String s,
+                                                 const QVariantMap& p)
     : TelepathyBaseJobPrivate(parent),
-      mode(m),
+      mode(OfferDBusTubeJob::OfferDBusTubeContactMode),
+      contact(c),
+      serviceName(s),
       parameters(p),
-      connection(QLatin1String("none")) {}
+      connection(QLatin1String("none"))
+{
+}
 
 
-OfferDBusTubeJobPrivate::~OfferDBusTubeJobPrivate() {}
+OfferDBusTubeJobPrivate::OfferDBusTubeJobPrivate(OfferDBusTubeJob* parent,
+                                                 const Nepomuk::Person& m,
+                                                 const QLatin1String s,
+                                                 const QVariantMap& p)
+    : TelepathyBaseJobPrivate(parent),
+      mode(OfferDBusTubeJob::OfferDBusTubeMetaContactMode),
+      metacontact(m),
+      serviceName(s),
+      parameters(p),
+      connection(QLatin1String("none"))
+{
+}
+
+
+OfferDBusTubeJobPrivate::~OfferDBusTubeJobPrivate()
+{
+}
 
 
 void OfferDBusTubeJobPrivate::__k__offerDBusTubeContact()
@@ -232,7 +236,7 @@ void OfferDBusTubeJobPrivate::__k__offerDBusTubeContact()
                 request.insert(QLatin1String(TELEPATHY_INTERFACE_CHANNEL ".TargetHandleType"), (uint) Tp::HandleTypeContact);
                 request.insert(QLatin1String(TELEPATHY_INTERFACE_CHANNEL ".TargetHandle"), contactHandle);
                 //TODO Service Name
-                request.insert(QLatin1String(TELEPATHY_INTERFACE_CHANNEL_TYPE_DBUS_TUBE ".ServiceName"), QLatin1String("org.freedesktop.Telepathy.Qt4.Example"));
+                request.insert(QLatin1String(TELEPATHY_INTERFACE_CHANNEL_TYPE_DBUS_TUBE ".ServiceName"), serviceName);
                 kDebug() << i18n("Request:") << request;
 
                 Tp::PendingChannel* pndChan = i.key()->account()->connection()->createChannel(request);

@@ -66,10 +66,14 @@ class KDE_EXPORT OfferDBusTubeJob : public TelepathyBaseJob
     Q_PRIVATE_SLOT(d_func(), void __k__onInvalidated())
 
     public:
-        OfferDBusTubeJob(const Nepomuk::PersonContact& contact, const QVariantMap& parameters = QVariantMap(), QObject* parent = 0);
-//TODO?        OfferDBusTubeJob(const Nepomuk::PersonContact& contact, QServer* server, const QVariantMap& parameters = QVariantMap(), QObject* parent = 0);
-        OfferDBusTubeJob(const Nepomuk::Person& metacontact, const QVariantMap& parameters = QVariantMap(), QObject* parent = 0);
-//TODO?        OfferDBusTubeJob(const Nepomuk::Person& metacontact, QServer* server, const QVariantMap& parameters = QVariantMap(), QObject* parent = 0);
+        OfferDBusTubeJob(const Nepomuk::PersonContact& contact,
+                         const QLatin1String serviceName = QLatin1String("org.kde.KTelepathy.DefaultServiceName"),
+                         const QVariantMap& parameters = QVariantMap(),
+                         QObject* parent = 0);
+        OfferDBusTubeJob(const Nepomuk::Person& metacontact,
+                         const QLatin1String serviceName = QLatin1String("org.kde.KTelepathy.DefaultServiceName"),
+                         const QVariantMap& parameters = QVariantMap(),
+                         QObject* parent = 0);
 
         virtual ~OfferDBusTubeJob();
 
