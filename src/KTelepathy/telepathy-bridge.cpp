@@ -496,12 +496,12 @@ KJob* TelepathyBridge::acceptTcpStreamTube(Tp::ChannelPtr channel, const QHostAd
 #endif // WITH_STREAMTUBES
 
 #ifdef WITH_DBUSTUBES
-KJob* TelepathyBridge::offerDBusTube(const Nepomuk::PersonContact& contact, const QLatin1String serviceName, const QVariantMap& parameters)
+KJob* TelepathyBridge::offerDBusTube(const Nepomuk::PersonContact& contact, const QString serviceName, const QVariantMap& parameters)
 {
     return new OfferDBusTubeJob(contact, serviceName, parameters, this);
 }
 
-KJob* TelepathyBridge::offerDBusTube(const Nepomuk::Person& metacontact, const QLatin1String serviceName, const QVariantMap& parameters)
+KJob* TelepathyBridge::offerDBusTube(const Nepomuk::Person& metacontact, const QString serviceName, const QVariantMap& parameters)
 {
     return new OfferDBusTubeJob(metacontact, serviceName, parameters, this);
 }

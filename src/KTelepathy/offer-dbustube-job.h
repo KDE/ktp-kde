@@ -67,11 +67,11 @@ class KDE_EXPORT OfferDBusTubeJob : public TelepathyBaseJob
 
     public:
         OfferDBusTubeJob(const Nepomuk::PersonContact& contact,
-                         const QLatin1String serviceName = QLatin1String("org.kde.KTelepathy.DefaultServiceName"),
+                         const QString serviceName = "org.kde.KTelepathy.DefaultServiceName",
                          const QVariantMap& parameters = QVariantMap(),
                          QObject* parent = 0);
         OfferDBusTubeJob(const Nepomuk::Person& metacontact,
-                         const QLatin1String serviceName = QLatin1String("org.kde.KTelepathy.DefaultServiceName"),
+                         const QString serviceName = "org.kde.KTelepathy.DefaultServiceName",
                          const QVariantMap& parameters = QVariantMap(),
                          QObject* parent = 0);
 
