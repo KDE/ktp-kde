@@ -212,7 +212,7 @@ void OfferLocalStreamTubeJob::start()
         default:
             // Hmm?
             setError(TelepathyBridge::InvalidOperationError);
-            setErrorText(i18n("This is an internal error of KDE-Telepathy"));
+            setErrorText(i18n("This is an internal error of KTelepathy"));
             QTimer::singleShot(0, this, SLOT(__k__doEmitResult()));
             break;
     }
