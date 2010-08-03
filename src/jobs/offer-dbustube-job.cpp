@@ -63,7 +63,7 @@ class OfferDBusTubeJobPrivate : public TelepathyBaseJobPrivate
         Tp::OutgoingDBusTubeChannelPtr channel;
         Nepomuk::PersonContact contact;
         Nepomuk::Person metacontact;
-        QLatin1String serviceName;
+        QString serviceName;
 
         const QVariantMap parameters;
         QDBusConnection connection;
@@ -159,7 +159,7 @@ OfferDBusTubeJobPrivate::OfferDBusTubeJobPrivate(const Nepomuk::PersonContact& c
                                                  const QVariantMap& p)
     : mode(OfferDBusTubeJob::OfferDBusTubeContactMode),
       contact(c),
-      serviceName(s.toLatin1()),
+      serviceName(s),
       parameters(p),
       connection(QLatin1String("none"))
 {
@@ -171,7 +171,7 @@ OfferDBusTubeJobPrivate::OfferDBusTubeJobPrivate(const Nepomuk::Person& m,
                                                  const QVariantMap& p)
     : mode(OfferDBusTubeJob::OfferDBusTubeMetaContactMode),
       metacontact(m),
-      serviceName(s.toLatin1()),
+      serviceName(s),
       parameters(p),
       connection(QLatin1String("none"))
 {
@@ -227,7 +227,6 @@ void OfferDBusTubeJobPrivate::__k__offerDBusTubeContact()
                 request.insert(QLatin1String(TELEPATHY_INTERFACE_CHANNEL ".ChannelType"), QLatin1String(TELEPATHY_INTERFACE_CHANNEL_TYPE_DBUS_TUBE));
                 request.insert(QLatin1String(TELEPATHY_INTERFACE_CHANNEL ".TargetHandleType"), (uint) Tp::HandleTypeContact);
                 request.insert(QLatin1String(TELEPATHY_INTERFACE_CHANNEL ".TargetHandle"), contactHandle);
-                //TODO Service Name
                 request.insert(QLatin1String(TELEPATHY_INTERFACE_CHANNEL_TYPE_DBUS_TUBE ".ServiceName"), serviceName);
                 kDebug() << i18n("Request:") << request;
 
