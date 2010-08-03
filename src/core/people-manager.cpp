@@ -22,20 +22,60 @@
 #include "people-manager.h"
 
 #include <KDebug>
+#include <KGlobal>
+
+
+/****************************** PeopleManager::Private ********************************************/
+
 
 class PeopleManager::Private {
 
 public:
-    Private()
+    explicit Private(PeopleManager *parent)
+      : q(parent)
     { }
+
+    PeopleManager * const q;
+
 };
 
 
-PeopleManager::PeopleManager(QObject *parent)
-  : QObject(parent),
-    d(new PeopleManager::Private)
+/****************************** Global Static Stuff ***********************************************/
+
+
+class PeopleManagerHelper
+{
+public:
+    PeopleManagerHelper() : q(0) {}
+    ~PeopleManagerHelper() {
+        delete q;
+    }
+    PeopleManager *q;
+};
+
+K_GLOBAL_STATIC(PeopleManagerHelper, s_globalPeopleManager)
+
+
+/****************************** PeopleManager *****************************************************/
+
+
+PeopleManager *PeopleManager::instance()
+{
+    if (!s_globalPeopleManager->q) {
+        new PeopleManager;
+    }
+
+    return s_globalPeopleManager->q;
+}
+
+PeopleManager::PeopleManager()
+  : QObject(0),
+    d(new PeopleManager::Private(this))
 {
     kDebug();
+
+    Q_ASSERT(!s_globalPeopleManager->q);
+    s_globalPeopleManager->q = this;
 }
 
 PeopleManager::~PeopleManager()

@@ -26,8 +26,6 @@
 
 #include <QtCore/QList>
 #include <QtCore/QObject>
-#include <QtCore/QSharedPointer>
-#include <QtCore/QWeakPointer>
 
 /**
  * @class PeopleManager
@@ -40,8 +38,10 @@ class PeopleManager : public QObject {
     Q_OBJECT
 
 public:
-    explicit PeopleManager(QObject *parent = 0);
+    PeopleManager();
     virtual ~PeopleManager();
+
+    static PeopleManager *instance();
 
 private:
     class Private;
