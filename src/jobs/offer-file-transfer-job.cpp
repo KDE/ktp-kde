@@ -43,7 +43,7 @@ class OfferFileTransferJobPrivate : public TelepathyBaseJobPrivate
     Q_DECLARE_PUBLIC(OfferFileTransferJob)
 
     public:
-        OfferFileTransferJobPrivate(OfferFileTransferJob* parent, OfferFileTransferJob::ProcessingMode m, QString f);
+        OfferFileTransferJobPrivate(OfferFileTransferJob::ProcessingMode m, QString f);
         virtual ~OfferFileTransferJobPrivate();
 
         OfferFileTransferJob::ProcessingMode mode;
@@ -75,7 +75,7 @@ class OfferFileTransferJobPrivate : public TelepathyBaseJobPrivate
 
 
 OfferFileTransferJob::OfferFileTransferJob(const Nepomuk::PersonContact& contact, QString filename, QObject* parent)
-    : TelepathyBaseJob(*new OfferFileTransferJobPrivate(this, OfferFileTransferContactMode, filename), parent)
+    : TelepathyBaseJob(*new OfferFileTransferJobPrivate(OfferFileTransferContactMode, filename), parent)
 {
     Q_D(OfferFileTransferJob);
 
@@ -84,7 +84,7 @@ OfferFileTransferJob::OfferFileTransferJob(const Nepomuk::PersonContact& contact
 }
 
 OfferFileTransferJob::OfferFileTransferJob(const Nepomuk::Person& metacontact, QString filename, QObject* parent)
-    : TelepathyBaseJob(*new OfferFileTransferJobPrivate(this, OfferFileTransferMetaContactMode, filename), parent)
+    : TelepathyBaseJob(*new OfferFileTransferJobPrivate(OfferFileTransferMetaContactMode, filename), parent)
 {
     Q_D(OfferFileTransferJob);
 
@@ -128,9 +128,8 @@ bool OfferFileTransferJob::doKill()
     return true;
 }
 
-OfferFileTransferJobPrivate::OfferFileTransferJobPrivate(OfferFileTransferJob* parent, OfferFileTransferJob::ProcessingMode m, QString f)
-    : TelepathyBaseJobPrivate(parent),
-      mode(m)
+OfferFileTransferJobPrivate::OfferFileTransferJobPrivate(OfferFileTransferJob::ProcessingMode m, QString f)
+    : mode(m)
 {
     filename = f;
     file.setFileName(filename);

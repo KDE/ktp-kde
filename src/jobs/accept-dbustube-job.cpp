@@ -34,7 +34,7 @@ class AcceptDBusTubeJobPrivate : public TelepathyBaseJobPrivate
     Q_DECLARE_PUBLIC(AcceptDBusTubeJob)
 
     public:
-        AcceptDBusTubeJobPrivate(AcceptDBusTubeJob* parent, const QVariantMap& p);
+        AcceptDBusTubeJobPrivate(const QVariantMap& p);
         virtual ~AcceptDBusTubeJobPrivate();
 
         Tp::IncomingDBusTubeChannelPtr channel;
@@ -58,7 +58,7 @@ AcceptDBusTubeJob::AcceptDBusTubeJob(const QVariantMap& parameters,
 AcceptDBusTubeJob::AcceptDBusTubeJob(Tp::ChannelPtr channel,
                                      const QVariantMap& parameters,
                                      QObject* parent)
-    : TelepathyBaseJob(*new AcceptDBusTubeJobPrivate(this, parameters), parent)
+    : TelepathyBaseJob(*new AcceptDBusTubeJobPrivate(parameters), parent)
 {
     Q_D(AcceptDBusTubeJob);
 
@@ -88,9 +88,8 @@ Tp::IncomingDBusTubeChannelPtr AcceptDBusTubeJob::incomingDBusTubeChannel()
 }
 
 
-AcceptDBusTubeJobPrivate::AcceptDBusTubeJobPrivate(AcceptDBusTubeJob* parent, const QVariantMap& p)
-    : TelepathyBaseJobPrivate(parent),
-      parameters(p),
+AcceptDBusTubeJobPrivate::AcceptDBusTubeJobPrivate(const QVariantMap& p)
+    : parameters(p),
       connection(QLatin1String("none"))
 {
 }

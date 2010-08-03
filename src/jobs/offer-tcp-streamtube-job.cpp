@@ -49,7 +49,7 @@ class OfferTcpStreamTubeJobPrivate : public TelepathyBaseJobPrivate
     Q_DECLARE_PUBLIC(OfferTcpStreamTubeJob)
 
     public:
-        OfferTcpStreamTubeJobPrivate(OfferTcpStreamTubeJob* parent, OfferTcpStreamTubeJob::ProcessingMode m, const QVariantMap& p, const QHostAddress& h);
+        OfferTcpStreamTubeJobPrivate(OfferTcpStreamTubeJob::ProcessingMode m, const QVariantMap& p, const QHostAddress& h);
         virtual ~OfferTcpStreamTubeJobPrivate();
 
         OfferTcpStreamTubeJob::ProcessingMode mode;
@@ -83,7 +83,7 @@ class OfferTcpStreamTubeJobPrivate : public TelepathyBaseJobPrivate
 OfferTcpStreamTubeJob::OfferTcpStreamTubeJob(const Nepomuk::PersonContact& contact,
                                              const QVariantMap& parameters,
                                              QObject* parent)
-    : TelepathyBaseJob(*new OfferTcpStreamTubeJobPrivate(this, OfferTcpStreamTubeContactMode, parameters, *new QHostAddress()), parent)
+    : TelepathyBaseJob(*new OfferTcpStreamTubeJobPrivate(OfferTcpStreamTubeContactMode, parameters, *new QHostAddress()), parent)
 {
     Q_D(OfferTcpStreamTubeJob);
 
@@ -97,7 +97,7 @@ OfferTcpStreamTubeJob::OfferTcpStreamTubeJob(const Nepomuk::PersonContact& conta
                                              quint16 port,
                                              const QVariantMap& parameters,
                                              QObject* parent)
-    : TelepathyBaseJob(*new OfferTcpStreamTubeJobPrivate(this, OfferTcpStreamTubeContactHostAddressMode, parameters, hostAddress), parent)
+    : TelepathyBaseJob(*new OfferTcpStreamTubeJobPrivate(OfferTcpStreamTubeContactHostAddressMode, parameters, hostAddress), parent)
 {
     Q_D(OfferTcpStreamTubeJob);
 
@@ -113,7 +113,7 @@ OfferTcpStreamTubeJob::OfferTcpStreamTubeJob(const Nepomuk::PersonContact& conta
                                              QTcpServer* server,
                                              const QVariantMap& parameters,
                                              QObject* parent)
-    : TelepathyBaseJob(*new OfferTcpStreamTubeJobPrivate(this, OfferTcpStreamTubeContactTcpServerMode, parameters, *new QHostAddress()), parent)
+    : TelepathyBaseJob(*new OfferTcpStreamTubeJobPrivate(OfferTcpStreamTubeContactTcpServerMode, parameters, *new QHostAddress()), parent)
 
 {
     Q_D(OfferTcpStreamTubeJob);
@@ -128,7 +128,7 @@ OfferTcpStreamTubeJob::OfferTcpStreamTubeJob(const Nepomuk::PersonContact& conta
 OfferTcpStreamTubeJob::OfferTcpStreamTubeJob(const Nepomuk::Person& metacontact,
                                              const QVariantMap& parameters,
                                              QObject* parent)
-    : TelepathyBaseJob(*new OfferTcpStreamTubeJobPrivate(this, OfferTcpStreamTubeMetaContactMode, parameters, *new QHostAddress()), parent)
+    : TelepathyBaseJob(*new OfferTcpStreamTubeJobPrivate(OfferTcpStreamTubeMetaContactMode, parameters, *new QHostAddress()), parent)
 {
     Q_D(OfferTcpStreamTubeJob);
 
@@ -143,7 +143,7 @@ OfferTcpStreamTubeJob::OfferTcpStreamTubeJob(const Nepomuk::Person& metacontact,
                                              quint16 port,
                                              const QVariantMap& parameters,
                                              QObject* parent)
-    : TelepathyBaseJob(*new OfferTcpStreamTubeJobPrivate(this, OfferTcpStreamTubeMetaContactHostAddressMode, parameters, hostAddress), parent)
+    : TelepathyBaseJob(*new OfferTcpStreamTubeJobPrivate(OfferTcpStreamTubeMetaContactHostAddressMode, parameters, hostAddress), parent)
 {
     Q_D(OfferTcpStreamTubeJob);
 
@@ -160,7 +160,7 @@ OfferTcpStreamTubeJob::OfferTcpStreamTubeJob(const Nepomuk::Person& metacontact,
                                              QTcpServer* server,
                                              const QVariantMap& parameters,
                                              QObject* parent)
-    : TelepathyBaseJob(*new OfferTcpStreamTubeJobPrivate(this, OfferTcpStreamTubeMetaContactTcpServerMode, parameters, *new QHostAddress()), parent)
+    : TelepathyBaseJob(*new OfferTcpStreamTubeJobPrivate(OfferTcpStreamTubeMetaContactTcpServerMode, parameters, *new QHostAddress()), parent)
 {
     Q_D(OfferTcpStreamTubeJob);
 
@@ -223,9 +223,8 @@ Tp::OutgoingStreamTubeChannelPtr OfferTcpStreamTubeJob::outgoingStreamTubeChanne
 }
 
 
-OfferTcpStreamTubeJobPrivate::OfferTcpStreamTubeJobPrivate(OfferTcpStreamTubeJob* parent, OfferTcpStreamTubeJob::ProcessingMode m, const QVariantMap& p, const QHostAddress& h)
-    : TelepathyBaseJobPrivate(parent),
-      mode(m),
+OfferTcpStreamTubeJobPrivate::OfferTcpStreamTubeJobPrivate(OfferTcpStreamTubeJob::ProcessingMode m, const QVariantMap& p, const QHostAddress& h)
+    : mode(m),
       parameters(p),
       hostAddress(h),
       server(NULL) {}

@@ -44,9 +44,8 @@ class RemoveContactsFromGroupJobPrivate : public TelepathyBaseJobPrivate
     Q_DECLARE_PUBLIC(RemoveContactsFromGroupJob)
 
 public:
-    RemoveContactsFromGroupJobPrivate(RemoveContactsFromGroupJob *parent,
-                                      RemoveContactsFromGroupJob::ProcessingMode m)
-        : TelepathyBaseJobPrivate(parent), mode(m)
+    RemoveContactsFromGroupJobPrivate(RemoveContactsFromGroupJob::ProcessingMode m)
+        : mode(m)
     {}
     virtual ~RemoveContactsFromGroupJobPrivate() {}
 
@@ -67,7 +66,7 @@ public:
 
 RemoveContactsFromGroupJob::RemoveContactsFromGroupJob(const QString& group, const Nepomuk::PersonContact& contact,
                                                        QObject *parent)
-    : TelepathyBaseJob(*new RemoveContactsFromGroupJobPrivate(this, RemoveContactMode), parent)
+    : TelepathyBaseJob(*new RemoveContactsFromGroupJobPrivate(RemoveContactMode), parent)
 {
     Q_D(RemoveContactsFromGroupJob);
 
@@ -77,7 +76,7 @@ RemoveContactsFromGroupJob::RemoveContactsFromGroupJob(const QString& group, con
 
 RemoveContactsFromGroupJob::RemoveContactsFromGroupJob(const QString& group, const Nepomuk::Person& metacontact,
                                                        QObject *parent)
-    : TelepathyBaseJob(*new RemoveContactsFromGroupJobPrivate(this, RemoveMetaContactMode), parent)
+    : TelepathyBaseJob(*new RemoveContactsFromGroupJobPrivate( RemoveMetaContactMode), parent)
 {
     Q_D(RemoveContactsFromGroupJob);
 
@@ -87,7 +86,7 @@ RemoveContactsFromGroupJob::RemoveContactsFromGroupJob(const QString& group, con
 
 RemoveContactsFromGroupJob::RemoveContactsFromGroupJob(const QString& group, const QList< Nepomuk::PersonContact >& contacts,
                                                        QObject *parent)
-    : TelepathyBaseJob(*new RemoveContactsFromGroupJobPrivate(this, RemoveContactsMode), parent)
+    : TelepathyBaseJob(*new RemoveContactsFromGroupJobPrivate(RemoveContactsMode), parent)
 {
     Q_D(RemoveContactsFromGroupJob);
 
@@ -97,7 +96,7 @@ RemoveContactsFromGroupJob::RemoveContactsFromGroupJob(const QString& group, con
 
 RemoveContactsFromGroupJob::RemoveContactsFromGroupJob(const QString& group, const QList< Nepomuk::Person >& metacontacts,
                                                        QObject *parent)
-    : TelepathyBaseJob(*new RemoveContactsFromGroupJobPrivate(this, RemoveMetaContactsMode), parent)
+    : TelepathyBaseJob(*new RemoveContactsFromGroupJobPrivate(RemoveMetaContactsMode), parent)
 {
     Q_D(RemoveContactsFromGroupJob);
 

@@ -34,7 +34,7 @@ class AcceptTcpStreamTubeJobPrivate : public TelepathyBaseJobPrivate
     Q_DECLARE_PUBLIC(AcceptTcpStreamTubeJob)
 
     public:
-        AcceptTcpStreamTubeJobPrivate(AcceptTcpStreamTubeJob* parent, const QVariantMap& p, const QHostAddress& h);
+        AcceptTcpStreamTubeJobPrivate(const QVariantMap& p, const QHostAddress& h);
         virtual ~AcceptTcpStreamTubeJobPrivate();
 
         Tp::IncomingStreamTubeChannelPtr channel;
@@ -69,7 +69,7 @@ AcceptTcpStreamTubeJob::AcceptTcpStreamTubeJob(Tp::ChannelPtr channel,
                                                quint16 allowedPort,
                                                const QVariantMap& parameters,
                                                QObject* parent)
-    : TelepathyBaseJob(*new AcceptTcpStreamTubeJobPrivate(this, parameters, allowedAddress), parent)
+    : TelepathyBaseJob(*new AcceptTcpStreamTubeJobPrivate(parameters, allowedAddress), parent)
 {
     Q_D(AcceptTcpStreamTubeJob);
 
@@ -106,9 +106,8 @@ Tp::IncomingStreamTubeChannelPtr AcceptTcpStreamTubeJob::incomingStreamTubeChann
 }
 
 
-AcceptTcpStreamTubeJobPrivate::AcceptTcpStreamTubeJobPrivate(AcceptTcpStreamTubeJob* parent, const QVariantMap& p, const QHostAddress& h)
-    : TelepathyBaseJobPrivate(parent),
-      parameters(p),
+AcceptTcpStreamTubeJobPrivate::AcceptTcpStreamTubeJobPrivate(const QVariantMap& p, const QHostAddress& h)
+    : parameters(p),
       hostAddress(h),
       socket(NULL)
 {

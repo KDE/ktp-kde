@@ -44,9 +44,8 @@ class AddContactsToGroupJobPrivate : public TelepathyBaseJobPrivate
     Q_DECLARE_PUBLIC(AddContactsToGroupJob)
 
 public:
-    AddContactsToGroupJobPrivate(AddContactsToGroupJob *parent,
-                                      AddContactsToGroupJob::ProcessingMode m)
-        : TelepathyBaseJobPrivate(parent), mode(m)
+    AddContactsToGroupJobPrivate(AddContactsToGroupJob::ProcessingMode m)
+        : mode(m)
     {}
     virtual ~AddContactsToGroupJobPrivate() {}
 
@@ -67,7 +66,7 @@ public:
 
 AddContactsToGroupJob::AddContactsToGroupJob(const QString& group, const Nepomuk::PersonContact& contact,
                                                        QObject *parent)
-    : TelepathyBaseJob(*new AddContactsToGroupJobPrivate(this, AddContactMode), parent)
+    : TelepathyBaseJob(*new AddContactsToGroupJobPrivate(AddContactMode), parent)
 {
     Q_D(AddContactsToGroupJob);
 
@@ -77,7 +76,7 @@ AddContactsToGroupJob::AddContactsToGroupJob(const QString& group, const Nepomuk
 
 AddContactsToGroupJob::AddContactsToGroupJob(const QString& group, const Nepomuk::Person& metacontact,
                                                        QObject *parent)
-    : TelepathyBaseJob(*new AddContactsToGroupJobPrivate(this, AddMetaContactMode), parent)
+    : TelepathyBaseJob(*new AddContactsToGroupJobPrivate(AddMetaContactMode), parent)
 {
     Q_D(AddContactsToGroupJob);
 
@@ -87,7 +86,7 @@ AddContactsToGroupJob::AddContactsToGroupJob(const QString& group, const Nepomuk
 
 AddContactsToGroupJob::AddContactsToGroupJob(const QString& group, const QList< Nepomuk::PersonContact >& contacts,
                                                        QObject *parent)
-    : TelepathyBaseJob(*new AddContactsToGroupJobPrivate(this, AddContactsMode), parent)
+    : TelepathyBaseJob(*new AddContactsToGroupJobPrivate(AddContactsMode), parent)
 {
     Q_D(AddContactsToGroupJob);
 
@@ -97,7 +96,7 @@ AddContactsToGroupJob::AddContactsToGroupJob(const QString& group, const QList< 
 
 AddContactsToGroupJob::AddContactsToGroupJob(const QString& group, const QList< Nepomuk::Person >& metacontacts,
                                                        QObject *parent)
-    : TelepathyBaseJob(*new AddContactsToGroupJobPrivate(this, AddMetaContactsMode), parent)
+    : TelepathyBaseJob(*new AddContactsToGroupJobPrivate(AddMetaContactsMode), parent)
 {
     Q_D(AddContactsToGroupJob);
 

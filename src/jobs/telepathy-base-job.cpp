@@ -27,8 +27,8 @@
 
 #include <KLocalizedString>
 
-TelepathyBaseJobPrivate::TelepathyBaseJobPrivate(TelepathyBaseJob *parent)
-    : q_ptr(parent)
+TelepathyBaseJobPrivate::TelepathyBaseJobPrivate()
+    : q_ptr(0)
 {
 }
 
@@ -51,6 +51,7 @@ TelepathyBaseJob::TelepathyBaseJob(TelepathyBaseJobPrivate& dd, QObject* parent)
     : KJob(parent)
     , d_ptr(&dd)
 {
+    d_ptr->q_ptr = this;
 }
 
 TelepathyBaseJob::~TelepathyBaseJob()

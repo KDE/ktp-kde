@@ -35,7 +35,7 @@ class AcceptFileTransferJobPrivate : public TelepathyBaseJobPrivate
     Q_DECLARE_PUBLIC(AcceptFileTransferJob)
 
     public:
-        AcceptFileTransferJobPrivate(AcceptFileTransferJob* parent);
+        AcceptFileTransferJobPrivate();
         virtual ~AcceptFileTransferJobPrivate();
 
         Tp::IncomingFileTransferChannelPtr channel;
@@ -57,7 +57,7 @@ class AcceptFileTransferJobPrivate : public TelepathyBaseJobPrivate
 AcceptFileTransferJob::AcceptFileTransferJob(Tp::ChannelPtr channel,
                                              QString filename,
                                              QObject* parent)
-    : TelepathyBaseJob(*new AcceptFileTransferJobPrivate(this), parent)
+    : TelepathyBaseJob(*new AcceptFileTransferJobPrivate(), parent)
 {
     Q_D(AcceptFileTransferJob);
 
@@ -75,9 +75,8 @@ void AcceptFileTransferJob::start()
 }
 
 
-AcceptFileTransferJobPrivate::AcceptFileTransferJobPrivate(AcceptFileTransferJob* parent)
-    : TelepathyBaseJobPrivate(parent),
-      file(0)
+AcceptFileTransferJobPrivate::AcceptFileTransferJobPrivate()
+    : file(0)
 {
     offset = 0; // TODO?
 }

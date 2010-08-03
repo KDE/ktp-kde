@@ -36,9 +36,7 @@ class AddMetaContactJobPrivate : public TelepathyBaseJobPrivate
     Q_DECLARE_PUBLIC(AddMetaContactJob)
 
 public:
-    AddMetaContactJobPrivate(AddMetaContactJob *parent)
-        : TelepathyBaseJobPrivate(parent)
-    {}
+    AddMetaContactJobPrivate() {}
     virtual ~AddMetaContactJobPrivate() {}
 
     QString name;
@@ -50,7 +48,7 @@ public:
 
 AddMetaContactJob::AddMetaContactJob(const QString& name, const QList< Nepomuk::PersonContact > contacts,
                                      QObject *parent)
-    : TelepathyBaseJob(*new AddMetaContactJobPrivate(this), parent)
+    : TelepathyBaseJob(*new AddMetaContactJobPrivate(), parent)
 {
     Q_D(AddMetaContactJob);
 

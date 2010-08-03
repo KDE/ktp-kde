@@ -33,10 +33,10 @@ class TelepathyBaseJobPrivate
     Q_DECLARE_PUBLIC(TelepathyBaseJob)
 
 protected:
-    TelepathyBaseJob * const q_ptr;
+    TelepathyBaseJob* q_ptr;
 
 public:
-    TelepathyBaseJobPrivate(TelepathyBaseJob *parent);
+    TelepathyBaseJobPrivate();
     virtual ~TelepathyBaseJobPrivate();
 
     QList< Tp::PendingOperation* > operations;

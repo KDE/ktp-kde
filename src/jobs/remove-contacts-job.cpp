@@ -56,9 +56,8 @@ class RemoveContactsJobPrivate : public TelepathyBaseJobPrivate
     Q_DECLARE_PUBLIC(RemoveContactsJob)
 
 public:
-    RemoveContactsJobPrivate(RemoveContactsJob *parent,
-                             RemoveContactsJob::ProcessingMode m, TelepathyBridge::RemovalModes rm)
-        : TelepathyBaseJobPrivate(parent), mode(m), removalModes(rm)
+    RemoveContactsJobPrivate(RemoveContactsJob::ProcessingMode m, TelepathyBridge::RemovalModes rm)
+        : mode(m), removalModes(rm)
     {}
     virtual ~RemoveContactsJobPrivate() {}
 
@@ -78,7 +77,7 @@ public:
 };
 
 RemoveContactsJob::RemoveContactsJob(const Nepomuk::PersonContact& contact, TelepathyBridge::RemovalModes modes, QObject *parent)
-    : TelepathyBaseJob(*new RemoveContactsJobPrivate(this, RemoveContactMode, modes), parent)
+    : TelepathyBaseJob(*new RemoveContactsJobPrivate(RemoveContactMode, modes), parent)
 {
     Q_D(RemoveContactsJob);
 
@@ -86,7 +85,7 @@ RemoveContactsJob::RemoveContactsJob(const Nepomuk::PersonContact& contact, Tele
 }
 
 RemoveContactsJob::RemoveContactsJob(const Nepomuk::Person& metacontact, TelepathyBridge::RemovalModes modes, QObject *parent)
-    : TelepathyBaseJob(*new RemoveContactsJobPrivate(this, RemoveMetaContactMode, modes), parent)
+    : TelepathyBaseJob(*new RemoveContactsJobPrivate(RemoveMetaContactMode, modes), parent)
 {
     Q_D(RemoveContactsJob);
 
@@ -95,7 +94,7 @@ RemoveContactsJob::RemoveContactsJob(const Nepomuk::Person& metacontact, Telepat
 
 RemoveContactsJob::RemoveContactsJob(const QList< Nepomuk::PersonContact >& contacts,
                                      TelepathyBridge::RemovalModes modes, QObject *parent)
-    : TelepathyBaseJob(*new RemoveContactsJobPrivate(this, RemoveContactsMode, modes), parent)
+    : TelepathyBaseJob(*new RemoveContactsJobPrivate(RemoveContactsMode, modes), parent)
 {
     Q_D(RemoveContactsJob);
 
@@ -104,7 +103,7 @@ RemoveContactsJob::RemoveContactsJob(const QList< Nepomuk::PersonContact >& cont
 
 RemoveContactsJob::RemoveContactsJob(const QList< Nepomuk::Person >& metacontacts,
                                      TelepathyBridge::RemovalModes modes, QObject *parent)
-    : TelepathyBaseJob(*new RemoveContactsJobPrivate(this, RemoveMetaContactsMode, modes), parent)
+    : TelepathyBaseJob(*new RemoveContactsJobPrivate(RemoveMetaContactsMode, modes), parent)
 {
     Q_D(RemoveContactsJob);
 

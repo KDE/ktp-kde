@@ -50,12 +50,10 @@ class OfferDBusTubeJobPrivate : public TelepathyBaseJobPrivate
     Q_DECLARE_PUBLIC(OfferDBusTubeJob)
 
     public:
-        OfferDBusTubeJobPrivate(OfferDBusTubeJob* parent,
-                                const Nepomuk::PersonContact& contact,
+        OfferDBusTubeJobPrivate(const Nepomuk::PersonContact& contact,
                                 const QString serviceName,
                                 const QVariantMap& p);
-        OfferDBusTubeJobPrivate(OfferDBusTubeJob* parent,
-                                const Nepomuk::Person& metacontact,
+        OfferDBusTubeJobPrivate(const Nepomuk::Person& metacontact,
                                 const QString serviceName,
                                 const QVariantMap& p);
         virtual ~OfferDBusTubeJobPrivate();
@@ -89,8 +87,7 @@ OfferDBusTubeJob::OfferDBusTubeJob(const Nepomuk::PersonContact& contact,
                                    const QString serviceName,
                                    const QVariantMap& parameters,
                                    QObject* parent)
-    : TelepathyBaseJob(*new OfferDBusTubeJobPrivate(this,
-                                                    contact,
+    : TelepathyBaseJob(*new OfferDBusTubeJobPrivate(contact,
                                                     serviceName,
                                                     parameters),
                        parent)
@@ -102,8 +99,7 @@ OfferDBusTubeJob::OfferDBusTubeJob(const Nepomuk::Person& metacontact,
                                    const QString serviceName,
                                    const QVariantMap& parameters,
                                    QObject* parent)
-    : TelepathyBaseJob(*new OfferDBusTubeJobPrivate(this,
-                                                    metacontact,
+    : TelepathyBaseJob(*new OfferDBusTubeJobPrivate(metacontact,
                                                     serviceName,
                                                     parameters),
                        parent)
@@ -158,12 +154,10 @@ Tp::OutgoingDBusTubeChannelPtr OfferDBusTubeJob::outgoingDBusTubeChannel()
     return d->channel;
 }
 
-OfferDBusTubeJobPrivate::OfferDBusTubeJobPrivate(OfferDBusTubeJob* parent,
-                                                 const Nepomuk::PersonContact& c,
+OfferDBusTubeJobPrivate::OfferDBusTubeJobPrivate(const Nepomuk::PersonContact& c,
                                                  const QString s,
                                                  const QVariantMap& p)
-    : TelepathyBaseJobPrivate(parent),
-      mode(OfferDBusTubeJob::OfferDBusTubeContactMode),
+    : mode(OfferDBusTubeJob::OfferDBusTubeContactMode),
       contact(c),
       serviceName(s.toLatin1()),
       parameters(p),
@@ -172,12 +166,10 @@ OfferDBusTubeJobPrivate::OfferDBusTubeJobPrivate(OfferDBusTubeJob* parent,
 }
 
 
-OfferDBusTubeJobPrivate::OfferDBusTubeJobPrivate(OfferDBusTubeJob* parent,
-                                                 const Nepomuk::Person& m,
+OfferDBusTubeJobPrivate::OfferDBusTubeJobPrivate(const Nepomuk::Person& m,
                                                  const QString s,
                                                  const QVariantMap& p)
-    : TelepathyBaseJobPrivate(parent),
-      mode(OfferDBusTubeJob::OfferDBusTubeMetaContactMode),
+    : mode(OfferDBusTubeJob::OfferDBusTubeMetaContactMode),
       metacontact(m),
       serviceName(s.toLatin1()),
       parameters(p),
