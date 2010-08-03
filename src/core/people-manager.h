@@ -40,7 +40,6 @@ class KDE_EXPORT PeopleManager : public QObject {
     Q_OBJECT
 
 public:
-    PeopleManager();
     virtual ~PeopleManager();
 
     static PeopleManager *instance();
@@ -50,6 +49,8 @@ public:
     PersonPtr personForResource(const Nepomuk::Resource &resource);
 
 private:
+    PeopleManager();
+
     class Private;
     Private * const d;
 
