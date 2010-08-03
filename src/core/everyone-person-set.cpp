@@ -21,28 +21,94 @@
 
 #include "everyone-person-set.h"
 
+#include "person.h"
+
+#include "pimo.h"
+
 #include <KDebug>
+
+#include <Nepomuk/Resource>
+#include <Nepomuk/Variant>
+
+#include <Nepomuk/Query/QueryServiceClient>
+#include <Nepomuk/Query/ResourceTypeTerm>
+#include <Nepomuk/Query/Result>
+
+#include <QtCore/QList>
+#include <QtCore/QUrl>
 
 class EveryonePersonSet::Private {
 
 public:
-    Private()
-    { }
+    Private(EveryonePersonSet *parent, const Nepomuk::Resource &me)
+      : q(parent),
+        mePimoPerson(me),
+        query(0)
+    {
+    }
 
+    EveryonePersonSet * const q;
+
+    Nepomuk::Resource mePimoPerson;
+    Nepomuk::Query::QueryServiceClient *query;
 };
 
-EveryonePersonSet::EveryonePersonSet(QObject* parent)
+EveryonePersonSet::EveryonePersonSet(const Nepomuk::Resource &mePimoPerson, QObject* parent)
   : PersonSet(parent),
-    d(new Private)
+    d(new Private(this, mePimoPerson))
 {
     kDebug();
 
-    // TODO: Implement me!
+    d->query = new Nepomuk::Query::QueryServiceClient(this);
+
+    connect(d->query, SIGNAL(newEntries(QList<Nepomuk::Query::Result>)),
+            this, SLOT(onNewEntries(QList<Nepomuk::Query::Result>)));
+    connect(d->query, SIGNAL(entriesRemoved(QList<QUrl>)),
+            this, SLOT(onEntriesRemoved(QList<QUrl>)));
+
+    // Get all PIMO:Persons
+    // FIXME: Make this query only return people that can be contacted in some way by Telepathy.
+    {
+        using namespace Nepomuk::Query;
+
+        Query query(ResourceTypeTerm(Nepomuk::Vocabulary::PIMO::Person()));
+
+        bool queryResult = d->query->query(query);
+        kDebug() << "Metacontact query result " << queryResult;
+
+        if (!queryResult) {
+            kWarning() << "Failed to query the Nepomuk database. QueryServiceClient may not be running";
+        }
+    }
 }
 
 EveryonePersonSet::~EveryonePersonSet()
 {
     kDebug();
+}
+
+void EveryonePersonSet::onNewEntries(const QList<Nepomuk::Query::Result> &entries)
+{
+    kDebug();
+
+    foreach (const Nepomuk::Query::Result &entry, entries) {
+        kDebug() << entry.resource();
+        PersonPtr person(new Person(entry.resource()));
+        if (person->isValid()) {
+            addPerson(person);
+        } else {
+            kWarning() << "Got a Nepomuk Resource URI that is not a valid PIMO:Person";
+        }
+    }
+}
+
+void EveryonePersonSet::onEntriesRemoved(const QList<QUrl> &entries)
+{
+    kDebug();
+
+    foreach (const QUrl &entry, entries) {
+        removePerson(entry);
+    }
 }
 
 

@@ -26,6 +26,8 @@
 #include <KDebug>
 #include <KGlobal>
 
+#include <Nepomuk/Resource>
+
 
 /****************************** PeopleManager::Private ********************************************/
 
@@ -35,11 +37,17 @@ class PeopleManager::Private {
 public:
     explicit Private(PeopleManager *parent)
       : q(parent)
-    { }
+    {
+        // Initiate the "me" PIMO:Person
+        // FIXME: Need a standard way to get "me" from Nepomuk
+        mePimoPerson = QUrl::fromEncoded("nepomuk:/myself");
+    }
 
     PeopleManager * const q;
 
     QWeakPointer<EveryonePersonSet> everyonePersonSet;
+
+    Nepomuk::Resource mePimoPerson;
 
 };
 
@@ -94,7 +102,7 @@ PersonSetPtr PeopleManager::everyone()
     kDebug();
 
     if (d->everyonePersonSet.isNull()) {
-        QSharedPointer<EveryonePersonSet> everyonePersonSet(new EveryonePersonSet(0));
+        QSharedPointer<EveryonePersonSet> everyonePersonSet(new EveryonePersonSet(d->mePimoPerson, 0));
         d->everyonePersonSet = everyonePersonSet.toWeakRef();
     }
 

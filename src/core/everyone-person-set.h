@@ -26,15 +26,27 @@
 
 #include <kdemacros.h>
 
+#include <Nepomuk/Query/Result>
+
+#include <QtCore/QList>
 #include <QtCore/QObject>
+#include <QtCore/QUrl>
+
+namespace Nepomuk {
+    class Resource;
+}
 
 class KDE_NO_EXPORT EveryonePersonSet : public PersonSet {
 
     Q_OBJECT
 
 public:
-    explicit EveryonePersonSet(QObject *parent = 0);
+    explicit EveryonePersonSet(const Nepomuk::Resource &mePimoPerson, QObject *parent = 0);
     virtual ~EveryonePersonSet();
+
+private Q_SLOTS:
+    void onNewEntries(const QList<Nepomuk::Query::Result> &entries);
+    void onEntriesRemoved(const QList<QUrl> &entries);
 
 private:
     class Private;
