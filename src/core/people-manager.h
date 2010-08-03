@@ -1,5 +1,5 @@
 /*
- * This file is part of people
+ * This file is part of libktelepathy
  *
  * Copyright (C) 2010 Collabora Ltd. <info@collabora.co.uk>
  *   @author George Goldberg <george.goldberg@collabora.co.uk>
