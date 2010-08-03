@@ -1,0 +1,7 @@
+#ifndef LIBKTELEPATHY_ENTITY_PRETTY_H
+#define LIBKTELEPATHY_ENTITY_PRETTY_H
+
+#include <KTelepathy/entity.h>
+
+#endif
+// vim:set ft=cpp:

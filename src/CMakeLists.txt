@@ -48,6 +48,10 @@ soprano_add_ontology (telepathy_ontology_SRCS
 )
 
 set (ktelepathy_SRCS
+     core/entity.cpp
+     core/people-manager.cpp
+     core/person-set.cpp
+     core/person.cpp
      jobs/accept-file-transfer-job.cpp
      jobs/add-contact-job.cpp
      jobs/add-contacts-to-group-job.cpp
@@ -72,6 +76,10 @@ set (ktelepathy_SRCS
 )
 
 set (ktelepathy_INST_HDRS
+     core/entity.h
+     core/people-manager.h
+     core/person-set.h
+     core/person.h
      jobs/accept-file-transfer-job.h
      jobs/add-contact-job.h
      jobs/add-contacts-to-group-job.h
@@ -106,11 +114,15 @@ set (ktelepathy_PRETTY_HDRS
      KTelepathy/ContactItem
      KTelepathy/ContactsListModel
      KTelepathy/ContactsModelMenu
+     KTelepathy/Entity
      KTelepathy/GroupedContactsProxyModel
      KTelepathy/MetaContactItem
      KTelepathy/ModelMenu
      KTelepathy/NepomukSignalWatcher
      KTelepathy/OfferFileTransferJob
+     KTelepathy/PeopleManager
+     KTelepathy/PersonSet
+     KTelepathy/Person
      KTelepathy/RemoveContactsFromGroupJob
      KTelepathy/RemoveContactsJob
      KTelepathy/TelepathyAccountProxy

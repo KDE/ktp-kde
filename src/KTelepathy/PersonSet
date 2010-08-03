@@ -1,0 +1,7 @@
+#ifndef LIBKTELEPATHY_PERSON_SET_PRETTY_H
+#define LIBKTELEPATHY_PERSON_SET_PRETTY_H
+
+#include <KTelepathy/person-set.h>
+
+#endif
+// vim:set ft=cpp:

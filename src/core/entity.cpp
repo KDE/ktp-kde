@@ -1,0 +1,85 @@
+/*
+ * This file is part of people
+ *
+ * Copyright (C) 2010 Collabora Ltd. <info@collabora.co.uk>
+ *   @author George Goldberg <george.goldberg@collabora.co.uk>
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ */
+
+#include "entity.h"
+
+#include <KDebug>
+
+class Entity::Private {
+
+public:
+    Private()
+      : valid(false)
+    { }
+
+    bool valid;
+    Nepomuk::Resource resource;
+};
+
+Entity::Entity(const Nepomuk::Resource &resource, QObject *parent)
+  : QObject(parent),
+    d(new Entity::Private)
+{
+    kDebug();
+
+    d->resource = resource;
+}
+
+Entity::~Entity()
+{
+    kDebug();
+
+    delete d;
+}
+
+bool Entity::isValid() const
+{
+    return d->valid;
+}
+
+Nepomuk::Resource Entity::resource() const
+{
+    // If the entity is invalid, return an invalid Nepomuk Resource
+    if (!d->valid) {
+        return Nepomuk::Resource();
+    }
+
+    return d->resource;
+}
+
+void Entity::setValid(bool valid)
+{
+    d->valid = valid;
+}
+
+bool Entity::operator==(const Entity &other) const
+{
+    return (this->resource() == other.resource());
+}
+
+bool Entity::operator!=(const Entity &other) const
+{
+    return !(*this == other);
+}
+
+
+#include "entity.moc"
+
