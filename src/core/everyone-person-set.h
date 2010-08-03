@@ -19,33 +19,18 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#ifndef LIBKTELEPATHY_PEOPLE_MANAGER_H
-#define LIBKTELEPATHY_PEOPLE_MANAGER_H
+#ifndef LIBKTELEPATHY_EVERYONE_PERSON_SET_H
+#define LIBKTELEPATHY_EVERYONE_PERSON_SET_H
 
 #include "person-set.h"
 
-#include <KDebug>
-
-#include <QtCore/QList>
-#include <QtCore/QObject>
-
-/**
- * @class PeopleManager
- *
- * This class represents the central store of all people. It is the starting point for all
- * applications wishing to interact with People.
- */
-class PeopleManager : public QObject {
+class KDE_NO_EXPORT EveryonePersonSet : public PersonSet {
 
     Q_OBJECT
 
 public:
-    PeopleManager();
-    virtual ~PeopleManager();
-
-    static PeopleManager *instance();
-
-    PersonSetPtr everyone();
+    explicit EveryonePersonSet(QObject *parent = 0);
+    virtual ~EveryonePersonSet();
 
 private:
     class Private;

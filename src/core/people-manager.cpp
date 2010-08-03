@@ -21,6 +21,8 @@
 
 #include "people-manager.h"
 
+#include "everyone-person-set.h"
+
 #include <KDebug>
 #include <KGlobal>
 
@@ -36,6 +38,8 @@ public:
     { }
 
     PeopleManager * const q;
+
+    QWeakPointer<EveryonePersonSet> everyonePersonSet;
 
 };
 
@@ -83,6 +87,18 @@ PeopleManager::~PeopleManager()
     kDebug();
 
     delete d;
+}
+
+PersonSetPtr PeopleManager::everyone()
+{
+    kDebug();
+
+    if (d->everyonePersonSet.isNull()) {
+        QSharedPointer<EveryonePersonSet> everyonePersonSet(new EveryonePersonSet(0));
+        d->everyonePersonSet = everyonePersonSet.toWeakRef();
+    }
+
+    return d->everyonePersonSet.toStrongRef();
 }
 
 

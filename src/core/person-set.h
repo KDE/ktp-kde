@@ -94,6 +94,5 @@ private:
 
 typedef QSharedPointer<PersonSet> PersonSetPtr;
 
-
 #endif  // Header guard
 

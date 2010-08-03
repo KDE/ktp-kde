@@ -49,6 +49,7 @@ soprano_add_ontology (telepathy_ontology_SRCS
 
 set (ktelepathy_SRCS
      core/entity.cpp
+     core/everyone-person-set.cpp
      core/people-manager.cpp
      core/person-set.cpp
      core/person.cpp
