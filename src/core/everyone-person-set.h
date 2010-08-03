@@ -41,7 +41,6 @@ class KDE_NO_EXPORT EveryonePersonSet : public PersonSet {
     Q_OBJECT
 
 public:
-    explicit EveryonePersonSet(const Nepomuk::Resource &mePimoPerson, QObject *parent = 0);
     virtual ~EveryonePersonSet();
 
 private Q_SLOTS:
@@ -49,6 +48,10 @@ private Q_SLOTS:
     void onEntriesRemoved(const QList<QUrl> &entries);
 
 private:
+    // Private constructor because this object should only be instantiated by PeopleManager
+    explicit EveryonePersonSet(const Nepomuk::Resource &mePimoPerson, QObject *parent = 0);
+    friend class PeopleManager;
+
     class Private;
     Private * const d;
 
