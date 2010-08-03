@@ -109,6 +109,19 @@ PersonSetPtr PeopleManager::everyone()
     return d->everyonePersonSet.toStrongRef();
 }
 
+PersonPtr PeopleManager::personForResource(const Nepomuk::Resource &resource)
+{
+    // TODO: Cache Person objects, and return the cached one where possible.
+    // FIXME: For now, just create a Person object and return.
+    QSharedPointer<Person> person(new Person(resource));
+
+    if (person->isValid()) {
+        return person;
+    }
+
+    return QSharedPointer<Person>();
+}
+
 
 #include "people-manager.moc"
 

@@ -21,6 +21,7 @@
 
 #include "everyone-person-set.h"
 
+#include "people-manager.h"
 #include "person.h"
 
 #include "pimo.h"
@@ -43,7 +44,8 @@ public:
     Private(EveryonePersonSet *parent, const Nepomuk::Resource &me)
       : q(parent),
         mePimoPerson(me),
-        query(0)
+        query(0),
+        peopleManager(PeopleManager::instance())
     {
     }
 
@@ -51,6 +53,8 @@ public:
 
     Nepomuk::Resource mePimoPerson;
     Nepomuk::Query::QueryServiceClient *query;
+
+    PeopleManager *peopleManager;
 };
 
 EveryonePersonSet::EveryonePersonSet(const Nepomuk::Resource &mePimoPerson, QObject* parent)
@@ -93,8 +97,8 @@ void EveryonePersonSet::onNewEntries(const QList<Nepomuk::Query::Result> &entrie
 
     foreach (const Nepomuk::Query::Result &entry, entries) {
         kDebug() << entry.resource();
-        PersonPtr person(new Person(entry.resource()));
-        if (person->isValid()) {
+        PersonPtr person = d->peopleManager->personForResource(entry.resource());
+        if (!person.isNull()) {
             addPerson(person);
         } else {
             kWarning() << "Got a Nepomuk Resource URI that is not a valid PIMO:Person";

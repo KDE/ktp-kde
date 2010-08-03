@@ -22,6 +22,7 @@
 #ifndef LIBKTELEPATHY_PEOPLE_MANAGER_H
 #define LIBKTELEPATHY_PEOPLE_MANAGER_H
 
+#include "person.h"
 #include "person-set.h"
 
 #include <kdemacros.h>
@@ -45,6 +46,8 @@ public:
     static PeopleManager *instance();
 
     PersonSetPtr everyone();
+
+    PersonPtr personForResource(const Nepomuk::Resource &resource);
 
 private:
     class Private;

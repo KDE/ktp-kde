@@ -43,10 +43,13 @@ class KDE_EXPORT Person : public Entity {
     Q_OBJECT
 
 public:
-    explicit Person(const Nepomuk::Resource &pimoPerson, QObject *parent = 0);
     virtual ~Person();
 
 private:
+    // Constrcutor is private because only PeopleManager should directly create Person objects
+    explicit Person(const Nepomuk::Resource &pimoPerson, QObject *parent = 0);
+    friend class PeopleManager;
+
     class Private;
     Private * const d;
 
