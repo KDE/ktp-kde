@@ -22,6 +22,8 @@
 #ifndef LIBKTELEPATHY_ENTITY_H
 #define LIBKTELEPATHY_ENTITY_H
 
+#include <kdemacros.h>
+
 #include <Nepomuk/Resource>
 
 #include <QtCore/QObject>
@@ -33,7 +35,7 @@
  * Provides the base class for objects that are simply backed by a Nepomuk resource, such as
  * PIMO:Person based Person objects and NCO:Contact based Contact objects.
  */
-class Entity : public QObject {
+class KDE_EXPORT Entity : public QObject {
 
     Q_OBJECT
 

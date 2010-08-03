@@ -24,6 +24,10 @@
 
 #include "person-set.h"
 
+#include <kdemacros.h>
+
+#include <QtCore/QObject>
+
 class KDE_NO_EXPORT EveryonePersonSet : public PersonSet {
 
     Q_OBJECT

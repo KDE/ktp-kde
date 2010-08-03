@@ -24,9 +24,8 @@
 
 #include "person-set.h"
 
-#include <KDebug>
+#include <kdemacros.h>
 
-#include <QtCore/QList>
 #include <QtCore/QObject>
 
 /**
@@ -35,7 +34,7 @@
  * This class represents the central store of all people. It is the starting point for all
  * applications wishing to interact with People.
  */
-class PeopleManager : public QObject {
+class KDE_EXPORT PeopleManager : public QObject {
 
     Q_OBJECT
 

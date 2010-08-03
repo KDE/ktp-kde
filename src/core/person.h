@@ -26,12 +26,10 @@
 
 #include <kdemacros.h>
 
-#include <KDebug>
+#include <Nepomuk/Resource>
 
-#include <QtCore/QList>
 #include <QtCore/QObject>
 #include <QtCore/QSharedPointer>
-#include <QtCore/QWeakPointer>
 
 
 /**
@@ -40,7 +38,7 @@
  * This class is a subclass of Entity, representing a Person object (basically a wrapper around a
  * PIMO:Person in the Nepomuk store).
  */
-class Person : public Entity {
+class KDE_EXPORT Person : public Entity {
 
     Q_OBJECT
 

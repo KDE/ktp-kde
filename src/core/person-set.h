@@ -24,10 +24,12 @@
 
 #include "person.h"
 
-#include <KDebug>
+#include <kdemacros.h>
 
 #include <QtCore/QObject>
+#include <QtCore/QSet>
 #include <QtCore/QSharedPointer>
+#include <QtCore/QUrl>
 
 /**
  * @class PersonSet
@@ -37,7 +39,7 @@
  * are added and removed from the PersonSet, allowing subclasses which provide dynamically updated
  * sets of Persons.
  */
-class PersonSet : public QObject {
+class KDE_EXPORT PersonSet : public QObject {
 
     Q_OBJECT
 
