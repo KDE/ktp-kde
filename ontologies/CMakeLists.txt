@@ -47,3 +47,5 @@ kde4_add_library (ontologies
                   ${telepathy_ontology_SRCS}
 )
 
+set_property(TARGET ontologies PROPERTY COMPILE_FLAGS -fPIC)
+
