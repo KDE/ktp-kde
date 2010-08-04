@@ -88,7 +88,7 @@ RequestChannelJobPrivate::RequestChannelJobPrivate( const Nepomuk::PersonContact
                                                     const QString ph,
                                                     const RequestChannelJob::RequestFlags f)
     : targetmode(RequestChannelJob::TargetModeContact),
-      requestflags(f),
+      requestchannelflags(f),
       contactResource(c),
       request(rq),
       useractiontime(QDateTime::currentDateTime()),
@@ -104,7 +104,7 @@ RequestChannelJobPrivate::RequestChannelJobPrivate( const Nepomuk::Person& mc,
                                                     const QString ph,
                                                     const RequestChannelJob::RequestFlags f)
     : targetmode(RequestChannelJob::TargetModeMetaContact),
-      requestflags(f),
+      requestchannelflags(f),
       metacontactResource(mc),
       request(rq),
       useractiontime(QDateTime::currentDateTime()),
@@ -120,7 +120,7 @@ RequestChannelJobPrivate::RequestChannelJobPrivate( const QString r,
                                                     const QString ph,
                                                     const RequestChannelJob::RequestFlags f)
     : targetmode(RequestChannelJob::TargetModeRoom),
-      requestflags(f),
+      requestchannelflags(f),
       room(r),
       request(rq),
       useractiontime(QDateTime::currentDateTime()),
@@ -135,7 +135,6 @@ RequestChannelJobPrivate::RequestChannelJobPrivate( const QString r,
 RequestChannelJobPrivate::~RequestChannelJobPrivate()
 {
     kDebug();
-    initTargets();
 }
 
 
@@ -153,7 +152,7 @@ void RequestChannelJobPrivate::__k__requestChannel()
         return;
     }
 
-    if (!(requestflags & (RequestChannelJob::RequestModeEnsure | RequestChannelJob::RequestModeCreate))) {
+    if (!(requestchannelflags & (RequestChannelJob::RequestModeEnsure | RequestChannelJob::RequestModeCreate))) {
         kWarning() << "What do you whant to request?";
         q->setError(TelepathyBridge::InvalidOperationError);
         q->setErrorText(i18n("This is an internal error of KTelepathy"));
@@ -169,14 +168,14 @@ void RequestChannelJobPrivate::__k__requestChannel()
         return;
     }
 
-    if (requestflags & RequestChannelJob::RequestModeEnsure) {
+    if (requestchannelflags & RequestChannelJob::RequestModeEnsure) {
         if (q->canEnsureChannel()) {
             m_pendingChannelRequest = q->ensureChannel();
         } else if (q->canCreateChannel()) {
             kWarning() << "RequestModeEnsure not supported, using RequestModeCreate";
             m_pendingChannelRequest = q->createChannel();
         }
-    } else if (requestflags & RequestChannelJob::RequestModeCreate) {
+    } else if (requestchannelflags & RequestChannelJob::RequestModeCreate) {
         if (q->canCreateChannel()) {
             m_pendingChannelRequest = q->createChannel();
         } else if (q->canEnsureChannel()) {
@@ -357,42 +356,42 @@ void RequestChannelJobPrivate::__k__onPendingChannelRequestFinished(Tp::PendingO
 RequestChannelJob* requestChannel(const Nepomuk::PersonContact& contact,
                                   const QVariantMap& request,
                                   const QString preferredHandler,
-                                  const RequestChannelJob::RequestFlag requestflags,
+                                  const RequestChannelJob::RequestFlag requestchannelflags,
                                   QObject* parent)
 {
     kDebug();
     return RequestChannelJobPrivate::newJob(contact,
                                             request,
                                             preferredHandler,
-                                            requestflags,
+                                            requestchannelflags,
                                             parent);
 }
 
 RequestChannelJob* requestChannel(const Nepomuk::Person& metacontact,
                                   const QVariantMap& request,
                                   const QString preferredHandler,
-                                  const RequestChannelJob::RequestFlag requestflags,
+                                  const RequestChannelJob::RequestFlag requestchannelflags,
                                   QObject* parent)
 {
     kDebug();
     return RequestChannelJobPrivate::newJob(metacontact,
                                             request,
                                             preferredHandler,
-                                            requestflags,
+                                            requestchannelflags,
                                             parent);
 }
 
 RequestChannelJob* requestChannel(const QString room,
                                   const QVariantMap& request,
                                   const QString preferredHandler,
-                                  const RequestChannelJob::RequestFlag requestflags,
+                                  const RequestChannelJob::RequestFlag requestchannelflags,
                                   QObject* parent)
 {
     kDebug();
     return RequestChannelJobPrivate::newJob(room,
                                             request,
                                             preferredHandler,
-                                            requestflags,
+                                            requestchannelflags,
                                             parent);
 }
 

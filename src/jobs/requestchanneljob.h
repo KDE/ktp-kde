@@ -67,6 +67,7 @@ protected:
     virtual Tp::PendingChannelRequest* createChannel();
     virtual bool canEnsureChannel();
     virtual bool canCreateChannel();
+    virtual void onChannelRequestFinished(Tp::PendingOperation* op);
 
 public:
     virtual void start();
@@ -77,31 +78,28 @@ Q_DECLARE_OPERATORS_FOR_FLAGS(RequestChannelJob::RequestFlags)
 
 
 #include <QVariantMap>
-
-
 namespace Nepomuk {
     class PersonContact;
     class Person;
 }
-class RequestChannelJob;
 
 
 KDE_EXPORT RequestChannelJob* requestChannel(const Nepomuk::PersonContact& contact,
                                              const QVariantMap& request,
                                              const QString preferredHandler = QString(),
-                                             RequestChannelJob::RequestFlags flags = RequestChannelJob::RequestModeEnsure,
+                                             RequestChannelJob::RequestFlags requestchannelflags = RequestChannelJob::RequestModeEnsure,
                                              QObject* parent = 0);
 
 KDE_EXPORT RequestChannelJob* requestChannel(const Nepomuk::Person& metacontact,
                                              const QVariantMap& request,
                                              const QString preferredHandler = QString(),
-                                             RequestChannelJob::RequestFlags flags = RequestChannelJob::RequestModeEnsure,
+                                             RequestChannelJob::RequestFlags requestchannelflags = RequestChannelJob::RequestModeEnsure,
                                              QObject* parent = 0);
 
 KDE_EXPORT RequestChannelJob* requestChannel(const QString room,
                                              const QVariantMap& request,
                                              const QString preferredHandler = QString(),
-                                             RequestChannelJob::RequestFlags flags = RequestChannelJob::RequestModeEnsure,
+                                             RequestChannelJob::RequestFlags requestchannelflags = RequestChannelJob::RequestModeEnsure,
                                              QObject* parent = 0);
 
 #endif // LIBKTELEPATHY_REQUESTCHANNELJOB_H

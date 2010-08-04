@@ -45,7 +45,7 @@ public:
                              const QString ph,
                              const RequestChannelJob::RequestFlags f);
     RequestChannelJobPrivate(const QString r,
-                             const QVariantMap& requestq,
+                             const QVariantMap& rq,
                              const QString ph,
                              const RequestChannelJob::RequestFlags f);
 /* TODO
@@ -65,7 +65,7 @@ public:
     virtual ~RequestChannelJobPrivate();
 
     RequestChannelJob::TargetMode targetmode;
-    RequestChannelJob::RequestFlags requestflags;
+    RequestChannelJob::RequestFlags requestchannelflags;
 
     Nepomuk::PersonContact contactResource;
     Nepomuk::Person metacontactResource;
@@ -85,7 +85,6 @@ public:
     // Operation Q_PRIVATE_SLOTS
     void __k__requestChannel();
 
-    void __k__onPendingChannelRequestFinished(Tp::PendingOperation* op);
 
 protected:
     void updateRequestTargets();
@@ -99,10 +98,10 @@ public:
     static inline RequestChannelJob* newJob(const Nepomuk::PersonContact& contact,
                                             const QVariantMap& request,
                                             const QString preferredHandler,
-                                            const RequestChannelJob::RequestFlags flags,
+                                            const RequestChannelJob::RequestFlags requestchannelflags,
                                             QObject* parent)
     {
-        RequestChannelJob *job = new RequestChannelJob(*new RequestChannelJobPrivate(contact, request, preferredHandler, flags), parent);
+        RequestChannelJob *job = new RequestChannelJob(*new RequestChannelJobPrivate(contact, request, preferredHandler, requestchannelflags), parent);
 //TODO?        job->setUiDelegate(new JobUiDelegate);
         return job;
     }
@@ -110,20 +109,20 @@ public:
     static inline RequestChannelJob* newJob(const Nepomuk::Person& metacontact,
                                             const QVariantMap& request,
                                             const QString preferredHandler,
-                                            const RequestChannelJob::RequestFlags flags,
+                                            const RequestChannelJob::RequestFlags requestchannelflags,
                                             QObject* parent)
     {
-        RequestChannelJob *job = new RequestChannelJob(*new RequestChannelJobPrivate(metacontact, request, preferredHandler, flags), parent);
+        RequestChannelJob *job = new RequestChannelJob(*new RequestChannelJobPrivate(metacontact, request, preferredHandler, requestchannelflags), parent);
         return job;
     }
 
     static inline RequestChannelJob* newJob(const QString room,
                                             const QVariantMap& request,
                                             const QString preferredHandler,
-                                            RequestChannelJob::RequestFlags flags,
+                                            RequestChannelJob::RequestFlags requestchannelflags,
                                             QObject* parent)
     {
-        RequestChannelJob *job = new RequestChannelJob(*new RequestChannelJobPrivate(room, request, preferredHandler, flags), parent);
+        RequestChannelJob *job = new RequestChannelJob(*new RequestChannelJobPrivate(room, request, preferredHandler, requestchannelflags), parent);
         return job;
     }
 
