@@ -5,7 +5,6 @@ include_directories (${CMAKE_CURRENT_BINARY_DIR}
                      ${CMAKE_CURRENT_SOURCE_DIR}/core
                      ${CMAKE_CURRENT_SOURCE_DIR}/jobs
                      ${CMAKE_CURRENT_SOURCE_DIR}/ui
-                     ${CMAKE_CURRENT_SOURCE_DIR}/KTelepathy
 )
 
 set (ktelepathy_SRCS
