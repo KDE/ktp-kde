@@ -442,9 +442,10 @@ int ContactsListModel::rowCount(const QModelIndex &parent) const
 void ContactsListModel::onItemDirty()
 {
     ContactItem *item = qobject_cast<ContactItem*>(sender());
+    MetaContactItem *mitem = qobject_cast<MetaContactItem*>(sender());
 
-    Q_ASSERT(item);
-    if (!item) {
+    Q_ASSERT(item||mitem);
+    if (!item && !mitem) {
         kWarning() << "Invalid sender.";
     }
 
