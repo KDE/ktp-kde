@@ -20,11 +20,11 @@
 #define LIBKTELEPATHY_REQUESTTEXTCHATJOB_H
 
 
-#include "requestchanneljob.h"
+#include "abstractrequestchanneljob.h"
 #include <kdemacros.h>
 
 class RequestTextChatJobPrivate;
-class KDE_EXPORT RequestTextChatJob : public RequestChannelJob
+class KDE_EXPORT RequestTextChatJob : public AbstractRequestChannelJob
 {
     Q_OBJECT
     Q_DISABLE_COPY(RequestTextChatJob)
@@ -35,17 +35,24 @@ public:
     virtual ~RequestTextChatJob();
 
     virtual Tp::PendingChannelRequest* ensureChannel();
-    virtual bool canCreateChannel();
+    virtual bool canEnsureChannel();
 };
+
+
+namespace Nepomuk {
+    class PersonContact;
+    class Person;
+}
+
 
 /*
 KDE_EXPORT RequestTextChatJob* requestTextChat(const Nepomuk::PersonContact& contact,
                                                const QString preferredHandler = QString(),
-                                               const RequestChannelJob::RequestFlags requestflags = RequestChannelJob::RequestModeEnsure,
+                                               const RequestChannelJob::RequestFlags requestchannelflags = RequestChannelJob::RequestModeEnsure,
                                                QObject* parent = 0);
 KDE_EXPORT RequestTextChatJob* requestTextChat(const Nepomuk::Person& metacontact,
                                                const QString preferredHandler = QString(),
-                                               const RequestChannelJob::RequestFlags requestflags = RequestChannelJob::RequestModeEnsure,
+                                               const RequestChannelJob::RequestFlags requestchannelflags = RequestChannelJob::RequestModeEnsure,
                                                QObject* parent = 0);
 */
 KDE_EXPORT RequestTextChatJob* requestTextChat(const Nepomuk::PersonContact& contact,

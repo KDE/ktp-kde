@@ -14,6 +14,7 @@ set (ktelepathy_SRCS
      core/people-manager.cpp
      core/person-set.cpp
      core/person.cpp
+     jobs/abstractrequestchanneljob.cpp
      jobs/accept-file-transfer-job.cpp
      jobs/add-contact-job.cpp
      jobs/add-contacts-to-group-job.cpp
@@ -21,7 +22,7 @@ set (ktelepathy_SRCS
      jobs/offer-file-transfer-job.cpp
      jobs/remove-contacts-from-group-job.cpp
      jobs/remove-contacts-job.cpp
-     jobs/requestchanneljob.cpp
+     jobs/requestgenericchanneljob.cpp
      jobs/requesttextchatjob.cpp
      jobs/telepathy-account-proxy.cpp
      jobs/telepathy-base-job.cpp
@@ -43,6 +44,7 @@ set (ktelepathy_INST_HDRS
      core/people-manager.h
      core/person-set.h
      core/person.h
+     jobs/abstractrequestchanneljob.h
      jobs/accept-file-transfer-job.h
      jobs/add-contact-job.h
      jobs/add-contacts-to-group-job.h
@@ -50,7 +52,7 @@ set (ktelepathy_INST_HDRS
      jobs/offer-file-transfer-job.h
      jobs/remove-contacts-from-group-job.h
      jobs/remove-contacts-job.h
-     jobs/requestchanneljob.h
+     jobs/requestgenericchanneljob.h
      jobs/requesttextchatjob.h
      jobs/telepathy-account-proxy.h
      jobs/telepathy-base-job.h
@@ -68,6 +70,7 @@ set (ktelepathy_INST_HDRS
 )
 
 set (ktelepathy_PRETTY_HDRS
+     KTelepathy/AbstractRequestChannelJob
      KTelepathy/AbstractTreeItem
      KTelepathy/AcceptFileTransferJob
      KTelepathy/AccountItem
@@ -89,7 +92,7 @@ set (ktelepathy_PRETTY_HDRS
      KTelepathy/Person
      KTelepathy/RemoveContactsFromGroupJob
      KTelepathy/RemoveContactsJob
-     KTelepathy/RequestChannelJob
+     KTelepathy/RequestGenericChannelJob
      KTelepathy/RequestTextChatJob
      KTelepathy/TelepathyAccountProxy
      KTelepathy/TelepathyBaseJob
