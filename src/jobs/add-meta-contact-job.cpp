@@ -23,12 +23,12 @@
 
 #include "telepathy-base-job_p.h"
 #include <QTimer>
-#include <pimo.h>
-#include <person.h>
-#include <nco.h>
-#include <informationelement.h>
-#include <personcontact.h>
-#include <nao.h>
+#include "ontologies/pimo.h"
+#include "ontologies/person.h"
+#include "ontologies/nco.h"
+#include "ontologies/informationelement.h"
+#include "ontologies/personcontact.h"
+#include "ontologies/nao.h"
 #include <Nepomuk/Variant>
 
 class AddMetaContactJobPrivate : public TelepathyBaseJobPrivate

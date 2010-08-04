@@ -27,8 +27,8 @@
 #include "abstract-tree-item.h"
 #include "nepomuk-signal-watcher.h"
 
-#include "person.h"
-#include "personcontact.h"
+#include "ontologies/person.h"
+#include "ontologies/personcontact.h"
 
 #include <QObject>
 #include <QPixmap>

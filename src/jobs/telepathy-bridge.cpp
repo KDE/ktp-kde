@@ -24,13 +24,13 @@
 #include "telepathy-account-proxy.h"
 
 // Nepomuk resources
-#include <nco.h>
-#include <telepathy.h>
-#include <personcontact.h>
-#include <person.h>
-#include <imaccount.h>
-#include <pimo.h>
-#include <informationelement.h>
+#include "ontologies/nco.h"
+#include "ontologies/telepathy.h"
+#include "ontologies/personcontact.h"
+#include "ontologies/person.h"
+#include "ontologies/imaccount.h"
+#include "ontologies/pimo.h"
+#include "ontologies/informationelement.h"
 
 // Jobs
 #include "remove-contacts-from-group-job.h"

@@ -8,45 +8,6 @@ include_directories (${CMAKE_CURRENT_BINARY_DIR}
                      ${CMAKE_CURRENT_SOURCE_DIR}/KTelepathy
 )
 
-nepomuk_add_ontology_classes (telepathynie_SRCS
-                              ONTOLOGIES
-                              ${SHAREDDESKTOPONTOLOGIES_ROOT_DIR}/nie/nie.trig
-                              ${SHAREDDESKTOPONTOLOGIES_ROOT_DIR}/nie/nfo.trig
-                              ${SHAREDDESKTOPONTOLOGIES_ROOT_DIR}/nie/nco.trig
-                              ${SHAREDDESKTOPONTOLOGIES_ROOT_DIR}/nie/nmo.trig
-                              ${SHAREDDESKTOPONTOLOGIES_ROOT_DIR}/pimo/pimo.trig
-                              ${TELEPATHY_TRIG_SOURCE}
-)
-
-# Add the ontologies we want to build the vocabulary for.
-soprano_add_ontology (pimo_ontology_SRCS
-                      ${SHAREDDESKTOPONTOLOGIES_ROOT_DIR}/pimo/pimo.trig
-                      "PIMO"
-                      "Nepomuk::Vocabulary"
-                      "trig"
-)
-
-soprano_add_ontology (nco_ontology_SRCS
-                      ${SHAREDDESKTOPONTOLOGIES_ROOT_DIR}/nie/nco.trig
-                      "NCO"
-                      "Nepomuk::Vocabulary"
-                      "trig"
-)
-
-soprano_add_ontology (nao_ontology_SRCS
-                      ${SHAREDDESKTOPONTOLOGIES_ROOT_DIR}/nepomuk/nao.trig
-                      "NAO"
-                      "Nepomuk::Vocabulary"
-                      "trig"
-)
-
-soprano_add_ontology (telepathy_ontology_SRCS
-                      ${TELEPATHY_TRIG_SOURCE}
-                      "Telepathy"
-                      "Nepomuk::Vocabulary"
-                      "trig"
-)
-
 set (ktelepathy_SRCS
      core/entity.cpp
      core/everyone-person-set.cpp
@@ -174,15 +135,11 @@ endif (WITH_DBUSTUBES)
 
 kde4_add_library (ktelepathy
                   SHARED
-                  ${telepathynie_SRCS}
                   ${ktelepathy_SRCS}
-                  ${nco_ontology_SRCS}
-                  ${nao_ontology_SRCS}
-                  ${pimo_ontology_SRCS}
-                  ${telepathy_ontology_SRCS}
 )
 
 target_link_libraries (ktelepathy
+                       ontologies
                        ${QT_QTCORE_LIBRARIES}
                        ${KDE4_KIO_LIBS}
                        ${NEPOMUK_LIBRARIES}

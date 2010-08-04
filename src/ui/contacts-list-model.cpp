@@ -26,14 +26,14 @@
 #include "meta-contact-item.h"
 
 // Nepomuk Vocabulary URIs
-#include "pimo.h"
-#include "nco.h"
-#include "telepathy.h"
+#include "ontologies/pimo.h"
+#include "ontologies/nco.h"
+#include "ontologies/telepathy.h"
 
 // Nepomuk Resources
-#include "imaccount.h"
-#include "person.h"
-#include "personcontact.h"
+#include "ontologies/imaccount.h"
+#include "ontologies/person.h"
+#include "ontologies/personcontact.h"
 
 #include <KDebug>
 

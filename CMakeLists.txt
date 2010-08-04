@@ -15,11 +15,14 @@ include (MacroLibrary)
 add_definitions (${KDE4_DEFINITIONS}
                  -DDISABLE_NEPOMUK_LEGACY
                  -DQT_NO_CAST_FROM_ASCII
+                 -fPIC
 )
 
 include_directories (${KDE4_INCLUDES}
                      ${TELEPATHY_QT4_INCLUDE_DIR}
                      ${NEPOMUK_INCLUDES}
+                     ${CMAKE_CURRENT_SOURCE_DIR}
+                     ${CMAKE_CURRENT_BINARY_DIR}
 )
 
 # Find telepathy.trig, which is installed already by telepathy-integration-daemon.
@@ -40,5 +43,6 @@ endif (NOT TELEPATHY_TRIG_SOURCE)
 option (WITH_STREAMTUBES "Enables compilation of streamtubes jobs." OFF)
 option (WITH_DBUSTUBES "Enables compilation of dbustubes jobs." OFF)
 
+add_subdirectory (ontologies)
 add_subdirectory (src)
 add_subdirectory (icons)

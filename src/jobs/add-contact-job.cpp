@@ -25,8 +25,8 @@
 #include "telepathy-bridge_p.h"
 #include "telepathy-account-proxy.h"
 
-#include <imaccount.h>
-#include <person.h>
+#include "ontologies/imaccount.h"
+#include "ontologies/person.h"
 
 #include <QTimer>
 

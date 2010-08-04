@@ -22,8 +22,8 @@
 #include "grouped-contacts-proxy-model.h"
 
 #include <KDebug>
-#include "imaccount.h"
-#include "personcontact.h"
+#include "ontologies/imaccount.h"
+#include "ontologies/personcontact.h"
 
 ContactsListModel* ContactsModelMenu::s_ContactsModel = 0;
 //GroupedContactsProxyModel* ContactsModelMenu::s_GroupedContactsModel = 0;

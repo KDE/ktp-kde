@@ -21,11 +21,11 @@
 
 #include "remove-contacts-job.h"
 
-#include <person.h>
-#include <personcontact.h>
-#include <imaccount.h>
-#include <pimo.h>
-#include <informationelement.h>
+#include "ontologies/person.h"
+#include "ontologies/personcontact.h"
+#include "ontologies/imaccount.h"
+#include "ontologies/pimo.h"
+#include "ontologies/informationelement.h"
 
 #include <QTimer>
 

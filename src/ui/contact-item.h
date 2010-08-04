@@ -27,8 +27,8 @@
 #include "abstract-tree-item.h"
 #include "nepomuk-signal-watcher.h"
 
-#include "imaccount.h"
-#include "personcontact.h"
+#include "ontologies/imaccount.h"
+#include "ontologies/personcontact.h"
 
 #include <KIcon>
 

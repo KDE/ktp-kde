@@ -21,10 +21,10 @@
 
 #include "contact-item.h"
 
-#include "contactgroup.h"
+#include "ontologies/contactgroup.h"
 
 #include <KDebug>
-#include <dataobject.h>
+#include "ontologies/dataobject.h"
 #include <QPainter>
 #include <kiconloader.h>
 

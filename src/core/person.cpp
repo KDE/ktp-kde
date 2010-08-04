@@ -21,7 +21,7 @@
 
 #include "person.h"
 
-#include "pimo.h"
+#include "ontologies/pimo.h"
 
 #include <KDebug>
 

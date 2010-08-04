@@ -21,9 +21,9 @@
 
 #include "remove-contacts-from-group-job.h"
 
-#include <person.h>
-#include <personcontact.h>
-#include <imaccount.h>
+#include "ontologies/person.h"
+#include "ontologies/personcontact.h"
+#include "ontologies/imaccount.h"
 
 #include <QTimer>
 

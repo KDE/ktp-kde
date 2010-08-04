@@ -21,9 +21,9 @@
 #include "telepathy-bridge_p.h"
 #include "telepathy-account-proxy.h"
 
-#include <person.h>
-#include <personcontact.h>
-#include <imaccount.h>
+#include "ontologies/person.h"
+#include "ontologies/personcontact.h"
+#include "ontologies/imaccount.h"
 
 #include <KLocalizedString>
 #include <KDebug>

@@ -25,10 +25,10 @@
 
 #include <KDebug>
 #include <KIcon>
-#include <nco.h>
-#include <nao.h>
-#include <telepathy.h>
-#include <pimo.h>
+#include "ontologies/nco.h"
+#include "ontologies/nao.h"
+#include "ontologies/telepathy.h"
+#include "ontologies/pimo.h"
 #include <Nepomuk/Variant>
 
 #include <Nepomuk/Query/QueryServiceClient>
