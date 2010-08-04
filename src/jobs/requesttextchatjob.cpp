@@ -78,7 +78,7 @@ Tp::PendingChannelRequest* RequestTextChatJob::ensureChannel()
 {
     Q_D(RequestTextChatJob);
     kDebug();
-    kDebug() << d->contactResource.resourceUri() << d->contact->alias();
+    kDebug() << d->contactResource.resourceUri() << d->contact->id();
     kDebug() << d->useractiontime;
     kDebug() << d->preferredHandler;
     return d->account->ensureTextChat(d->contact, d->useractiontime, d->preferredHandler);
