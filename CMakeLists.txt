@@ -8,6 +8,7 @@ find_package (KDE4 4.4.75 REQUIRED)
 find_package (TelepathyQt4 REQUIRED)
 find_package (Nepomuk REQUIRED)
 find_package (Soprano REQUIRED)
+find_package (KTelepathyTestLib)
 
 include (KDE4Defaults)
 include (MacroLibrary)
@@ -45,3 +46,8 @@ option (WITH_DBUSTUBES "Enables compilation of dbustubes jobs." OFF)
 add_subdirectory (ontologies)
 add_subdirectory (src)
 add_subdirectory (icons)
+
+if (KTelepathyTestLib_DIR)
+    add_subdirectory (tests)
+endif (KTelepathyTestLib_DIR)
+
