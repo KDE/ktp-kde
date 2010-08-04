@@ -1,0 +1,7 @@
+#ifndef LIBKTELEPATHY_REQUESTCHANNELJOB_PRETTY_H
+#define LIBKTELEPATHY_REQUESTCHANNELJOB_PRETTY_H
+
+#include <KTelepathy/requestchanneljob.h>
+
+#endif
+// vim:set ft=cpp:

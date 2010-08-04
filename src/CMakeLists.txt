@@ -21,6 +21,7 @@ set (ktelepathy_SRCS
      jobs/offer-file-transfer-job.cpp
      jobs/remove-contacts-from-group-job.cpp
      jobs/remove-contacts-job.cpp
+     jobs/requestchanneljob.cpp
      jobs/telepathy-account-proxy.cpp
      jobs/telepathy-base-job.cpp
      jobs/telepathy-bridge.cpp
@@ -34,7 +35,6 @@ set (ktelepathy_SRCS
      ui/meta-contact-item.cpp
      ui/modelmenu.cpp
      ui/nepomuk-signal-watcher.cpp
-
 )
 
 set (ktelepathy_INST_HDRS
@@ -49,6 +49,7 @@ set (ktelepathy_INST_HDRS
      jobs/offer-file-transfer-job.h
      jobs/remove-contacts-from-group-job.h
      jobs/remove-contacts-job.h
+     jobs/requestchanneljob.h
      jobs/telepathy-account-proxy.h
      jobs/telepathy-base-job.h
      jobs/telepathy-bridge.h
@@ -62,7 +63,6 @@ set (ktelepathy_INST_HDRS
      ui/meta-contact-item.h
      ui/modelmenu.h
      ui/nepomuk-signal-watcher.h
-
 )
 
 set (ktelepathy_PRETTY_HDRS
@@ -87,6 +87,7 @@ set (ktelepathy_PRETTY_HDRS
      KTelepathy/Person
      KTelepathy/RemoveContactsFromGroupJob
      KTelepathy/RemoveContactsJob
+     KTelepathy/RequestChannelJob
      KTelepathy/TelepathyAccountProxy
      KTelepathy/TelepathyBaseJob
      KTelepathy/TelepathyBridge
