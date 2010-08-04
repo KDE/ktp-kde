@@ -69,6 +69,8 @@ protected:
     virtual Tp::PendingChannelRequest* createChannel();
     virtual bool canEnsureChannel();
     virtual bool canCreateChannel();
+
+protected slots:
     virtual void onChannelRequestFinished(Tp::PendingOperation* op);
 
 public:
