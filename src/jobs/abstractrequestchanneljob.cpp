@@ -29,7 +29,7 @@
 
 #include <KDebug>
 
-//BEGIN AbstractRequestChannelJob methods
+
 
 AbstractRequestChannelJob::AbstractRequestChannelJob(AbstractRequestChannelJobPrivate &dd, QObject *parent)
     : TelepathyBaseJob(dd, parent)
@@ -94,12 +94,6 @@ void AbstractRequestChannelJob::onChannelRequestFinished(Tp::PendingOperation* o
 }
 
 
-
-//END AbstractRequestChannelJob methods
-
-
-//BEGIN AbstractRequestChannelJobPrivate constructors
-
 AbstractRequestChannelJobPrivate::AbstractRequestChannelJobPrivate( const Nepomuk::PersonContact& c,
                                                                     const QString ph,
                                                                     const KTelepathy::RequestChannelFlags f)
@@ -142,11 +136,6 @@ AbstractRequestChannelJobPrivate::AbstractRequestChannelJobPrivate( const QStrin
     initTargets();
 }
 
-//END AbstractRequestChannelJobPrivate constructors
-
-
-
-//BEGIN Other AbstractRequestChannelJobPrivate methods
 
 AbstractRequestChannelJobPrivate::~AbstractRequestChannelJobPrivate() {}
 
@@ -211,9 +200,8 @@ void AbstractRequestChannelJobPrivate::__k__requestChannel()
 
     q->connect(pendingchannelrequest,
                SIGNAL(finished(Tp::PendingOperation*)),
-               SLOT(__k__onPendingChannelRequestFinished(Tp::PendingOperation*)));
+               SLOT(onChannelRequestFinished(Tp::PendingOperation*)));
 }
-//END Other AbstractRequestChannelJobPrivate methods
 
 
 void AbstractRequestChannelJobPrivate::initTargets()
@@ -241,6 +229,7 @@ void AbstractRequestChannelJobPrivate::initTargets()
             break;
     }
 }
+
 
 void AbstractRequestChannelJobPrivate::initTargetsModeContact()
 {
@@ -292,6 +281,7 @@ void AbstractRequestChannelJobPrivate::initTargetsModeContact()
     q->setErrorText(i18n("No existing Telepathy contacts could be mapped to the chosen contact"));
     QTimer::singleShot(0, q, SLOT(__k__doEmitResult()));
 }
+
 
 void AbstractRequestChannelJobPrivate::initTargetsModeMetaContact()
 {
