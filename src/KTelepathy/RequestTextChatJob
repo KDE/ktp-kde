@@ -1,0 +1,7 @@
+#ifndef LIBKTELEPATHY_REQUESTTEXTCHATJOB_PRETTY_H
+#define LIBKTELEPATHY_REQUESTTEXTCHATJOB_PRETTY_H
+
+#include <KTelepathy/requesttextchatjob.h>
+
+#endif
+// vim:set ft=cpp:

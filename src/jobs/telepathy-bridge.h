@@ -758,6 +758,7 @@ private:
     friend class OfferLocalStreamTubeJobPrivate;
     friend class OfferTcpStreamTubeJobPrivate;
     friend class RequestChannelJobPrivate;
+    friend class RequestTextChatJobPrivate;
 };
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(TelepathyBridge::RemovalModes)
