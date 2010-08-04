@@ -42,7 +42,7 @@
 #include <TelepathyQt4/DBusTubeChannel>
 #include <TelepathyQt4/OutgoingDBusTubeChannel>
 #include <TelepathyQt4/ConnectionCapabilities>
-#include </opt/kde/src/telepathy-qt4/TelepathyQt4/types.h>
+#include <TelepathyQt4/Types>
 
 
 class OfferDBusTubeJobPrivate : public TelepathyBaseJobPrivate
