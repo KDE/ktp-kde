@@ -179,15 +179,17 @@ QItemSelection GroupedContactsProxyModel::mapSelectionToSource(const QItemSelect
 QModelIndex GroupedContactsProxyModel::mapToSource(const QModelIndex &proxyIndex) const
 {
     // Work out the appropriate index on the source model
-    Item *item = static_cast<Item*>(proxyIndex.internalPointer());
+    if (proxyIndex.isValid()) {
+        Item *item = static_cast<Item*>(proxyIndex.internalPointer());
 
-    Q_ASSERT(item);
-    if (!item) {
-        kWarning() << "Invalid internal pointer :/";
-        return QModelIndex();
+        Q_ASSERT(item);
+        if (item) {
+            return item->sourceIndex;
+        } else {
+            kWarning() << "Invalid internal pointer :/";
+        }
     }
- 
-    return item->sourceIndex;
+    return QModelIndex();
 }
 
 void GroupedContactsProxyModel::setSourceModel(QAbstractItemModel *sourceModel)
