@@ -34,11 +34,15 @@ class KDE_EXPORT RequestChannelJob : public TelepathyBaseJob
     Q_DISABLE_COPY(RequestChannelJob)
     Q_DECLARE_PRIVATE(RequestChannelJob)
 
-    enum RequestMode { //TODO change to RequestFlags and use in constructor
-        RequestModeEnsure,
-        RequestModeCreate,
+public:
+    enum RequestFlag { //TODO change to RequestFlags and use in constructor
+        RequestModeNoOption = 0,
+        RequestModeEnsure   = 1 << 0,
+        RequestModeCreate   = 1 << 1,
     };
+    Q_DECLARE_FLAGS(RequestFlags, RequestFlag)
 
+private:
     enum TargetMode {
         TargetModeError = 0,
         TargetModeContact,
@@ -53,18 +57,23 @@ class KDE_EXPORT RequestChannelJob : public TelepathyBaseJob
 
     Q_PRIVATE_SLOT(d_func(), void __k__onPendingChannelRequestFinished(Tp::PendingOperation* op))
 
+    Q_FLAGS(RequestFlags)
+
 protected:
     RequestChannelJob(RequestChannelJobPrivate &dd, QObject *parent = 0);
     virtual ~RequestChannelJob();
 
     virtual Tp::PendingChannelRequest* ensureChannel();
     virtual Tp::PendingChannelRequest* createChannel();
+    virtual bool canEnsureChannel();
+    virtual bool canCreateChannel();
 
 public:
     virtual void start();
     virtual bool kill(KJob::KillVerbosity verbosity = KJob::Quietly);
 };
 
+Q_DECLARE_OPERATORS_FOR_FLAGS(RequestChannelJob::RequestFlags)
 
 
 #include <QVariantMap>
@@ -80,16 +89,19 @@ class RequestChannelJob;
 KDE_EXPORT RequestChannelJob* requestChannel(const Nepomuk::PersonContact& contact,
                                              const QVariantMap& request,
                                              const QString preferredHandler = QString(),
+                                             RequestChannelJob::RequestFlags flags = RequestChannelJob::RequestModeEnsure,
                                              QObject* parent = 0);
 
 KDE_EXPORT RequestChannelJob* requestChannel(const Nepomuk::Person& metacontact,
                                              const QVariantMap& request,
                                              const QString preferredHandler = QString(),
+                                             RequestChannelJob::RequestFlags flags = RequestChannelJob::RequestModeEnsure,
                                              QObject* parent = 0);
 
 KDE_EXPORT RequestChannelJob* requestChannel(const QString room,
                                              const QVariantMap& request,
                                              const QString preferredHandler = QString(),
+                                             RequestChannelJob::RequestFlags flags = RequestChannelJob::RequestModeEnsure,
                                              QObject* parent = 0);
 
 #endif // LIBKTELEPATHY_REQUESTCHANNELJOB_H

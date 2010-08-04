@@ -38,28 +38,34 @@ class RequestChannelJobPrivate : public TelepathyBaseJobPrivate
 public:
     RequestChannelJobPrivate(const Nepomuk::PersonContact& c,
                              const QVariantMap& rq,
-                             const QString ph);
+                             const QString ph,
+                             const RequestChannelJob::RequestFlags f);
     RequestChannelJobPrivate(const Nepomuk::Person& mc,
                              const QVariantMap& rq,
-                             const QString ph);
+                             const QString ph,
+                             const RequestChannelJob::RequestFlags f);
     RequestChannelJobPrivate(const QString r,
                              const QVariantMap& requestq,
-                             const QString ph);
+                             const QString ph,
+                             const RequestChannelJob::RequestFlags f);
 /* TODO
-    RequestChannelJobPrivate(QString chatroom,
-                             QList<Nepomuk::PersonContact>& contacts,
-                             QVariantMap& request,
-                             QString preferredHandler = QString());
-    RequestChannelJobPrivate(QString chatroom,
-                             QList<Nepomuk::Person>& metacontacts,
-                             QVariantMap& request,
-                             QString preferredHandler = QString());
+    RequestChannelJobPrivate(const QString r,
+                             const QList<Nepomuk::PersonContact>& cl,
+                             const QVariantMap& rq,
+                             const QString ph,
+                             const RequestChannelJob::RequestFlags f);
+
+    RequestChannelJobPrivate(const QString r,
+                             const QList<Nepomuk::Person>& mcl,
+                             const QVariantMap& rq,
+                             const QString ph,
+                             const RequestChannelJob::RequestFlags f);
 */
 
     virtual ~RequestChannelJobPrivate();
 
-    RequestChannelJob::RequestMode requestmode; //TODO change to RequestFlags
     RequestChannelJob::TargetMode targetmode;
+    RequestChannelJob::RequestFlags requestflags;
 
     Nepomuk::PersonContact contactResource;
     Nepomuk::Person metacontactResource;
@@ -93,9 +99,10 @@ public:
     static inline RequestChannelJob* newJob(const Nepomuk::PersonContact& contact,
                                             const QVariantMap& request,
                                             const QString preferredHandler,
+                                            const RequestChannelJob::RequestFlags flags,
                                             QObject* parent)
     {
-        RequestChannelJob *job = new RequestChannelJob(*new RequestChannelJobPrivate(contact, request, preferredHandler), parent);
+        RequestChannelJob *job = new RequestChannelJob(*new RequestChannelJobPrivate(contact, request, preferredHandler, flags), parent);
 //TODO?        job->setUiDelegate(new JobUiDelegate);
         return job;
     }
@@ -103,18 +110,20 @@ public:
     static inline RequestChannelJob* newJob(const Nepomuk::Person& metacontact,
                                             const QVariantMap& request,
                                             const QString preferredHandler,
+                                            const RequestChannelJob::RequestFlags flags,
                                             QObject* parent)
     {
-        RequestChannelJob *job = new RequestChannelJob(*new RequestChannelJobPrivate(metacontact, request, preferredHandler), parent);
+        RequestChannelJob *job = new RequestChannelJob(*new RequestChannelJobPrivate(metacontact, request, preferredHandler, flags), parent);
         return job;
     }
 
     static inline RequestChannelJob* newJob(const QString room,
                                             const QVariantMap& request,
                                             const QString preferredHandler,
+                                            RequestChannelJob::RequestFlags flags,
                                             QObject* parent)
     {
-        RequestChannelJob *job = new RequestChannelJob(*new RequestChannelJobPrivate(room, request, preferredHandler), parent);
+        RequestChannelJob *job = new RequestChannelJob(*new RequestChannelJobPrivate(room, request, preferredHandler, flags), parent);
         return job;
     }
 

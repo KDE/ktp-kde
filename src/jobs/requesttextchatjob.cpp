@@ -29,28 +29,37 @@ class RequestTextChatJobPrivate : public RequestChannelJobPrivate
 
 public:
     RequestTextChatJobPrivate(const Nepomuk::PersonContact& c,
-                              const QString ph);
+                              const QString ph,
+                              const RequestChannelJob::RequestFlags requestflags);
     RequestTextChatJobPrivate(const Nepomuk::Person& mc,
-                              const QString ph);
+                              const QString ph,
+                              const RequestChannelJob::RequestFlags requestflags);
     ~RequestTextChatJobPrivate();
 
     static inline RequestTextChatJob* newJob(const Nepomuk::PersonContact& contact,
-                                            const QString preferredHandler,
-                                            QObject* parent)
+                                             const QString preferredHandler,
+                                             const RequestChannelJob::RequestFlags requestflags,
+                                             QObject* parent)
     {
-        kDebug();
-        RequestTextChatJob *job = new RequestTextChatJob(*new RequestTextChatJobPrivate(contact, preferredHandler), parent);
+        kDebug() << contact.genericLabel();
+        kDebug() << preferredHandler;
+        kDebug() << requestflags;
+        RequestTextChatJob *job = new RequestTextChatJob(*new RequestTextChatJobPrivate(contact, preferredHandler, requestflags), parent);
         return job;
     }
     static inline RequestTextChatJob* newJob(const Nepomuk::Person& metacontact,
-                                            const QString preferredHandler,
-                                            QObject* parent)
+                                             const QString preferredHandler,
+                                             const RequestChannelJob::RequestFlags requestflags,
+                                             QObject* parent)
     {
-        kDebug();
-        RequestTextChatJob *job = new RequestTextChatJob(*new RequestTextChatJobPrivate(metacontact, preferredHandler), parent);
+        kDebug() << metacontact.genericLabel();
+        kDebug() << preferredHandler;
+        kDebug() << requestflags;
+        RequestTextChatJob *job = new RequestTextChatJob(*new RequestTextChatJobPrivate(metacontact, preferredHandler, requestflags), parent);
         return job;
     }
 };
+
 
 RequestTextChatJob::RequestTextChatJob(RequestTextChatJobPrivate &dd, QObject *parent)
     : RequestChannelJob(dd, parent)
@@ -58,29 +67,12 @@ RequestTextChatJob::RequestTextChatJob(RequestTextChatJobPrivate &dd, QObject *p
     kDebug();
 }
 
+
 RequestTextChatJob::~RequestTextChatJob()
 {
     kDebug();
 }
 
-RequestTextChatJobPrivate::RequestTextChatJobPrivate(const Nepomuk::PersonContact& c,
-                                                     const QString ph)
-    : RequestChannelJobPrivate(c, QVariantMap(), ph)
-{
-    kDebug();
-}
-
-RequestTextChatJobPrivate::RequestTextChatJobPrivate(const Nepomuk::Person& mc,
-                                                     const QString ph)
-    : RequestChannelJobPrivate(mc, QVariantMap(), ph)
-{
-    kDebug();
-}
-
-RequestTextChatJobPrivate::~RequestTextChatJobPrivate()
-{
-    kDebug();
-}
 
 Tp::PendingChannelRequest* RequestTextChatJob::ensureChannel()
 {
@@ -92,30 +84,78 @@ Tp::PendingChannelRequest* RequestTextChatJob::ensureChannel()
     return d->account->ensureTextChat(d->contact, d->useractiontime, d->preferredHandler);
 }
 
-Tp::PendingChannelRequest* RequestTextChatJob::createChannel()
+
+bool inline RequestTextChatJob::canCreateChannel() { return false; }
+
+
+RequestTextChatJobPrivate::RequestTextChatJobPrivate(const Nepomuk::PersonContact& c,
+                                                     const QString ph,
+                                                     const RequestChannelJob::RequestFlags requestflags)
+    : RequestChannelJobPrivate(c, QVariantMap(), ph, requestflags)
 {
-    kWarning() << "RequestModeCreate not supported, using RequestModeEnsure";
-    return ensureChannel();
+    kDebug();
 }
+
+
+RequestTextChatJobPrivate::RequestTextChatJobPrivate(const Nepomuk::Person& mc,
+                                                     const QString ph,
+                                                     const RequestChannelJob::RequestFlags requestflags)
+    : RequestChannelJobPrivate(mc, QVariantMap(), ph, requestflags)
+{
+    kDebug();
+}
+
+
+RequestTextChatJobPrivate::~RequestTextChatJobPrivate()
+{
+    kDebug();
+}
+
+/*
+RequestTextChatJob* requestTextChat(const Nepomuk::PersonContact& contact,
+                                    const QString preferredHandler,
+                                    const RequestChannelJob::RequestFlags requestflags,
+                                    QObject* parent)
+{
+    return RequestTextChatJobPrivate::newJob(contact,
+                                             preferredHandler,
+                                             requestflags,
+                                             parent);
+
+}
+
+RequestTextChatJob* requestTextChat(const Nepomuk::Person& metacontact,
+                                    const QString preferredHandler,
+                                    const RequestChannelJob::RequestFlags requestflags,
+                                    QObject* parent)
+{
+    return RequestTextChatJobPrivate::newJob(metacontact,
+                                             preferredHandler,
+                                             requestflags,
+                                             parent);
+}
+*/
 
 RequestTextChatJob* requestTextChat(const Nepomuk::PersonContact& contact,
                                     const QString preferredHandler,
                                     QObject* parent)
 {
-    kDebug() << contact.genericLabel();
-    kDebug() << preferredHandler;
+    kDebug();
     return RequestTextChatJobPrivate::newJob(contact,
                                              preferredHandler,
+                                             RequestChannelJob::RequestModeEnsure,
                                              parent);
+
 }
+
 RequestTextChatJob* requestTextChat(const Nepomuk::Person& metacontact,
                                     const QString preferredHandler,
                                     QObject* parent)
 {
-    kDebug() << metacontact.genericLabel();
-    kDebug() << preferredHandler;
+    kDebug();
     return RequestTextChatJobPrivate::newJob(metacontact,
                                              preferredHandler,
+                                             RequestChannelJob::RequestModeEnsure,
                                              parent);
 }
 

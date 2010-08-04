@@ -35,13 +35,23 @@ public:
     virtual ~RequestTextChatJob();
 
     virtual Tp::PendingChannelRequest* ensureChannel();
-    virtual Tp::PendingChannelRequest* createChannel();
+    virtual bool canCreateChannel();
 };
 
+/*
 KDE_EXPORT RequestTextChatJob* requestTextChat(const Nepomuk::PersonContact& contact,
                                                const QString preferredHandler = QString(),
+                                               const RequestChannelJob::RequestFlags requestflags = RequestChannelJob::RequestModeEnsure,
                                                QObject* parent = 0);
 KDE_EXPORT RequestTextChatJob* requestTextChat(const Nepomuk::Person& metacontact,
                                                const QString preferredHandler = QString(),
+                                               const RequestChannelJob::RequestFlags requestflags = RequestChannelJob::RequestModeEnsure,
                                                QObject* parent = 0);
+*/
+KDE_EXPORT RequestTextChatJob* requestTextChat(const Nepomuk::PersonContact& contact,
+                                               const QString preferredHandler,
+                                               QObject* parent);
+KDE_EXPORT RequestTextChatJob* requestTextChat(const Nepomuk::Person& metacontact,
+                                               const QString preferredHandler,
+                                               QObject* parent);
 #endif // LIBKTELEPATHY_REQUESTTEXTCHATJOB_H
