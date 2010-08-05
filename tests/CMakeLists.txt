@@ -26,7 +26,7 @@ target_link_libraries (people-manager-test
                        ontologies
 )
 
-add_ktelepathy_dbus_test (PeopleManagerTest
+add_ktelepathy_nepomuk_test (PeopleManagerTest
                           ${CMAKE_CURRENT_BINARY_DIR}/people-manager-test
 )
 
