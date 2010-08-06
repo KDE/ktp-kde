@@ -13,6 +13,7 @@ set (ktelepathy_SRCS
      core/people-manager.cpp
      core/person-set.cpp
      core/person.cpp
+     jobs/abstracthandlechanneljob.cpp
      jobs/abstractrequestchanneljob.cpp
      jobs/accept-file-transfer-job.cpp
      jobs/add-contact-job.cpp
@@ -43,6 +44,7 @@ set (ktelepathy_INST_HDRS
      core/people-manager.h
      core/person-set.h
      core/person.h
+     jobs/abstracthandlechanneljob.h
      jobs/abstractrequestchanneljob.h
      jobs/accept-file-transfer-job.h
      jobs/add-contact-job.h
@@ -69,6 +71,7 @@ set (ktelepathy_INST_HDRS
 )
 
 set (ktelepathy_PRETTY_HDRS
+     KTelepathy/AbstractHandleChannelJob
      KTelepathy/AbstractRequestChannelJob
      KTelepathy/AbstractTreeItem
      KTelepathy/AcceptFileTransferJob
