@@ -25,6 +25,8 @@
 
 #include <QtCore/QSet>
 
+using namespace KTelepathy;
+
 class PersonSet::Private {
 
 public:

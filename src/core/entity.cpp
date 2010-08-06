@@ -23,6 +23,8 @@
 
 #include <KDebug>
 
+using namespace KTelepathy;
+
 class Entity::Private {
 
 public:

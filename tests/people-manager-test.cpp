@@ -32,6 +32,7 @@
 
 #include <QTest>
 
+using namespace KTelepathy;
 
 PeopleManagerTest::PeopleManagerTest(QObject* parent)
     : TelepathyBaseTest(parent)
@@ -153,11 +154,11 @@ void PeopleManagerTest::testEveryone()
 
     // Connect to the PersonSet's signals
     connect(m_everyonePersonSet.data(),
-            SIGNAL(personAdded(PersonPtr)),
-            SLOT(everyoneOnPersonAdded1(PersonPtr)));
+            SIGNAL(personAdded(KTelepathy::PersonPtr)),
+            SLOT(everyoneOnPersonAdded1(KTelepathy::PersonPtr)));
     connect(m_everyonePersonSet.data(),
-            SIGNAL(personRemoved(PersonPtr)),
-            SLOT(everyoneOnPersonRemoved1(PersonPtr)));
+            SIGNAL(personRemoved(KTelepathy::PersonPtr)),
+            SLOT(everyoneOnPersonRemoved1(KTelepathy::PersonPtr)));
 
     // Launch the mainloop
     mLoop->exec();
@@ -166,13 +167,13 @@ void PeopleManagerTest::testEveryone()
 
     // Disconnect the signals from part one of the test.
     disconnect(m_everyonePersonSet.data(),
-               SIGNAL(personAdded(PersonPtr)),
+               SIGNAL(personAdded(KTelepathy::PersonPtr)),
                this,
-               SLOT(everyoneOnPersonAdded1(PersonPtr)));
+               SLOT(everyoneOnPersonAdded1(KTelepathy::PersonPtr)));
     disconnect(m_everyonePersonSet.data(),
-               SIGNAL(personRemoved(PersonPtr)),
+               SIGNAL(personRemoved(KTelepathy::PersonPtr)),
                this,
-               SLOT(everyoneOnPersonRemoved1(PersonPtr)));
+               SLOT(everyoneOnPersonRemoved1(KTelepathy::PersonPtr)));
 
     // Next, we add a new person to Nepomuk and see if the set picks it up.
     m_everyonePerson4 = QUrl::fromEncoded("nepomuk:/everyone-test-4");
@@ -184,11 +185,11 @@ void PeopleManagerTest::testEveryone()
 
     // Connect to the signals
     connect(m_everyonePersonSet.data(),
-            SIGNAL(personAdded(PersonPtr)),
-            SLOT(everyoneOnPersonAdded2(PersonPtr)));
+            SIGNAL(personAdded(KTelepathy::PersonPtr)),
+            SLOT(everyoneOnPersonAdded2(KTelepathy::PersonPtr)));
     connect(m_everyonePersonSet.data(),
-            SIGNAL(personRemoved(PersonPtr)),
-            SLOT(everyoneOnPersonRemoved2(PersonPtr)));
+            SIGNAL(personRemoved(KTelepathy::PersonPtr)),
+            SLOT(everyoneOnPersonRemoved2(KTelepathy::PersonPtr)));
 
     // Launch the mainloop
     mLoop->exec();
@@ -197,24 +198,24 @@ void PeopleManagerTest::testEveryone()
 
     // Disconnect the signals from part two of the test.
     disconnect(m_everyonePersonSet.data(),
-               SIGNAL(personAdded(PersonPtr)),
+               SIGNAL(personAdded(KTelepathy::PersonPtr)),
                this,
-               SLOT(everyoneOnPersonAdded2(PersonPtr)));
+               SLOT(everyoneOnPersonAdded2(KTelepathy::PersonPtr)));
     disconnect(m_everyonePersonSet.data(),
-               SIGNAL(personRemoved(PersonPtr)),
+               SIGNAL(personRemoved(KTelepathy::PersonPtr)),
                this,
-               SLOT(everyoneOnPersonRemoved2(PersonPtr)));
+               SLOT(everyoneOnPersonRemoved2(KTelepathy::PersonPtr)));
 
     // Next, remove a person from Nepomuk to see if it picks it up.
     m_everyonePerson2.remove();
 
     // Connect to the signals
     connect(m_everyonePersonSet.data(),
-            SIGNAL(personAdded(PersonPtr)),
-            SLOT(everyoneOnPersonAdded3(PersonPtr)));
+            SIGNAL(personAdded(KTelepathy::PersonPtr)),
+            SLOT(everyoneOnPersonAdded3(KTelepathy::PersonPtr)));
     connect(m_everyonePersonSet.data(),
-            SIGNAL(personRemoved(PersonPtr)),
-            SLOT(everyoneOnPersonRemoved3(PersonPtr)));
+            SIGNAL(personRemoved(KTelepathy::PersonPtr)),
+            SLOT(everyoneOnPersonRemoved3(KTelepathy::PersonPtr)));
 
     // Launch the mainloop
     mLoop->exec();
@@ -223,13 +224,13 @@ void PeopleManagerTest::testEveryone()
 
     // Disconnect the signals from part three of the test.
     disconnect(m_everyonePersonSet.data(),
-               SIGNAL(personAdded(PersonPtr)),
+               SIGNAL(personAdded(KTelepathy::PersonPtr)),
                this,
-               SLOT(everyoneOnPersonAdded2(PersonPtr)));
+               SLOT(everyoneOnPersonAdded2(KTelepathy::PersonPtr)));
     disconnect(m_everyonePersonSet.data(),
-               SIGNAL(personRemoved(PersonPtr)),
+               SIGNAL(personRemoved(KTelepathy::PersonPtr)),
                this,
-               SLOT(everyoneOnPersonRemoved2(PersonPtr)));
+               SLOT(everyoneOnPersonRemoved2(KTelepathy::PersonPtr)));
 
     // Check that the everyonePersonSet is cached properly.
     PersonSetPtr personSet = pm->everyone();

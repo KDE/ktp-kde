@@ -28,6 +28,8 @@
 
 #include <Nepomuk/Resource>
 
+using namespace KTelepathy;
+
 
 /****************************** PeopleManager::Private ********************************************/
 

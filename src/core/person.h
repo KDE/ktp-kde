@@ -26,11 +26,13 @@
 
 #include <kdemacros.h>
 
-#include <Nepomuk/Resource>
-
-#include <QtCore/QObject>
 #include <QtCore/QSharedPointer>
 
+namespace Nepomuk {
+    class Resource;
+}
+
+namespace KTelepathy {
 
 /**
  * @class Person
@@ -62,6 +64,8 @@ private:
 };
 
 typedef QSharedPointer<Person> PersonPtr;
+
+}  // namespace KTelepathy
 
 
 #endif  // Header guard

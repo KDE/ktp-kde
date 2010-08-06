@@ -22,9 +22,10 @@
 #ifndef PEOPLEMANAGER_TEST_H
 #define PEOPLEMANAGER_TEST_H
 
-#include <KTelepathy/TestLib/telepathy-base-test.h>
+#include "person.h"
+#include "person-set.h"
 
-#include <KTelepathy/PersonSet>
+#include <KTelepathy/TestLib/telepathy-base-test.h>
 
 #include <Nepomuk/Resource>
 
@@ -38,12 +39,12 @@ public:
 
 protected Q_SLOTS:
     // testEveryone()
-    void everyoneOnPersonAdded1(const PersonPtr &person);
-    void everyoneOnPersonRemoved1(const PersonPtr &person);
-    void everyoneOnPersonAdded2(const PersonPtr &person);
-    void everyoneOnPersonRemoved2(const PersonPtr &person);
-    void everyoneOnPersonAdded3(const PersonPtr &person);
-    void everyoneOnPersonRemoved3(const PersonPtr &person);
+    void everyoneOnPersonAdded1(const KTelepathy::PersonPtr &person);
+    void everyoneOnPersonRemoved1(const KTelepathy::PersonPtr &person);
+    void everyoneOnPersonAdded2(const KTelepathy::PersonPtr &person);
+    void everyoneOnPersonRemoved2(const KTelepathy::PersonPtr &person);
+    void everyoneOnPersonAdded3(const KTelepathy::PersonPtr &person);
+    void everyoneOnPersonRemoved3(const KTelepathy::PersonPtr &person);
 
 private Q_SLOTS:
     void initTestCase();
@@ -61,7 +62,7 @@ private:
     Nepomuk::Resource m_everyonePerson2;
     Nepomuk::Resource m_everyonePerson3;
     Nepomuk::Resource m_everyonePerson4;
-    PersonSetPtr m_everyonePersonSet;
+    KTelepathy::PersonSetPtr m_everyonePersonSet;
     bool m_everyonePerson1Added;
     bool m_everyonePerson2Added;
     bool m_everyonePerson3Added;

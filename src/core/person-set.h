@@ -29,7 +29,10 @@
 #include <QtCore/QObject>
 #include <QtCore/QSet>
 #include <QtCore/QSharedPointer>
-#include <QtCore/QUrl>
+
+class QUrl;
+
+namespace KTelepathy {
 
 /**
  * @class PersonSet
@@ -98,12 +101,12 @@ Q_SIGNALS:
     /**
      * @brief emitted when a new person is added to this PersonSet.
      */
-    void personAdded(const PersonPtr &person);
+    void personAdded(const KTelepathy::PersonPtr &person);
 
     /**
      * @brief emitted when a person is removed from this PersonSet.
      */
-    void personRemoved(const PersonPtr &person);
+    void personRemoved(const KTelepathy::PersonPtr &person);
 
 private:
     Q_DISABLE_COPY(PersonSet);
@@ -114,6 +117,9 @@ private:
 };
 
 typedef QSharedPointer<PersonSet> PersonSetPtr;
+
+}  // namespace KTelepathy
+
 
 #endif  // Header guard
 

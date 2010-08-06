@@ -29,6 +29,12 @@
 
 #include <QtCore/QObject>
 
+namespace Nepomuk {
+    class Resource;
+}
+
+namespace KTelepathy {
+
 /**
  * @class PeopleManager
  *
@@ -57,6 +63,8 @@ private:
     Private * const d;
 
 };
+
+}  // namespace KTelepathy
 
 
 #endif  // Header guard

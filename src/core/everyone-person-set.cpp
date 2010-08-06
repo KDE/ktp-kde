@@ -38,6 +38,8 @@
 #include <QtCore/QList>
 #include <QtCore/QUrl>
 
+using namespace KTelepathy;
+
 class EveryonePersonSet::Private {
 
 public:

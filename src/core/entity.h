@@ -30,6 +30,8 @@
 #include <QtCore/QSharedPointer>
 #include <QtCore/QUrl>
 
+namespace KTelepathy {
+
 /**
  * @class Entity
  *
@@ -108,8 +110,11 @@ private:
 
 typedef QSharedPointer<Entity> EntityPtr;
 
-uint KDE_EXPORT qHash(Entity key);
-uint KDE_EXPORT qHash(EntityPtr key);
+}  // namespace KTelepathy
+
+uint KDE_EXPORT qHash(KTelepathy::Entity key);
+uint KDE_EXPORT qHash(KTelepathy::EntityPtr key);
+
 
 #endif  // Header guard
 

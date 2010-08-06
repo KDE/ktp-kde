@@ -29,12 +29,13 @@
 #include <Nepomuk/Query/Result>
 
 #include <QtCore/QList>
-#include <QtCore/QObject>
 #include <QtCore/QUrl>
 
 namespace Nepomuk {
     class Resource;
 }
+
+namespace KTelepathy {
 
 class KDE_NO_EXPORT EveryonePersonSet : public PersonSet {
 
@@ -60,6 +61,8 @@ private:
     Private * const d;
 
 };
+
+}  // namespace KTelepathy
 
 
 #endif  // Header guard

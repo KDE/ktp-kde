@@ -27,6 +27,8 @@
 
 #include <Nepomuk/Thing>
 
+using namespace KTelepathy;
+
 class Person::Private {
 
 public:
