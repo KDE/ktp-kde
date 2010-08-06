@@ -35,6 +35,7 @@ AbstractRequestChannelJob::AbstractRequestChannelJob(AbstractRequestChannelJobPr
     : TelepathyBaseJob(dd, parent)
 {
     setCapabilities(KJob::Killable);
+    connect(this, SIGNAL(requestChannelFinished()), SLOT(onRequestChannelFinished()));
 }
 
 
@@ -81,15 +82,8 @@ bool AbstractRequestChannelJob::canCreateChannel()
 }
 
 
-void AbstractRequestChannelJob::onChannelRequestFinished(Tp::PendingOperation* op)
+void AbstractRequestChannelJob::onRequestChannelFinished()
 {
-    if (op->isError()) {
-        kWarning() << "Channel request failed:"
-                   << op->errorName()
-                   << op->errorMessage();
-        setError(KJob::UserDefinedError);
-        setErrorText(i18n("An error occourred requesting channel."));
-    }
     QTimer::singleShot(0, this, SLOT(__k__doEmitResult()));
 }
 
@@ -200,7 +194,23 @@ void AbstractRequestChannelJobPrivate::__k__requestChannel()
 
     q->connect(pendingchannelrequest,
                SIGNAL(finished(Tp::PendingOperation*)),
-               SLOT(onChannelRequestFinished(Tp::PendingOperation*)));
+               SLOT(__k__onRequestChannelFinished(Tp::PendingOperation*)));
+}
+
+
+void AbstractRequestChannelJobPrivate::__k__onRequestChannelFinished(Tp::PendingOperation* op)
+{
+    Q_Q(AbstractRequestChannelJob);
+    if (op->isError()) {
+        kWarning() << "Channel request failed:"
+                   << op->errorName()
+                   << op->errorMessage();
+        q->setError(KJob::UserDefinedError);
+        q->setErrorText(i18n("An error occourred requesting the channel."));
+        QTimer::singleShot(0, q, SLOT(__k__doEmitResult()));
+    }
+
+    Q_EMIT q->requestChannelFinished();
 }
 
 

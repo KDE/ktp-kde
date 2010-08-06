@@ -29,15 +29,17 @@ namespace Tp {
 
 
 namespace KTelepathy {
-    enum RequestChannelFlag { //TODO change to RequestFlags and use in constructor
+
+    enum RequestChannelFlag {
          RequestChannelNoOption     = 0,
          RequestChannelEnsureMode   = 1 << 0,
          RequestChannelCreateMode   = 1 << 1,
          RequestChannelAnyMode      = RequestChannelEnsureMode | RequestChannelCreateMode
     };
     Q_DECLARE_FLAGS(RequestChannelFlags, RequestChannelFlag)
-//REMOVE?    Q_FLAGS(RequestChannelFlags)
-}
+    //Q_FLAGS(RequestChannelFlags) //TODO REMOVE?
+
+} // namespace KTelepathy
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(KTelepathy::RequestChannelFlags)
 
@@ -61,6 +63,7 @@ protected:
 
     // Our Q_PRIVATE_SLOTS who perform the real job
     Q_PRIVATE_SLOT(d_func(), void __k__requestChannel())
+    Q_PRIVATE_SLOT(d_func(), void __k__onRequestChannelFinished(Tp::PendingOperation* op))
 
     AbstractRequestChannelJob(AbstractRequestChannelJobPrivate &dd, QObject *parent = 0);
     virtual ~AbstractRequestChannelJob();
@@ -70,12 +73,16 @@ protected:
     virtual bool canEnsureChannel();
     virtual bool canCreateChannel();
 
-protected slots:
-    virtual void onChannelRequestFinished(Tp::PendingOperation* op);
+protected Q_SLOTS:
+    virtual void onRequestChannelFinished();
 
 public:
     virtual void start();
     virtual bool kill(KJob::KillVerbosity verbosity = KJob::Quietly);
+
+Q_SIGNALS:
+    void requestChannelFinished();
+
 };
 
 

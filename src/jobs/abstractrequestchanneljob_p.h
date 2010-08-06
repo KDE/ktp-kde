@@ -83,6 +83,7 @@ public:
 
     // Operation Q_PRIVATE_SLOTS
     void __k__requestChannel();
+    void __k__onRequestChannelFinished(Tp::PendingOperation* op);
 
 private:
     void initTargets();
