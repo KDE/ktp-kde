@@ -43,13 +43,17 @@ class KDE_NO_EXPORT EveryonePersonSet : public PersonSet {
 public:
     virtual ~EveryonePersonSet();
 
+protected:
+    // Protected constructor because this object should only be instantiated by PeopleManager
+    explicit EveryonePersonSet(const Nepomuk::Resource &mePimoPerson);
+
 private Q_SLOTS:
     void onNewEntries(const QList<Nepomuk::Query::Result> &entries);
     void onEntriesRemoved(const QList<QUrl> &entries);
 
 private:
-    // Private constructor because this object should only be instantiated by PeopleManager
-    explicit EveryonePersonSet(const Nepomuk::Resource &mePimoPerson);
+    Q_DISABLE_COPY(EveryonePersonSet);
+
     friend class PeopleManager;
 
     class Private;

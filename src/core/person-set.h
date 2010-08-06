@@ -44,7 +44,17 @@ class KDE_EXPORT PersonSet : public QObject {
     Q_OBJECT
 
 public:
-    explicit PersonSet();
+    /**
+     * @brief create a new empty person set.
+     * @return a shared pointer pointing to the new person set.
+     *
+     * This method creates a new empty PersonSet and returns a shared pointer to it.
+     */
+    static QSharedPointer<PersonSet> create();
+
+    /**
+     * Destrcutor
+     */
     virtual ~PersonSet();
 
     /**
@@ -77,6 +87,13 @@ public:
      */
     QSet<PersonPtr> people() const;
 
+protected:
+    /**
+     * Protected constructor since library users should create new instances of this class by
+     * calling the static member create().
+     */
+    explicit PersonSet();
+
 Q_SIGNALS:
     /**
      * @brief emitted when a new person is added to this PersonSet.
@@ -89,6 +106,8 @@ Q_SIGNALS:
     void personRemoved(const PersonPtr &person);
 
 private:
+    Q_DISABLE_COPY(PersonSet);
+
     class Private;
     Private * const d;
 
