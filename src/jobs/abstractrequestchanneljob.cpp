@@ -161,16 +161,16 @@ void AbstractRequestChannelJobPrivate::__k__requestChannel()
         return;
     }
 
-    if (!(requestchannelflags & (KTelepathy::RequestChannelEnsureMode | KTelepathy::RequestChannelCreateMode))) {
-        kWarning() << "What do you whant to request?";
+    if (!q->canEnsureChannel() && !q->canCreateChannel()) {
+        kWarning() << "This job is useless!";
         q->setError(KJob::UserDefinedError);
         q->setErrorText(i18n("This is an internal error of KTelepathy"));
         QTimer::singleShot(0, q, SLOT(__k__doEmitResult()));
         return;
     }
 
-    if (!q->canEnsureChannel() && !q->canCreateChannel()) {
-        kWarning() << "This job is useless!";
+    if (!(requestchannelflags & (KTelepathy::RequestChannelEnsureMode | KTelepathy::RequestChannelCreateMode))) {
+        kWarning() << "What do you whant to request?";
         q->setError(KJob::UserDefinedError);
         q->setErrorText(i18n("This is an internal error of KTelepathy"));
         QTimer::singleShot(0, q, SLOT(__k__doEmitResult()));
