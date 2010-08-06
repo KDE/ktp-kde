@@ -221,7 +221,7 @@ void OfferDBusTubeJobPrivate::__k__offerDBusTubeContact()
             // Can target contact accept it?
             //TODO drdanz
             if (1) {
-                uint contactHandle = i.value().first()->handle()[0];
+                uint contactHandle = i.value().first()->handle().at(0);
 
                 QVariantMap request;
                 request.insert(QLatin1String(TELEPATHY_INTERFACE_CHANNEL ".ChannelType"), QLatin1String(TELEPATHY_INTERFACE_CHANNEL_TYPE_DBUS_TUBE));

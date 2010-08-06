@@ -160,7 +160,7 @@ void RequestGenericChannelJob::updateRequestTargets()
                 d->request.remove(QLatin1String(TELEPATHY_INTERFACE_CHANNEL ".TargetHandle"));
             }
             d->request.insert(QLatin1String(TELEPATHY_INTERFACE_CHANNEL ".TargetHandle"),
-                        d->contact->handle()[0]);
+                        d->contact->handle().at(0));
             break;
 
         case AbstractRequestChannelJob::TargetModeRoom:
