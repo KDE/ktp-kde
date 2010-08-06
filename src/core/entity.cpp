@@ -87,6 +87,14 @@ bool Entity::operator!=(const Entity &other) const
     return !(*this == other);
 }
 
+uint qHash(Entity key) {
+    return qHash(key.resourceUri());
+}
+
+uint qHash(EntityPtr key) {
+    return qHash(key->resourceUri());
+}
+
 
 #include "entity.moc"
 

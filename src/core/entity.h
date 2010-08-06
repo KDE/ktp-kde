@@ -100,6 +100,8 @@ private:
 
 typedef QSharedPointer<Entity> EntityPtr;
 
+uint KDE_EXPORT qHash(Entity key);
+uint KDE_EXPORT qHash(EntityPtr key);
 
 #endif  // Header guard
 

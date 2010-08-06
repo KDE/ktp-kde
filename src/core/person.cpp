@@ -62,14 +62,6 @@ Person::~Person()
     delete d;
 }
 
-uint qHash(Person key) {
-    return qHash(key.resourceUri());
-}
-
-uint qHash(PersonPtr key) {
-    return qHash(key->resourceUri());
-}
-
 
 #include "person.moc"
 

@@ -57,9 +57,6 @@ private:
 
 typedef QSharedPointer<Person> PersonPtr;
 
-uint KDE_EXPORT qHash(Person key);
-uint KDE_EXPORT qHash(PersonPtr key);
-
 
 #endif  // Header guard
 
