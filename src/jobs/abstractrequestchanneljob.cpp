@@ -61,15 +61,23 @@ bool AbstractRequestChannelJob::kill(KJob::KillVerbosity verbosity) //TODO
 
 Tp::PendingChannelRequest* AbstractRequestChannelJob::ensureChannel()
 {
-    kWarning() << "Returning null pointer";
+    kWarning() << "This method should not be called.";
+    setError(KJob::UserDefinedError);
+    setErrorText(i18n("This is an internal error of KTelepathy"));
+    QTimer::singleShot(0, this, SLOT(__k__doEmitResult()));
     return NULL;
 }
 
+
 Tp::PendingChannelRequest* AbstractRequestChannelJob::createChannel()
 {
-    kWarning() << "Returning null pointer";
+    kWarning() << "This method should not be called.";
+    setError(KJob::UserDefinedError);
+    setErrorText(i18n("This is an internal error of KTelepathy"));
+    QTimer::singleShot(0, this, SLOT(__k__doEmitResult()));
     return NULL;
 }
+
 
 bool AbstractRequestChannelJob::canEnsureChannel()
 { 
