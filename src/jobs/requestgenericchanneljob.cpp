@@ -31,15 +31,15 @@ class RequestGenericChannelJobPrivate : public AbstractRequestChannelJobPrivate
 public:
     RequestGenericChannelJobPrivate(const Nepomuk::PersonContact& c,
                                     const QVariantMap& rq,
-                                    const QString ph,
+                                    const QString& ph,
                                     const KTelepathy::RequestChannelFlags requestchannelflags);
     RequestGenericChannelJobPrivate(const Nepomuk::Person& mc,
                                     const QVariantMap& rq,
-                                    const QString ph,
+                                    const QString& ph,
                                     const KTelepathy::RequestChannelFlags requestchannelflags);
     RequestGenericChannelJobPrivate(const QString& r,
                                     const QVariantMap& rq,
-                                    const QString ph,
+                                    const QString& ph,
                                     const KTelepathy::RequestChannelFlags requestchannelflags);
     ~RequestGenericChannelJobPrivate();
 
@@ -47,7 +47,7 @@ public:
 
     static inline RequestGenericChannelJob* newJob( const Nepomuk::PersonContact& contact,
                                                     const QVariantMap& request,
-                                                    const QString preferredHandler,
+                                                    const QString& preferredHandler,
                                                     const KTelepathy::RequestChannelFlags requestchannelflags,
                                                     QObject* parent)
     {
@@ -64,7 +64,7 @@ public:
     }
     static inline RequestGenericChannelJob* newJob( const Nepomuk::Person& metacontact,
                                                     const QVariantMap& request,
-                                                    const QString preferredHandler,
+                                                    const QString& preferredHandler,
                                                     const KTelepathy::RequestChannelFlags requestchannelflags,
                                                     QObject* parent)
     {
@@ -81,7 +81,7 @@ public:
     }
     static inline RequestGenericChannelJob* newJob( const QString room,
                                                     const QVariantMap& request,
-                                                    const QString preferredHandler,
+                                                    const QString& preferredHandler,
                                                     const KTelepathy::RequestChannelFlags requestchannelflags,
                                                     QObject* parent)
     {

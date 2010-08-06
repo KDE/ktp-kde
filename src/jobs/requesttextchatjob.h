@@ -47,18 +47,18 @@ namespace Nepomuk {
 
 /*
 KDE_EXPORT RequestTextChatJob* requestTextChat(const Nepomuk::PersonContact& contact,
-                                               const QString preferredHandler = QString(),
+                                               const QString& preferredHandler = QString(),
                                                const RequestChannelJob::RequestFlags requestchannelflags = RequestChannelJob::RequestModeEnsure,
                                                QObject* parent = 0);
 KDE_EXPORT RequestTextChatJob* requestTextChat(const Nepomuk::Person& metacontact,
-                                               const QString preferredHandler = QString(),
+                                               const QString& preferredHandler = QString(),
                                                const RequestChannelJob::RequestFlags requestchannelflags = RequestChannelJob::RequestModeEnsure,
                                                QObject* parent = 0);
 */
 KDE_EXPORT RequestTextChatJob* requestTextChat(const Nepomuk::PersonContact& contact,
-                                               const QString preferredHandler,
+                                               const QString& preferredHandler,
                                                QObject* parent);
 KDE_EXPORT RequestTextChatJob* requestTextChat(const Nepomuk::Person& metacontact,
-                                               const QString preferredHandler,
+                                               const QString& preferredHandler,
                                                QObject* parent);
 #endif // LIBKTELEPATHY_REQUESTTEXTCHATJOB_H

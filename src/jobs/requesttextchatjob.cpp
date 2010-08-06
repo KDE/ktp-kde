@@ -29,15 +29,15 @@ class RequestTextChatJobPrivate : public AbstractRequestChannelJobPrivate
 
 public:
     RequestTextChatJobPrivate(const Nepomuk::PersonContact& c,
-                              const QString ph,
+                              const QString& ph,
                               const KTelepathy::RequestChannelFlags requestchannelflags);
     RequestTextChatJobPrivate(const Nepomuk::Person& mc,
-                              const QString ph,
+                              const QString& ph,
                               const KTelepathy::RequestChannelFlags requestchannelflags);
     ~RequestTextChatJobPrivate();
 
     static inline RequestTextChatJob* newJob(const Nepomuk::PersonContact& contact,
-                                             const QString preferredHandler,
+                                             const QString& preferredHandler,
                                              const KTelepathy::RequestChannelFlags requestchannelflags,
                                              QObject* parent)
     {
@@ -51,7 +51,7 @@ public:
         return job;
     }
     static inline RequestTextChatJob* newJob(const Nepomuk::Person& metacontact,
-                                             const QString preferredHandler,
+                                             const QString& preferredHandler,
                                              const KTelepathy::RequestChannelFlags requestchannelflags,
                                              QObject* parent)
     {
@@ -95,7 +95,7 @@ bool RequestTextChatJob::canEnsureChannel()
 
 
 RequestTextChatJobPrivate::RequestTextChatJobPrivate(const Nepomuk::PersonContact& c,
-                                                     const QString ph,
+                                                     const QString& ph,
                                                      const KTelepathy::RequestChannelFlags requestchannelflags)
     : AbstractRequestChannelJobPrivate(c, ph, requestchannelflags)
 {
@@ -104,7 +104,7 @@ RequestTextChatJobPrivate::RequestTextChatJobPrivate(const Nepomuk::PersonContac
 
 
 RequestTextChatJobPrivate::RequestTextChatJobPrivate(const Nepomuk::Person& mc,
-                                                     const QString ph,
+                                                     const QString& ph,
                                                      const KTelepathy::RequestChannelFlags requestchannelflags)
     : AbstractRequestChannelJobPrivate(mc, ph, requestchannelflags)
 {
@@ -119,7 +119,7 @@ RequestTextChatJobPrivate::~RequestTextChatJobPrivate()
 
 /*
 RequestTextChatJob* requestTextChat(const Nepomuk::PersonContact& contact,
-                                    const QString preferredHandler,
+                                    const QString& preferredHandler,
                                     const KTelepathy::RequestChannelFlags requestchannelflags,
                                     QObject* parent)
 {
@@ -131,7 +131,7 @@ RequestTextChatJob* requestTextChat(const Nepomuk::PersonContact& contact,
 }
 
 RequestTextChatJob* requestTextChat(const Nepomuk::Person& metacontact,
-                                    const QString preferredHandler,
+                                    const QString& preferredHandler,
                                     const KTelepathy::RequestChannelFlags requestchannelflags,
                                     QObject* parent)
 {
@@ -143,7 +143,7 @@ RequestTextChatJob* requestTextChat(const Nepomuk::Person& metacontact,
 */
 
 RequestTextChatJob* requestTextChat(const Nepomuk::PersonContact& contact,
-                                    const QString preferredHandler,
+                                    const QString& preferredHandler,
                                     QObject* parent)
 {
     kDebug();
@@ -155,7 +155,7 @@ RequestTextChatJob* requestTextChat(const Nepomuk::PersonContact& contact,
 }
 
 RequestTextChatJob* requestTextChat(const Nepomuk::Person& metacontact,
-                                    const QString preferredHandler,
+                                    const QString& preferredHandler,
                                     QObject* parent)
 {
     kDebug();

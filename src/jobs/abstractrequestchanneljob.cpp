@@ -95,7 +95,7 @@ void AbstractRequestChannelJob::onChannelRequestFinished(Tp::PendingOperation* o
 
 
 AbstractRequestChannelJobPrivate::AbstractRequestChannelJobPrivate( const Nepomuk::PersonContact& c,
-                                                                    const QString ph,
+                                                                    const QString& ph,
                                                                     const KTelepathy::RequestChannelFlags f)
     : targetmode(AbstractRequestChannelJob::TargetModeContact),
       requestchannelflags(f),
@@ -109,7 +109,7 @@ AbstractRequestChannelJobPrivate::AbstractRequestChannelJobPrivate( const Nepomu
 }
 
 AbstractRequestChannelJobPrivate::AbstractRequestChannelJobPrivate( const Nepomuk::Person& mc,
-                                                                    const QString ph,
+                                                                    const QString& ph,
                                                                     const KTelepathy::RequestChannelFlags f)
     : targetmode(AbstractRequestChannelJob::TargetModeMetaContact),
       requestchannelflags(f),
@@ -122,8 +122,8 @@ AbstractRequestChannelJobPrivate::AbstractRequestChannelJobPrivate( const Nepomu
     initTargets();
 }
 
-AbstractRequestChannelJobPrivate::AbstractRequestChannelJobPrivate( const QString r,
-                                                                    const QString ph,
+AbstractRequestChannelJobPrivate::AbstractRequestChannelJobPrivate( const QString& r,
+                                                                    const QString& ph,
                                                                     const KTelepathy::RequestChannelFlags f)
     : targetmode(AbstractRequestChannelJob::TargetModeRoom),
       requestchannelflags(f),

@@ -37,23 +37,23 @@ class AbstractRequestChannelJobPrivate : public TelepathyBaseJobPrivate
 
 public:
     AbstractRequestChannelJobPrivate(const Nepomuk::PersonContact& c,
-                                     const QString ph,
+                                     const QString& ph,
                                      const KTelepathy::RequestChannelFlags f);
     AbstractRequestChannelJobPrivate(const Nepomuk::Person& mc,
-                                     const QString ph,
+                                     const QString& ph,
                                      const KTelepathy::RequestChannelFlags f);
-    AbstractRequestChannelJobPrivate(const QString r,
-                                     const QString ph,
+    AbstractRequestChannelJobPrivate(const QString& r,
+                                     const QString& ph,
                                      const KTelepathy::RequestChannelFlags f);
 /* TODO
-    AbstractRequestChannelJobPrivate(const QString r,
+    AbstractRequestChannelJobPrivate(const QString& r,
                                      const QList<Nepomuk::PersonContact>& cl,
-                                     const QString ph,
+                                     const QString& ph,
                                      const KTelepathy::RequestChannelFlags f);
 
-    AbstractRequestChannelJobPrivate(const QString r,
+    AbstractRequestChannelJobPrivate(const QString& r,
                                      const QList<Nepomuk::Person>& mcl,
-                                     const QString ph,
+                                     const QString& ph,
                                      const KTelepathy::RequestChannelFlags f);
 */
 
