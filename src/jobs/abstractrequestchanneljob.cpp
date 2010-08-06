@@ -28,6 +28,7 @@
 #include <TelepathyQt4/Account>
 
 #include <KDebug>
+#include <KLocalizedString>
 
 
 
@@ -90,9 +91,10 @@ void AbstractRequestChannelJob::onRequestChannelFinished()
 
 AbstractRequestChannelJobPrivate::AbstractRequestChannelJobPrivate( const Nepomuk::PersonContact& c,
                                                                     const QString& ph,
-                                                                    const KTelepathy::RequestChannelFlags f)
-    : targetmode(AbstractRequestChannelJob::TargetModeContact),
-      requestchannelflags(f),
+                                                                    const KTelepathy::RequestChannelFlags rcf)
+    : TelepathyBaseJobPrivate(),
+      targetmode(AbstractRequestChannelJob::TargetModeContact),
+      requestchannelflags(rcf),
       contactResource(c),
       useractiontime(QDateTime::currentDateTime()),
       preferredHandler(ph),
@@ -104,9 +106,10 @@ AbstractRequestChannelJobPrivate::AbstractRequestChannelJobPrivate( const Nepomu
 
 AbstractRequestChannelJobPrivate::AbstractRequestChannelJobPrivate( const Nepomuk::Person& mc,
                                                                     const QString& ph,
-                                                                    const KTelepathy::RequestChannelFlags f)
-    : targetmode(AbstractRequestChannelJob::TargetModeMetaContact),
-      requestchannelflags(f),
+                                                                    const KTelepathy::RequestChannelFlags rcf)
+    : TelepathyBaseJobPrivate(),
+      targetmode(AbstractRequestChannelJob::TargetModeMetaContact),
+      requestchannelflags(rcf),
       metacontactResource(mc),
       useractiontime(QDateTime::currentDateTime()),
       preferredHandler(ph),
@@ -118,9 +121,10 @@ AbstractRequestChannelJobPrivate::AbstractRequestChannelJobPrivate( const Nepomu
 
 AbstractRequestChannelJobPrivate::AbstractRequestChannelJobPrivate( const QString& r,
                                                                     const QString& ph,
-                                                                    const KTelepathy::RequestChannelFlags f)
-    : targetmode(AbstractRequestChannelJob::TargetModeRoom),
-      requestchannelflags(f),
+                                                                    const KTelepathy::RequestChannelFlags rcf)
+    : TelepathyBaseJobPrivate(),
+      targetmode(AbstractRequestChannelJob::TargetModeRoom),
+      requestchannelflags(rcf),
       room(r),
       useractiontime(QDateTime::currentDateTime()),
       preferredHandler(ph),
@@ -131,7 +135,10 @@ AbstractRequestChannelJobPrivate::AbstractRequestChannelJobPrivate( const QStrin
 }
 
 
-AbstractRequestChannelJobPrivate::~AbstractRequestChannelJobPrivate() {}
+AbstractRequestChannelJobPrivate::~AbstractRequestChannelJobPrivate()
+{
+    kDebug();
+}
 
 void AbstractRequestChannelJobPrivate::__k__requestChannel()
 {
@@ -162,6 +169,8 @@ void AbstractRequestChannelJobPrivate::__k__requestChannel()
         return;
     }
 
+
+    // Request the channel
     if (requestchannelflags & KTelepathy::RequestChannelEnsureMode) {
         if (q->canEnsureChannel()) {
             pendingchannelrequest = q->ensureChannel();
@@ -183,9 +192,10 @@ void AbstractRequestChannelJobPrivate::__k__requestChannel()
         return;
     }
 
+
     // Check if the channel request was created...
     if(!pendingchannelrequest) {
-        kWarning() << "!pendingchannelrequest";
+        kWarning() << "Pending channel request was not created.";
         q->setError(TelepathyBridge::InvalidOperationError);
         q->setErrorText(i18n("This is an internal error of KTelepathy"));
         QTimer::singleShot(0, q, SLOT(__k__doEmitResult()));

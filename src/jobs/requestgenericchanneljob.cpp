@@ -32,15 +32,15 @@ public:
     RequestGenericChannelJobPrivate(const Nepomuk::PersonContact& c,
                                     const QVariantMap& rq,
                                     const QString& ph,
-                                    const KTelepathy::RequestChannelFlags requestchannelflags);
+                                    const KTelepathy::RequestChannelFlags rcf);
     RequestGenericChannelJobPrivate(const Nepomuk::Person& mc,
                                     const QVariantMap& rq,
                                     const QString& ph,
-                                    const KTelepathy::RequestChannelFlags requestchannelflags);
+                                    const KTelepathy::RequestChannelFlags rcf);
     RequestGenericChannelJobPrivate(const QString& r,
                                     const QVariantMap& rq,
                                     const QString& ph,
-                                    const KTelepathy::RequestChannelFlags requestchannelflags);
+                                    const KTelepathy::RequestChannelFlags rcf);
     ~RequestGenericChannelJobPrivate();
 
     QVariantMap request;
@@ -170,4 +170,43 @@ void RequestGenericChannelJob::updateRequestTargets()
     }
 
     kDebug() << i18n("Request:") << d->request;
+}
+
+
+RequestGenericChannelJobPrivate::RequestGenericChannelJobPrivate(const Nepomuk::PersonContact& c,
+                                                                 const QVariantMap& rq,
+                                                                 const QString& ph,
+                                                                 const KTelepathy::RequestChannelFlags rcf)
+    : AbstractRequestChannelJobPrivate(c, ph, rcf),
+      request(rq)
+{
+    kDebug();
+}
+
+
+RequestGenericChannelJobPrivate::RequestGenericChannelJobPrivate(const Nepomuk::Person& mc,
+                                                                 const QVariantMap& rq,
+                                                                 const QString& ph,
+                                                                 const KTelepathy::RequestChannelFlags rcf)
+    : AbstractRequestChannelJobPrivate(mc, ph, rcf),
+      request(rq)
+{
+    kDebug();
+}
+
+
+RequestGenericChannelJobPrivate::RequestGenericChannelJobPrivate(const QString& r,
+                                                                 const QVariantMap& rq,
+                                                                 const QString& ph,
+                                                                 const KTelepathy::RequestChannelFlags rcf)
+    : AbstractRequestChannelJobPrivate(r, ph, rcf),
+      request(rq)
+{
+    kDebug();
+}
+
+
+RequestGenericChannelJobPrivate::~RequestGenericChannelJobPrivate()
+{
+    kDebug();
 }

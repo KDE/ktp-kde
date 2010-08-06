@@ -30,10 +30,10 @@ class RequestTextChatJobPrivate : public AbstractRequestChannelJobPrivate
 public:
     RequestTextChatJobPrivate(const Nepomuk::PersonContact& c,
                               const QString& ph,
-                              const KTelepathy::RequestChannelFlags requestchannelflags);
+                              const KTelepathy::RequestChannelFlags rcf);
     RequestTextChatJobPrivate(const Nepomuk::Person& mc,
                               const QString& ph,
-                              const KTelepathy::RequestChannelFlags requestchannelflags);
+                              const KTelepathy::RequestChannelFlags rcf);
     ~RequestTextChatJobPrivate();
 
     static inline RequestTextChatJob* newJob(const Nepomuk::PersonContact& contact,
@@ -96,8 +96,8 @@ bool RequestTextChatJob::canEnsureChannel()
 
 RequestTextChatJobPrivate::RequestTextChatJobPrivate(const Nepomuk::PersonContact& c,
                                                      const QString& ph,
-                                                     const KTelepathy::RequestChannelFlags requestchannelflags)
-    : AbstractRequestChannelJobPrivate(c, ph, requestchannelflags)
+                                                     const KTelepathy::RequestChannelFlags rcf)
+    : AbstractRequestChannelJobPrivate(c, ph, rcf)
 {
     kDebug();
 }
@@ -105,8 +105,8 @@ RequestTextChatJobPrivate::RequestTextChatJobPrivate(const Nepomuk::PersonContac
 
 RequestTextChatJobPrivate::RequestTextChatJobPrivate(const Nepomuk::Person& mc,
                                                      const QString& ph,
-                                                     const KTelepathy::RequestChannelFlags requestchannelflags)
-    : AbstractRequestChannelJobPrivate(mc, ph, requestchannelflags)
+                                                     const KTelepathy::RequestChannelFlags rcf)
+    : AbstractRequestChannelJobPrivate(mc, ph, rcf)
 {
     kDebug();
 }

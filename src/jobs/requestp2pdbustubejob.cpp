@@ -31,11 +31,11 @@ public:
     RequestP2PDBusTubeJobPrivate(const Nepomuk::PersonContact& c,
                                  const QString& sn,
                                  const QString& ph,
-                                 const KTelepathy::RequestChannelFlags requestchannelflags);
+                                 const KTelepathy::RequestChannelFlags rcf);
     RequestP2PDBusTubeJobPrivate(const Nepomuk::Person& mc,
                                  const QString& sn,
                                  const QString& ph,
-                                 const KTelepathy::RequestChannelFlags requestchannelflags);
+                                 const KTelepathy::RequestChannelFlags rcf);
     ~RequestP2PDBusTubeJobPrivate();
 
     QString serviceName;
@@ -108,8 +108,8 @@ bool RequestP2PDBusTubeJob::canCreateChannel()
 RequestP2PDBusTubeJobPrivate::RequestP2PDBusTubeJobPrivate(const Nepomuk::PersonContact& c,
                                                            const QString& sn,
                                                            const QString& ph,
-                                                           const KTelepathy::RequestChannelFlags requestchannelflags)
-    : AbstractRequestChannelJobPrivate(c, ph, requestchannelflags),
+                                                           const KTelepathy::RequestChannelFlags rcf)
+    : AbstractRequestChannelJobPrivate(c, ph, rcf),
       serviceName(sn)
 {
     kDebug();
@@ -119,8 +119,8 @@ RequestP2PDBusTubeJobPrivate::RequestP2PDBusTubeJobPrivate(const Nepomuk::Person
 RequestP2PDBusTubeJobPrivate::RequestP2PDBusTubeJobPrivate(const Nepomuk::Person& mc,
                                                            const QString& sn,
                                                            const QString& ph,
-                                                           const KTelepathy::RequestChannelFlags requestchannelflags)
-    : AbstractRequestChannelJobPrivate(mc, ph, requestchannelflags),
+                                                           const KTelepathy::RequestChannelFlags rcf)
+    : AbstractRequestChannelJobPrivate(mc, ph, rcf),
       serviceName(sn)
 {
     kDebug();

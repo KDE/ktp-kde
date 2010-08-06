@@ -38,41 +38,41 @@ class AbstractRequestChannelJobPrivate : public TelepathyBaseJobPrivate
 public:
     AbstractRequestChannelJobPrivate(const Nepomuk::PersonContact& c,
                                      const QString& ph,
-                                     const KTelepathy::RequestChannelFlags f);
+                                     const KTelepathy::RequestChannelFlags rcf);
     AbstractRequestChannelJobPrivate(const Nepomuk::Person& mc,
                                      const QString& ph,
-                                     const KTelepathy::RequestChannelFlags f);
+                                     const KTelepathy::RequestChannelFlags rcf);
     AbstractRequestChannelJobPrivate(const QString& r,
                                      const QString& ph,
-                                     const KTelepathy::RequestChannelFlags f);
+                                     const KTelepathy::RequestChannelFlags rcf);
 /* TODO
     AbstractRequestChannelJobPrivate(const QString& r,
                                      const QList<Nepomuk::PersonContact>& cl,
                                      const QString& ph,
-                                     const KTelepathy::RequestChannelFlags f);
+                                     const KTelepathy::RequestChannelFlags rcf);
 
     AbstractRequestChannelJobPrivate(const QString& r,
                                      const QList<Nepomuk::Person>& mcl,
                                      const QString& ph,
-                                     const KTelepathy::RequestChannelFlags f);
+                                     const KTelepathy::RequestChannelFlags rcf);
 */
 
     virtual ~AbstractRequestChannelJobPrivate();
 
     // Flags
-    AbstractRequestChannelJob::TargetMode targetmode;
-    KTelepathy::RequestChannelFlags requestchannelflags;
+    const AbstractRequestChannelJob::TargetMode targetmode;
+    const KTelepathy::RequestChannelFlags requestchannelflags;
 
     // Target (input)
-    Nepomuk::PersonContact contactResource;
-    Nepomuk::Person metacontactResource;
-    QString room;
-//    QList<Nepomuk::PersonContact> contactResources;
-//    QList<Nepomuk::Person> metacontactResources;
+    Nepomuk::PersonContact contactResource; // TODO const?
+    const Nepomuk::Person metacontactResource;
+    const QString room;
+//    const QList<Nepomuk::PersonContact> contactResources;
+//    const QList<Nepomuk::Person> metacontactResources;
 
     // Other input
-    QDateTime useractiontime;
-    QString preferredHandler;
+    const QDateTime useractiontime;
+    const QString preferredHandler;
 
     // TelepathyQt4 stuff
     Tp::AccountPtr account;

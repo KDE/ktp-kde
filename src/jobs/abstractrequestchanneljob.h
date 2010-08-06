@@ -19,13 +19,8 @@
 #ifndef LIBKTELEPATHY_ABSTRACTREQUESTCHANNELJOB_H
 #define LIBKTELEPATHY_ABSTRACTREQUESTCHANNELJOB_H
 
-#include "telepathy-base-job.h"
+#include <KTelepathy/TelepathyBaseJob>
 #include <kdemacros.h>
-
-namespace Tp {
-    class PendingOperation;
-    class PendingChannelRequest;
-}
 
 
 namespace KTelepathy {
@@ -44,8 +39,13 @@ namespace KTelepathy {
 Q_DECLARE_OPERATORS_FOR_FLAGS(KTelepathy::RequestChannelFlags)
 
 
+namespace Tp {
+    class PendingOperation;
+    class PendingChannelRequest;
+}
+
 class AbstractRequestChannelJobPrivate;
-class KDE_EXPORT AbstractRequestChannelJob : public TelepathyBaseJob
+class KDE_EXPORT AbstractRequestChannelJob : public TelepathyBaseJob // TODO Remove KDE_EXPORT?
 {
     Q_OBJECT
     Q_DISABLE_COPY(AbstractRequestChannelJob)
