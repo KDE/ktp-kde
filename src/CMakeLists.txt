@@ -126,16 +126,19 @@ if (WITH_DBUSTUBES)
          ${ktelepathy_SRCS}
          jobs/accept-dbustube-job.cpp
          jobs/offer-dbustube-job.cpp
+         jobs/requestp2pdbustubejob.cpp
     )
     set (ktelepathy_INST_HDRS
          ${ktelepathy_INST_HDRS}
          jobs/accept-dbustube-job.h
          jobs/offer-dbustube-job.h
+         jobs/requestp2pdbustubejob.h
     )
     set (ktelepathy_PRETTY_HDRS
          ${ktelepathy_PRETTY_HDRS}
          KTelepathy/AcceptDBusTubeJob
          KTelepathy/OfferDBusTubeJob
+         KTelepathy/RequestP2PDBusTubeJob
     )
 endif (WITH_DBUSTUBES)
 
