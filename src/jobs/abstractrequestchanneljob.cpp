@@ -147,7 +147,7 @@ void AbstractRequestChannelJobPrivate::__k__requestChannel()
     //Handle some possible errors
     if(pendingchannelrequest) {
         kWarning() << "What happened?";
-        q->setError(TelepathyBridge::InvalidOperationError);
+        q->setError(KJob::UserDefinedError);
         q->setErrorText(i18n("This is an internal error of KTelepathy"));
         QTimer::singleShot(0, q, SLOT(__k__doEmitResult()));
         return;
@@ -155,7 +155,7 @@ void AbstractRequestChannelJobPrivate::__k__requestChannel()
 
     if (!(requestchannelflags & (KTelepathy::RequestChannelEnsureMode | KTelepathy::RequestChannelCreateMode))) {
         kWarning() << "What do you whant to request?";
-        q->setError(TelepathyBridge::InvalidOperationError);
+        q->setError(KJob::UserDefinedError);
         q->setErrorText(i18n("This is an internal error of KTelepathy"));
         QTimer::singleShot(0, q, SLOT(__k__doEmitResult()));
         return;
@@ -163,7 +163,7 @@ void AbstractRequestChannelJobPrivate::__k__requestChannel()
 
     if (!q->canEnsureChannel() && !q->canCreateChannel()) {
         kWarning() << "This job is useless!";
-        q->setError(TelepathyBridge::InvalidOperationError);
+        q->setError(KJob::UserDefinedError);
         q->setErrorText(i18n("This is an internal error of KTelepathy"));
         QTimer::singleShot(0, q, SLOT(__k__doEmitResult()));
         return;
@@ -186,7 +186,7 @@ void AbstractRequestChannelJobPrivate::__k__requestChannel()
             pendingchannelrequest = q->createChannel();
         }
     } else {
-        q->setError(TelepathyBridge::InvalidOperationError);
+        q->setError(KJob::UserDefinedError);
         q->setErrorText(i18n("This is an internal error of KTelepathy"));
         QTimer::singleShot(0, q, SLOT(__k__doEmitResult()));
         return;
@@ -196,7 +196,7 @@ void AbstractRequestChannelJobPrivate::__k__requestChannel()
     // Check if the channel request was created...
     if(!pendingchannelrequest) {
         kWarning() << "Pending channel request was not created.";
-        q->setError(TelepathyBridge::InvalidOperationError);
+        q->setError(KJob::UserDefinedError);
         q->setErrorText(i18n("This is an internal error of KTelepathy"));
         QTimer::singleShot(0, q, SLOT(__k__doEmitResult()));
         return;
@@ -243,7 +243,7 @@ void AbstractRequestChannelJobPrivate::initTargets()
         case AbstractRequestChannelJob::TargetModeError:
         default:
             // Hmm?
-            q->setError(TelepathyBridge::InvalidOperationError);
+            q->setError(KJob::UserDefinedError);
             q->setErrorText(i18n("This is an internal error of KTelepathy"));
             QTimer::singleShot(0, q, SLOT(__k__doEmitResult()));
             break;
