@@ -45,9 +45,15 @@ class KDE_EXPORT Person : public Entity {
 public:
     virtual ~Person();
 
-private:
-    // Constrcutor is private because only PeopleManager should directly create Person objects
+protected:
+    /**
+     * Constrcutor is protected because only PeopleManager should directly create Person objects.
+     */
     explicit Person(const Nepomuk::Resource &pimoPerson);
+
+private:
+    Q_DISABLE_COPY(Person);
+
     friend class PeopleManager;
 
     class Private;

@@ -41,7 +41,6 @@ class KDE_EXPORT Entity : public QObject {
     Q_OBJECT
 
 public:
-    explicit Entity(const Nepomuk::Resource &resource);
     virtual ~Entity();
 
     /**
@@ -85,6 +84,11 @@ public:
 
 protected:
     /**
+     * Constructor is protected since only PeopleManager can create Entity instances.
+     */
+    explicit Entity(const Nepomuk::Resource &resource);
+
+    /**
      * Sub-classes use this method to indicate if the Entity should be valid or not. It should be
      * called by subclasses in the constructor after they have discovered whether the resource
      * provided to the constructor is of a valid type for the type of entity (e.g. a PIMO:Person
@@ -93,6 +97,10 @@ protected:
     void setValid(bool valid);
 
 private:
+    Q_DISABLE_COPY(Entity);
+
+    friend class PeopleManager;
+
     class Private;
     Private * const d;
 

@@ -51,6 +51,8 @@ public:
 private:
     PeopleManager();
 
+    Q_DISABLE_COPY(PeopleManager);
+
     class Private;
     Private * const d;
 
