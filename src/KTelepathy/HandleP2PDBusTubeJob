@@ -1,0 +1,7 @@
+#ifndef LIBKTELEPATHY_HANDLEP2PDBUSTUBEJOB_PRETTY_H
+#define LIBKTELEPATHY_HANDLEP2PDBUSTUBEJOB_PRETTY_H
+
+#include <KTelepathy/handlep2pdbustubejob.h>
+
+#endif
+// vim:set ft=cpp:
