@@ -47,7 +47,7 @@ public:
 
 private:
     // Constrcutor is private because only PeopleManager should directly create Person objects
-    explicit Person(const Nepomuk::Resource &pimoPerson, QObject *parent = 0);
+    explicit Person(const Nepomuk::Resource &pimoPerson);
     friend class PeopleManager;
 
     class Private;

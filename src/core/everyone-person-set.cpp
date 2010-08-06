@@ -57,8 +57,8 @@ public:
     PeopleManager *peopleManager;
 };
 
-EveryonePersonSet::EveryonePersonSet(const Nepomuk::Resource &mePimoPerson, QObject* parent)
-  : PersonSet(parent),
+EveryonePersonSet::EveryonePersonSet(const Nepomuk::Resource &mePimoPerson)
+  : PersonSet(),
     d(new Private(this, mePimoPerson))
 {
     kDebug();

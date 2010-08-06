@@ -49,7 +49,7 @@ private Q_SLOTS:
 
 private:
     // Private constructor because this object should only be instantiated by PeopleManager
-    explicit EveryonePersonSet(const Nepomuk::Resource &mePimoPerson, QObject *parent = 0);
+    explicit EveryonePersonSet(const Nepomuk::Resource &mePimoPerson);
     friend class PeopleManager;
 
     class Private;

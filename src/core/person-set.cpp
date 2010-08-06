@@ -35,8 +35,8 @@ public:
 
 };
 
-PersonSet::PersonSet(QObject *parent)
-  : QObject(parent),
+PersonSet::PersonSet()
+  : QObject(0),
     d(new PersonSet::Private)
 {
     kDebug();

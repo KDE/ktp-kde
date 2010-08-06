@@ -44,7 +44,7 @@ class KDE_EXPORT PersonSet : public QObject {
     Q_OBJECT
 
 public:
-    explicit PersonSet(QObject *parent = 0);
+    explicit PersonSet();
     virtual ~PersonSet();
 
     /**

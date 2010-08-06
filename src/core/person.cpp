@@ -38,8 +38,8 @@ public:
 };
 
 
-Person::Person(const Nepomuk::Resource &pimoPerson, QObject *parent)
-  : Entity(pimoPerson, parent),
+Person::Person(const Nepomuk::Resource &pimoPerson)
+  : Entity(pimoPerson),
     d(new Private)
 {
     kDebug();

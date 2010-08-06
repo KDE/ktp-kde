@@ -35,8 +35,8 @@ public:
     QUrl resourceUri;
 };
 
-Entity::Entity(const Nepomuk::Resource &resource, QObject *parent)
-  : QObject(parent),
+Entity::Entity(const Nepomuk::Resource &resource)
+  : QObject(0),
     d(new Entity::Private)
 {
     kDebug();

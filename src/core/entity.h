@@ -41,7 +41,7 @@ class KDE_EXPORT Entity : public QObject {
     Q_OBJECT
 
 public:
-    explicit Entity(const Nepomuk::Resource &resource, QObject *parent = 0);
+    explicit Entity(const Nepomuk::Resource &resource);
     virtual ~Entity();
 
     /**

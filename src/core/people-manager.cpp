@@ -102,7 +102,7 @@ PersonSetPtr PeopleManager::everyone()
     kDebug();
 
     if (d->everyonePersonSet.isNull()) {
-        QSharedPointer<EveryonePersonSet> everyonePersonSet(new EveryonePersonSet(d->mePimoPerson, 0));
+        QSharedPointer<EveryonePersonSet> everyonePersonSet(new EveryonePersonSet(d->mePimoPerson));
         d->everyonePersonSet = everyonePersonSet.toWeakRef();
         // Must return from here otherwise the only strong ref (everyonePersonSet above) goes out of
         // scope and the everyonePersonSet gets destroyed.
