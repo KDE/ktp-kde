@@ -32,6 +32,7 @@ public:
 
     bool valid;
     Nepomuk::Resource resource;
+    QUrl resourceUri;
 };
 
 Entity::Entity(const Nepomuk::Resource &resource, QObject *parent)
@@ -41,6 +42,7 @@ Entity::Entity(const Nepomuk::Resource &resource, QObject *parent)
     kDebug();
 
     d->resource = resource;
+    d->resourceUri = resource.resourceUri();
 }
 
 Entity::~Entity()
@@ -65,6 +67,11 @@ Nepomuk::Resource Entity::resource() const
     return d->resource;
 }
 
+QUrl Entity::resourceUri() const
+{
+    return d->resourceUri;
+}
+
 void Entity::setValid(bool valid)
 {
     d->valid = valid;
@@ -72,7 +79,7 @@ void Entity::setValid(bool valid)
 
 bool Entity::operator==(const Entity &other) const
 {
-    return (this->resource() == other.resource());
+    return (this->resourceUri() == other.resourceUri());
 }
 
 bool Entity::operator!=(const Entity &other) const

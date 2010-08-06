@@ -63,11 +63,11 @@ Person::~Person()
 }
 
 uint qHash(Person key) {
-    return qHash(key.resource());
+    return qHash(key.resourceUri());
 }
 
 uint qHash(PersonPtr key) {
-    return qHash(key->resource());
+    return qHash(key->resourceUri());
 }
 
 

@@ -28,6 +28,7 @@
 
 #include <QtCore/QObject>
 #include <QtCore/QSharedPointer>
+#include <QtCore/QUrl>
 
 /**
  * @class Entity
@@ -55,14 +56,29 @@ public:
     bool isValid() const;
 
     /**
-     * @brief get the resource this entity wraps/
+     * @brief get the resource this entity wraps.
      * @return the resource this entity wraps.
      *
      * This method will return the resource this entity wraps if the entity is valid. If the entity
      * is not valid, it will always return an invalid resource even if the entity was constructed
      * with a valid resource.
+     *
+     * If the Nepomuk resource this entity wraps is deleted from the Nepomuk store, the corresponding
+     * Nepomuk::Resource object will have all its properties immediately cleared. In order to get
+     * the URI of the wrapped Nepomuk resource in a way which guarantees to provide it even if the
+     * resource is removed from the nepomuk store, call resourceUri() instead.
      */
     Nepomuk::Resource resource() const;
+
+    /**
+     * @brief returns the URI of the resource this entity wraps, even if the resource no longer exists.
+     * @return the URI of the wrapped resource.
+     *
+     * This method returns the URI of the wrapped resource, even if that resource has been removed
+     * from the Nepomuk storage, and therefore the properties of the corresponding Nepomuk::Resource
+     * object have been reset.
+     */
+    QUrl resourceUri() const;
 
     bool operator==(const Entity &other) const;
     bool operator!=(const Entity &other) const;

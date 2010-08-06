@@ -72,7 +72,7 @@ void PersonSet::removePerson(const QUrl &uri)
     kDebug();
 
     Q_FOREACH (const PersonPtr &person, d->people) {
-        if (person->resource().resourceUri() == uri) {
+        if (person->resourceUri() == uri) {
             d->people.remove(person);
             Q_EMIT personRemoved(person);
             return;
