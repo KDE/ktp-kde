@@ -60,18 +60,22 @@ void PersonSet::addPerson(const PersonPtr &person)
 {
     kDebug();
 
-    // FIXME: Signal should only be emitted if something actually changes
-    d->people.insert(person);
-    Q_EMIT personAdded(person);
+    // Signal should only be emitted if something actually changes
+    if (!d->people.contains(person)) {
+        d->people.insert(person);
+        Q_EMIT personAdded(person);
+    }
 }
 
 void PersonSet::removePerson(const PersonPtr &person)
 {
     kDebug();
 
-    // FIXME: Signal should only be emitted if something actually changes
-    d->people.remove(person);
-    Q_EMIT personRemoved(person);
+    // Signal should only be emitted if something actually changes
+    if (d->people.contains(person)) {
+        d->people.remove(person);
+        Q_EMIT personRemoved(person);
+    }
 }
 
 void PersonSet::removePerson(const QUrl &uri)
