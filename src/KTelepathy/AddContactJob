@@ -1,7 +1,1 @@
-#ifndef LIBKTELEPATHY_ADD_CONTACT_JOB_PRETTY_H
-#define LIBKTELEPATHY_ADD_CONTACT_JOB_PRETTY_H
-
-#include <KTelepathy/add-contact-job.h>
-
-#endif
-// vim:set ft=cpp:
+#include "../../ktelepathy/add-contact-job.h"

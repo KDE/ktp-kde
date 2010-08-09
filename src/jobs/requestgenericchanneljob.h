@@ -19,7 +19,7 @@
 #ifndef REQUESTGENERICCHANNELJOB_H
 #define REQUESTGENERICCHANNELJOB_H
 
-#include "abstractrequestchanneljob.h"
+#include <abstractrequestchanneljob.h>
 #include <kdemacros.h>
 
 

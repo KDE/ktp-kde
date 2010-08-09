@@ -20,7 +20,7 @@
 #define LIBKTELEPATHY_REQUESTP2PDBUSTUBEJOB_H
 
 
-#include "abstractrequestchanneljob.h"
+#include <abstractrequestchanneljob.h>
 #include <kdemacros.h>
 
 class RequestP2PDBusTubeJobPrivate;

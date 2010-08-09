@@ -1,7 +1,1 @@
-#ifndef LIBKTELEPATHY_TELEPATHY_BASE_JOB_PRETTY_H
-#define LIBKTELEPATHY_TELEPATHY_BASE_JOB_PRETTY_H
-
-#include <KTelepathy/telepathy-base-job.h>
-
-#endif
-// vim:set ft=cpp:
+#include "../../ktelepathy/telepathy-base-job.h"

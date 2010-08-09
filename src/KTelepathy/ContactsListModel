@@ -1,7 +1,1 @@
-#ifndef LIBKTELEPATHY_CONTACTS_LIST_MODEL_PRETTY_H
-#define LIBKTELEPATHY_CONTACTS_LIST_MODEL_PRETTY_H
-
-#include <KTelepathy/contacts-list-model.h>
-
-#endif
-// vim:set ft=cpp:
+#include "../../ktelepathy/contacts-list-model.h"

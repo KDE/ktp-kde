@@ -1,7 +1,1 @@
-#ifndef LIBKTELEPATHY_TELEPATHY_ACCOUNT_PROXY_PRETTY_H
-#define LIBKTELEPATHY_TELEPATHY_ACCOUNT_PROXY_PRETTY_H
-
-#include <KTelepathy/telepathy-account-proxy.h>
-
-#endif
-// vim:set ft=cpp:
+#include "../../ktelepathy/telepathy-account-proxy.h"

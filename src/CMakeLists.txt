@@ -179,8 +179,13 @@ install (TARGETS ktelepathy
          ${INSTALL_TARGETS_DEFAULT_ARGS}
 )
 
-install (FILES ${ktelepathy_INST_HDRS} ${ktelepathy_PRETTY_HDRS}
-         DESTINATION ${INCLUDE_INSTALL_DIR}/KTelepathy
+install (FILES ${ktelepathy_INST_HDRS}
+         DESTINATION ${INCLUDE_INSTALL_DIR}/ktelepathy
+         COMPONENT Devel
+)
+
+install (FILES ${ktelepathy_PRETTY_HDRS}
+         DESTINATION ${INCLUDE_INSTALL_DIR}/KDE/KTelepathy
          COMPONENT Devel
 )
 

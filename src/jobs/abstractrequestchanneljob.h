@@ -19,7 +19,7 @@
 #ifndef LIBKTELEPATHY_ABSTRACTREQUESTCHANNELJOB_H
 #define LIBKTELEPATHY_ABSTRACTREQUESTCHANNELJOB_H
 
-#include <KTelepathy/TelepathyBaseJob>
+#include <telepathy-base-job.h>
 #include <kdemacros.h>
 
 

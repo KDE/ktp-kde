@@ -1,7 +1,1 @@
-#ifndef LIBKTELEPATHY_ACCEPT_TCP_STREAMTUBE_JOB_PRETTY_H
-#define LIBKTELEPATHY_ACCEPT_TCP_STREAMTUBE_JOB_PRETTY_H
-
-#include <KTelepathy/accept-tcp-streamtube-job.h>
-
-#endif
-// vim:set ft=cpp:
+#include "../../ktelepathy/accept-tcp-streamtube-job.h"

@@ -1,7 +1,1 @@
-#ifndef LIBKTELEPATHY_META_CONTACT_ITEM_PRETTY_H
-#define LIBKTELEPATHY_META_CONTACT_ITEM_PRETTY_H
-
-#include <KTelepathy/meta-contact-item.h>
-
-#endif
-// vim:set ft=cpp:
+#include "../../ktelepathy/meta-contact-item.h"

@@ -24,7 +24,7 @@
 
 #include <kdemacros.h>
 
-#include "telepathy-base-job.h"
+#include <telepathy-base-job.h>
 
 #include "telepathy-bridge.h"
 

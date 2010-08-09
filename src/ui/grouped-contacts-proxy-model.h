@@ -24,7 +24,7 @@
 
 #include <kdemacros.h>
 
-#include "abstract-tree-item.h"
+#include <abstract-tree-item.h>
 
 #include <QtGui/QAbstractProxyModel>
 

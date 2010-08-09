@@ -1,7 +1,1 @@
-#ifndef LIBKTELEPATHY_OFFER_DBUSTUBE_JOB_PRETTY_H
-#define LIBKTELEPATHY_OFFER_DBUSTUBE_JOB_PRETTY_H
-
-#include <KTelepathy/offer-dbustube-job.h>
-
-#endif
-// vim:set ft=cpp:
+#include "../../ktelepathy/offer-dbustube-job.h"

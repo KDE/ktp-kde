@@ -22,7 +22,7 @@
 #ifndef LIBKTELEPATHY_PERSON_SET_H
 #define LIBKTELEPATHY_PERSON_SET_H
 
-#include "person.h"
+#include <person.h>
 
 #include <kdemacros.h>
 

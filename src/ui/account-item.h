@@ -22,8 +22,8 @@
 #include <kdemacros.h>
 
 #include <QObject>
-#include "abstract-tree-item.h"
-#include "nepomuk-signal-watcher.h"
+#include <abstract-tree-item.h>
+#include <nepomuk-signal-watcher.h>
 
 #include "ontologies/imaccount.h"
 #include <KIcon>

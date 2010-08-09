@@ -1,7 +1,1 @@
-#ifndef LIBKTELEPATHY_ABSTRACT_TREE_ITEM_PRETTY_H
-#define LIBKTELEPATHY_ABSTRACT_TREE_ITEM_PRETTY_H
-
-#include <KTelepathy/abstract-tree-item.h>
-
-#endif
-// vim:set ft=cpp:
+#include "../../ktelepathy/abstract-tree-item.h"

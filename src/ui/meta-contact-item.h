@@ -24,8 +24,8 @@
 
 #include <kdemacros.h>
 
-#include "abstract-tree-item.h"
-#include "nepomuk-signal-watcher.h"
+#include <abstract-tree-item.h>
+#include <nepomuk-signal-watcher.h>
 
 #include "ontologies/person.h"
 #include "ontologies/personcontact.h"

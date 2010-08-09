@@ -22,8 +22,8 @@
 #ifndef LIBKTELEPATHY_PEOPLE_MANAGER_H
 #define LIBKTELEPATHY_PEOPLE_MANAGER_H
 
-#include "person.h"
-#include "person-set.h"
+#include <person.h>
+#include <person-set.h>
 
 #include <kdemacros.h>
 

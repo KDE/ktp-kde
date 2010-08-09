@@ -1,7 +1,1 @@
-#ifndef LIBKTELEPATHY_REQUESTGENERICCHANNELJOB_PRETTY_H
-#define LIBKTELEPATHY_REQUESTGENERICCHANNELJOB_PRETTY_H
-
-#include <KTelepathy/requestgenericchanneljob.h>
-
-#endif
-// vim:set ft=cpp:
+#include "../../ktelepathy/requestgenericchanneljob.h"

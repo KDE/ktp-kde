@@ -1,7 +1,1 @@
-#ifndef LIBKTELEPATHY_ABSTRACTHANDLECHANNELJOB_PRETTY_H
-#define LIBKTELEPATHY_ABSTRACTHANDLECHANNELJOB_PRETTY_H
-
-#include <KTelepathy/abstracthandlechanneljob.h>
-
-#endif
-// vim:set ft=cpp:
+#include "../../ktelepathy/abstracthandlechanneljob.h"

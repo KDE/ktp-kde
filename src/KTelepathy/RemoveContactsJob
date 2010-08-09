@@ -1,7 +1,1 @@
-#ifndef LIBKTELEPATHY_REMOVE_CONTACTS_JOB_PRETTY_H
-#define LIBKTELEPATHY_REMOVE_CONTACTS_JOB_PRETTY_H
-
-#include <KTelepathy/remove-contacts-job.h>
-
-#endif
-// vim:set ft=cpp:
+#include "../../ktelepathy/remove-contacts-job.h"

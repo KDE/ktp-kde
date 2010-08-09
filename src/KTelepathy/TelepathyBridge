@@ -1,7 +1,1 @@
-#ifndef LIBKTELEPATHY_TELEPATHY_BRIDGE_PRETTY_H
-#define LIBKTELEPATHY_TELEPATHY_BRIDGE_PRETTY_H
-
-#include <KTelepathy/telepathy-bridge.h>
-
-#endif
-// vim:set ft=cpp:
+#include "../../ktelepathy/telepathy-bridge.h"

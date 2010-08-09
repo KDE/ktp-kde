@@ -1,7 +1,1 @@
-#ifndef LIBKTELEPATHY_ADD_CONTACTS_TO_GROUP_JOB_PRETTY_H
-#define LIBKTELEPATHY_ADD_CONTACTS_TO_GROUP_JOB_PRETTY_H
-
-#include <KTelepathy/add-contacts-to-group-job.h>
-
-#endif
-// vim:set ft=cpp:
+#include "../../ktelepathy/add-contacts-to-group-job.h"
