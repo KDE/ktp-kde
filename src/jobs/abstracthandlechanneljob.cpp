@@ -105,7 +105,8 @@ AbstractHandleChannelJobPrivate::AbstractHandleChannelJobPrivate(const Tp::Chann
                                                                  const KTelepathy::HandleChannelFlags hcf)
     : TelepathyBaseJobPrivate(),
       channel(c),
-      handlechannelflags(hcf)
+      handlechannelflags(hcf),
+      pendingoperation(NULL)
 {
     kDebug();
 }
@@ -126,8 +127,8 @@ void AbstractHandleChannelJobPrivate::__k__handleChannel()
         QTimer::singleShot(0, q, SLOT(__k__doEmitResult()));
     }
 
-    if(!pendingoperation) {
-        kWarning() << "What happened?";
+    if(pendingoperation) {
+        kWarning() << "Pending operation already existing! What Happened?";
         q->setError(KJob::UserDefinedError);
         q->setErrorText(i18n("This is an internal error of KTelepathy"));
         QTimer::singleShot(0, q, SLOT(__k__doEmitResult()));
