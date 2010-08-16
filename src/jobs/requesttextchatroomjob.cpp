@@ -95,6 +95,9 @@ RequestTextChatroomJobPrivate::~RequestTextChatroomJobPrivate()
     kDebug();
 }
 
+
+namespace KTelepathy {
+
 /*
 RequestTextChatroomJob* requestTextChatroom(const QString& room,
                                             const QString& preferredHandler,
@@ -119,5 +122,6 @@ RequestTextChatroomJob* requestTextChatroom(const QString& room,
                                                  parent);
 }
 
+} // namespace KTelepathy
 
 #include "requesttextchatroomjob.moc"

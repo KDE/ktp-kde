@@ -138,6 +138,9 @@ RequestP2PDBusTubeJobPrivate::~RequestP2PDBusTubeJobPrivate()
     kDebug();
 }
 
+
+namespace KTelepathy {
+
 /*
 RequestP2PDBusTubeJob* requestP2PDBusTube(const Nepomuk::PersonContact& contact,
                                           const QString& serviceName,
@@ -191,5 +194,7 @@ RequestP2PDBusTubeJob* requestP2PDBusTube(const Nepomuk::Person& metacontact,
                                                 KTelepathy::RequestChannelCreateMode,
                                                 parent);
 }
+
+} // namespace KTelepathy
 
 #include "requestp2pdbustubejob.moc"

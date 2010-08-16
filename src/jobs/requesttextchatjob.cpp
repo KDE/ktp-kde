@@ -122,6 +122,9 @@ RequestTextChatJobPrivate::~RequestTextChatJobPrivate()
     kDebug();
 }
 
+
+namespace KTelepathy {
+
 /*
 RequestTextChatJob* requestTextChat(const Nepomuk::PersonContact& contact,
                                     const QString& preferredHandler,
@@ -169,5 +172,7 @@ RequestTextChatJob* requestTextChat(const Nepomuk::Person& metacontact,
                                              KTelepathy::RequestChannelEnsureMode,
                                              parent);
 }
+
+} // namespace KTelepathy
 
 #include "requesttextchatjob.moc"

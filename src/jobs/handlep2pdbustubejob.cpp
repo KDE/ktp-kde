@@ -199,6 +199,8 @@ HandleP2PDBusTubeJobPrivate::~HandleP2PDBusTubeJobPrivate()
 }
 
 
+namespace KTelepathy {
+
 HandleP2PDBusTubeJob* handleP2PDBusTube(const Tp::ChannelPtr& channel,
                                         const QVariantMap& parameters,
                                         const bool requireCredentials,
@@ -241,5 +243,6 @@ Tp::ChannelClassList P2PDBusTubeClientHandlerChannelClassList(QString serviceNam
     return Tp::ChannelClassList() << Tp::ChannelClass(filter0);
 }
 
+} // namespace KTelepathy
 
 #include "handlep2pdbustubejob.moc"

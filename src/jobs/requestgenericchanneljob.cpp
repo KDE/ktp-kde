@@ -215,4 +215,8 @@ RequestGenericChannelJobPrivate::~RequestGenericChannelJobPrivate()
     kDebug();
 }
 
+namespace KTelepathy {
+// TODO implement methods
+}
+
 #include "requestgenericchanneljob.moc"

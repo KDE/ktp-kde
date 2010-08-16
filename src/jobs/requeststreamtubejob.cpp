@@ -137,6 +137,9 @@ RequestStreamTubeJobPrivate::~RequestStreamTubeJobPrivate()
     kDebug();
 }
 
+
+namespace KTelepathy {
+
 /*
 RequestStreamTubeJob* requestStreamTube(const Nepomuk::PersonContact& contact,
                                         const QString& service,
@@ -190,5 +193,7 @@ RequestStreamTubeJob* requestStreamTube(const Nepomuk::Person& metacontact,
                                                KTelepathy::RequestChannelCreateMode,
                                                parent);
 }
+
+} // namespace KTelepathy
 
 #include "requeststreamtubejob.moc"
