@@ -30,6 +30,8 @@
 
 #include <TelepathyQt4/Constants>
 
+using namespace KTelepathy;
+
 ContactItem::ContactItem(Nepomuk::PersonContact personContact,
                          Nepomuk::IMAccount imAccount,
                          QObject *parent)

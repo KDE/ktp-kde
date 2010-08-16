@@ -21,6 +21,8 @@
 #include <QtCore/QAbstractItemModel>
 #include <KDebug>
 
+using namespace KTelepathy;
+
 ModelMenu::ModelMenu(QWidget * parent)
     : QMenu(parent)
     , m_maxRows(7)

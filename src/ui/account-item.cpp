@@ -20,6 +20,8 @@
 
 #include <KDebug>
 
+using namespace KTelepathy;
+
 AccountItem::AccountItem(Nepomuk::IMAccount imAccount, QObject* parent)
     : QObject(parent),
       AbstractTreeItem(),

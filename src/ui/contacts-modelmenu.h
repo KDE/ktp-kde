@@ -24,11 +24,13 @@
 #include <modelmenu.h>
 #include <contacts-list-model.h>
 
-class ContactsListModel;
-class GroupedContactsProxyModel;
 namespace Nepomuk {
     class PersonContact;
 }
+
+namespace KTelepathy {
+class ContactsListModel;
+class GroupedContactsProxyModel;
 
 //TODO allow to use a proxy model instead of the default model
 class KDE_EXPORT ContactsModelMenu: public ModelMenu
@@ -57,5 +59,7 @@ private:
 //    static GroupedContactsProxyModel* s_GroupedContactsModel;
     QVariant& m_data;
 };
+
+} // namespace KTelepathy
 
 #endif // LIBKTELEPATHY_CONTACTS_MODELMENU_H

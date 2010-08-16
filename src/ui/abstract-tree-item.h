@@ -26,6 +26,8 @@
 
 #include <QtCore/QList>
 
+namespace KTelepathy {
+
 class KDE_EXPORT AbstractTreeItem
 {
 public:
@@ -45,6 +47,7 @@ private:
     AbstractTreeItem *m_parent;
 };
 
+} // namespace KTelepathy
 
 #endif // LIBKTELEPATHY_ABSTRACT_TREE_ITEM_H
 

@@ -26,7 +26,6 @@
 
 #include <QtCore/QAbstractItemModel>
 
-class ContactItem;
 namespace Nepomuk {
 namespace Query {
 class QueryServiceClient;
@@ -34,7 +33,12 @@ class Result;
 }
 }
 
+
+namespace KTelepathy {
+
 class AbstractTreeItem;
+class ContactItem;
+
 
 class KDE_EXPORT ContactsListModel : public QAbstractItemModel
 {
@@ -86,6 +90,7 @@ private:
     Nepomuk::Query::QueryServiceClient *m_metaContactsQuery;
 };
 
+} // namespace KTelepathy
 
 #endif // LIBKTELEPATHY_CONTACTS_LIST_MODEL_H
 

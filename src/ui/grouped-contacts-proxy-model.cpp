@@ -28,6 +28,8 @@
 
 #include <QtGui/QItemSelection>
 
+using namespace KTelepathy;
+
 GroupedContactsProxyModel::GroupedContactsProxyModel(QObject* parent)
  : QAbstractProxyModel(parent),
    m_sourceModel(0),

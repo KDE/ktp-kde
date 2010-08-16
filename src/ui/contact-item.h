@@ -34,6 +34,8 @@
 
 #include <QObject>
 
+namespace KTelepathy {
+
 class KDE_EXPORT ContactItem : public QObject,
                                public AbstractTreeItem,
                                protected NepomukSignalWatcher::Watcher
@@ -76,6 +78,7 @@ private:
     QPixmap m_pixmap;
 };
 
+} // namespace KTelepathy
 
 #endif // LIBKTELEPATHY_CONTACT_ITEM_H
 

@@ -45,6 +45,8 @@
 #include <KDebug>
 #include <KMessageBox>
 
+using namespace KTelepathy;
+
 AccountsModel::AccountsModel(QObject *parent)
  : QAbstractItemModel(parent),
    m_rootItem(0)

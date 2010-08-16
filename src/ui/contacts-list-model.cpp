@@ -52,6 +52,8 @@
 #include <unistd.h>
 #include <KMessageBox>
 
+using namespace KTelepathy;
+
 ContactsListModel::ContactsListModel(QObject *parent)
  : QAbstractItemModel(parent),
    m_rootItem(0)

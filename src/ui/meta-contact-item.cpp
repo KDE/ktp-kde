@@ -42,6 +42,8 @@
 
 #include <KMessageBox>
 
+using namespace KTelepathy;
+
 MetaContactItem::MetaContactItem(MetaContactType type, QObject *parent)
   : QObject(parent),
     AbstractTreeItem(),

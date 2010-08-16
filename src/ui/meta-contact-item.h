@@ -42,6 +42,8 @@ class Result;
 
 class KIcon;
 
+namespace KTelepathy {
+
 class KDE_EXPORT MetaContactItem : public QObject,
                                    public AbstractTreeItem,
                                    protected NepomukSignalWatcher::Watcher
@@ -87,6 +89,7 @@ private:
     Nepomuk::Query::QueryServiceClient *m_queryClient;
 };
 
+} // namespace KTelepathy
 
 #endif // LIBKTELEPATHY_META_CONTACT_ITEM_H
 

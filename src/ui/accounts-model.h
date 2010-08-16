@@ -30,6 +30,8 @@ namespace Nepomuk {
     }
 }
 
+namespace KTelepathy {
+
 class AbstractTreeItem;
 
 class KDE_EXPORT AccountsModel : public QAbstractItemModel
@@ -76,5 +78,7 @@ private:
 
     Nepomuk::Query::QueryServiceClient* m_accountsQuery;
 };
+
+} // namespace KTelepathy
 
 #endif // LIBKTELEPATHY_ACCOUNTS_MODEL_H

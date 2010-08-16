@@ -29,6 +29,8 @@
 #include <KIcon>
 #include <TelepathyQt4/Constants>
 
+namespace KTelepathy {
+
 class KDE_EXPORT AccountItem : public QObject,
                                public AbstractTreeItem,
                                protected NepomukSignalWatcher::Watcher
@@ -64,5 +66,7 @@ private:
     KIcon *m_presenceIcon;
     QPixmap m_pixmap;
 };
+
+} // namespace KTelepathy
 
 #endif // LIBKTELEPATHY_ACCOUNT_ITEM_H

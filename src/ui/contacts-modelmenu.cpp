@@ -25,6 +25,8 @@
 #include "ontologies/imaccount.h"
 #include "ontologies/personcontact.h"
 
+using namespace KTelepathy;
+
 ContactsListModel* ContactsModelMenu::s_ContactsModel = 0;
 //GroupedContactsProxyModel* ContactsModelMenu::s_GroupedContactsModel = 0;
 

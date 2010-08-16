@@ -28,6 +28,8 @@
 
 #include <QtGui/QAbstractProxyModel>
 
+namespace KTelepathy {
+
 class ContactsListModel;
 
 class KDE_EXPORT GroupedContactsProxyModel : public QAbstractProxyModel
@@ -73,6 +75,7 @@ private:
 
 };
 
+} // namespace KTelepathy
 
 #endif // LIBKTELEPATHY_GROUPED_CONTACTS_PROXY_MODEL_H
 

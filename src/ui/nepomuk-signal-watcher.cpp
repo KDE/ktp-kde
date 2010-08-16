@@ -29,6 +29,8 @@
 #include <Soprano/Node>
 #include <Soprano/Statement>
 
+using namespace KTelepathy;
+
 class NepomukSignalWatcherHelper
 {
 public:

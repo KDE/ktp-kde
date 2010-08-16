@@ -32,6 +32,8 @@
 
 #include <Soprano/Util/SignalCacheModel>
 
+namespace KTelepathy {
+
 /**
  * This class allows you to register an interest in a specific Nepomuk resource
  * and be notified whenever that resource is either the subject or object of a statement
@@ -84,6 +86,7 @@ private:
     QHash<QString, NepomukSignalWatcher::Watcher*> m_subjectCallbacks;
 };
 
+} // namespace KTelepathy
 
 #endif // LIBKTELEPATHY_NEPOMUK_SIGNAL_WATCHER_H
 

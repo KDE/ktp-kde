@@ -21,6 +21,8 @@
 
 #include "abstract-tree-item.h"
 
+using namespace KTelepathy;
+
 AbstractTreeItem::AbstractTreeItem()
  : m_parent(0)
 {

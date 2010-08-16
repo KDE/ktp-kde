@@ -23,6 +23,9 @@
 #include <QtCore/QAbstractItemModel>
 #include <kdemacros.h>
 
+namespace KTelepathy {
+
+
 // A QMenu that is dynamically populated from a QAbstractItemModel
 class KDE_EXPORT ModelMenu : public QMenu
 {
@@ -78,5 +81,7 @@ private:
     QAbstractItemModel *m_model;
     QPersistentModelIndex m_root;
 };
+
+} // namespace KTelepathy
 
 #endif //  LIBKTELEPATHY_MODELMENU_H
