@@ -63,7 +63,7 @@ protected:
     virtual Tp::PendingOperation* handleOutgoingChannel();
     virtual bool canHandleIncomingChannel();
     virtual bool canHandleOutgoingChannel();
-    virtual Tp::Features features(); // TODO choose a better name
+    virtual Tp::Features channelFeatures();
 
 protected Q_SLOTS:
     virtual void onHandleChannelFinished();

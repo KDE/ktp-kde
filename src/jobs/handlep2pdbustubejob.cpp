@@ -133,7 +133,7 @@ bool HandleP2PDBusTubeJob::canHandleOutgoingChannel()
 }
 
 
-Tp::Features HandleP2PDBusTubeJob::features()
+Tp::Features HandleP2PDBusTubeJob::channelFeatures()
 {
     Tp::Features features = Tp::Features() << Tp::TubeChannel::FeatureTube
                                            << Tp::DBusTubeChannel::FeatureDBusTube;

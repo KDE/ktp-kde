@@ -89,7 +89,7 @@ bool AbstractHandleChannelJob::canHandleOutgoingChannel()
 }
 
 
-Tp::Features AbstractHandleChannelJob::features()
+Tp::Features AbstractHandleChannelJob::channelFeatures()
 {
     return Tp::Features();
 }
@@ -185,7 +185,7 @@ void AbstractHandleChannelJobPrivate::__k__handleChannel()
     }
 
     // Sets the features and waits for channel to become ready
-    Tp::PendingReady* op = channel->becomeReady(q->features());
+    Tp::PendingReady* op = channel->becomeReady(q->channelFeatures());
     q->connect(op, SIGNAL(finished(Tp::PendingOperation*)), SLOT(__k__onChannelReady(Tp::PendingOperation*)));
 }
 
