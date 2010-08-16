@@ -108,18 +108,21 @@ if (WITH_STREAMTUBES)
          jobs/accept-tcp-streamtube-job.cpp
          jobs/offer-local-streamtube-job.cpp
          jobs/offer-tcp-streamtube-job.cpp
+         jobs/requeststreamtubejob.cpp
     )
     set (ktelepathy_INST_HDRS
          ${ktelepathy_INST_HDRS}
          jobs/accept-tcp-streamtube-job.h
          jobs/offer-local-streamtube-job.h
          jobs/offer-tcp-streamtube-job.h
+         jobs/requeststreamtubejob.h
     )
     set (ktelepathy_PRETTY_HDRS
          ${ktelepathy_PRETTY_HDRS}
          KTelepathy/AcceptTcpStreamTubeJob
          KTelepathy/OfferLocalStreamTubeJob
          KTelepathy/OfferTcpStreamTubeJob
+         KTelepathy/RequestStreamTubeJob
     )
 endif (WITH_STREAMTUBES)
 
