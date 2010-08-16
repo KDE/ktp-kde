@@ -336,8 +336,8 @@ void AbstractRequestChannelJobPrivate::initTargetsModeMetaContact()
 void AbstractRequestChannelJobPrivate::initTargetsModeRoom()
 {
     kDebug();
-    //TODO Should I handle anything here?
+    kWarning() << "Not implemented yet!";
+    //TODO Init account
 }
-
 
 #include "abstractrequestchanneljob.moc"
