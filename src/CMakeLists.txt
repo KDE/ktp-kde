@@ -24,6 +24,7 @@ set (ktelepathy_SRCS
      jobs/remove-contacts-job.cpp
      jobs/requestgenericchanneljob.cpp
      jobs/requesttextchatjob.cpp
+     jobs/requesttextchatroomjob.cpp
      jobs/telepathy-account-proxy.cpp
      jobs/telepathy-base-job.cpp
      jobs/telepathy-bridge.cpp
@@ -55,6 +56,7 @@ set (ktelepathy_INST_HDRS
      jobs/remove-contacts-job.h
      jobs/requestgenericchanneljob.h
      jobs/requesttextchatjob.h
+     jobs/requesttextchatroomjob.h
      jobs/telepathy-account-proxy.h
      jobs/telepathy-base-job.h
      jobs/telepathy-bridge.h
@@ -96,6 +98,7 @@ set (ktelepathy_PRETTY_HDRS
      KTelepathy/RemoveContactsJob
      KTelepathy/RequestGenericChannelJob
      KTelepathy/RequestTextChatJob
+     KTelepathy/RequestTextChatroomJob
      KTelepathy/TelepathyAccountProxy
      KTelepathy/TelepathyBaseJob
      KTelepathy/TelepathyBridge

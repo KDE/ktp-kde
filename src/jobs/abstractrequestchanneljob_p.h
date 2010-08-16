@@ -89,6 +89,7 @@ private:
     void initTargets();
     void initTargetsModeContact();
     void initTargetsModeMetaContact();
+    void initTargetsModeRoom();
 };
 
 

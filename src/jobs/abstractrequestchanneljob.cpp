@@ -244,7 +244,7 @@ void AbstractRequestChannelJobPrivate::initTargets()
             initTargetsModeMetaContact();
             break;
         case AbstractRequestChannelJob::TargetModeRoom:
-            initTargetsModeMetaContact();
+            initTargetsModeRoom();
             break;
         case AbstractRequestChannelJob::TargetModeRoomContactsList:
         case AbstractRequestChannelJob::TargetModeRoomMetaContactsList:
@@ -331,5 +331,13 @@ void AbstractRequestChannelJobPrivate::initTargetsModeMetaContact()
     q->setErrorText(i18n("No existing Telepathy contacts could be mapped to the chosen metacontact"));
     QTimer::singleShot(0, q, SLOT(__k__doEmitResult()));
 }
+
+
+void AbstractRequestChannelJobPrivate::initTargetsModeRoom()
+{
+    kDebug();
+    //TODO Should I handle anything here?
+}
+
 
 #include "abstractrequestchanneljob.moc"
