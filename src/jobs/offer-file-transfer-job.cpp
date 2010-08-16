@@ -38,6 +38,8 @@
 #include <TelepathyQt4/Feature>
 #include <TelepathyQt4/ConnectionCapabilities>
 
+namespace KTelepathy {
+
 class OfferFileTransferJobPrivate : public TelepathyBaseJobPrivate
 {
     Q_DECLARE_PUBLIC(OfferFileTransferJob)
@@ -72,7 +74,9 @@ class OfferFileTransferJobPrivate : public TelepathyBaseJobPrivate
         bool transferStarted;
 };
 
+} // namespace KTelepathy;
 
+using namespace KTelepathy;
 
 OfferFileTransferJob::OfferFileTransferJob(const Nepomuk::PersonContact& contact, QString filename, QObject* parent)
     : TelepathyBaseJob(*new OfferFileTransferJobPrivate(OfferFileTransferContactMode, filename), parent)

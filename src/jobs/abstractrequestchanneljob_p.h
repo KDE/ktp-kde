@@ -16,11 +16,11 @@
 * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#include "telepathy-base-job_p.h"
-#include "abstractrequestchanneljob.h"
-
 #ifndef LIBKTELEPATHY_ABSTRACTREQUESTCHANNELJOB_P_H
 #define LIBKTELEPATHY_ABSTRACTREQUESTCHANNELJOB_P_H
+
+#include "telepathy-base-job_p.h"
+#include "abstractrequestchanneljob.h"
 
 #include "ontologies/person.h"
 #include "ontologies/personcontact.h"
@@ -30,6 +30,8 @@
 namespace Tp {
     class PendingChannelRequest;
 }
+
+namespace KTelepathy {
 
 class AbstractRequestChannelJobPrivate : public TelepathyBaseJobPrivate
 {
@@ -91,6 +93,8 @@ private:
     void initTargetsModeMetaContact();
     void initTargetsModeRoom();
 };
+
+} // namespace KTelepathy
 
 
 #endif // LIBKTELEPATHY_REQUESTCHANNELJOB_H

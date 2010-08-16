@@ -26,6 +26,8 @@
 
 #include <TelepathyQt4/AccountManager>
 
+namespace KTelepathy {
+
 class TelepathyAccountProxy;
 
 class TelepathyBridgePrivate
@@ -47,5 +49,7 @@ public:
     void __k__onAccountManagerReady(Tp::PendingOperation* op);
     void __k__onAccountCreated(const QString &path);
 };
+
+} // namespace KTelepathy
 
 #endif // LIBKTELEPATHY_TELEPATHY_BRIDGE_P_H

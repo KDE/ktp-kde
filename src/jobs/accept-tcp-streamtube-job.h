@@ -34,6 +34,9 @@ namespace Tp {
 class QTcpSocket;
 class QIODevice;
 
+
+namespace KTelepathy {
+
 class AcceptTcpStreamTubeJobPrivate;
 class KDE_EXPORT AcceptTcpStreamTubeJob : public TelepathyBaseJob
 {
@@ -60,5 +63,7 @@ class KDE_EXPORT AcceptTcpStreamTubeJob : public TelepathyBaseJob
 
         Tp::IncomingStreamTubeChannelPtr incomingStreamTubeChannel();
 };
+
+} // namespace KTelepathy
 
 #endif // LIBKTELEPATHY_ACCEPT_TCP_STREAMTUBE_JOB_H

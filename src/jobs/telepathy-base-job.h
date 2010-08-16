@@ -25,6 +25,8 @@
 #include <kdemacros.h>
 #include <KJob>
 
+namespace KTelepathy {
+
 class TelepathyBaseJobPrivate;
 class KDE_EXPORT TelepathyBaseJob : public KJob
 {
@@ -41,5 +43,7 @@ protected:
 
     TelepathyBaseJobPrivate * const d_ptr;
 };
+
+} // namespace KTelepathy
 
 #endif // LIBKTELEPATHY_TELEPATHY_BASE_JOB_H

@@ -31,6 +31,9 @@
 #include "ontologies/nao.h"
 #include <Nepomuk/Variant>
 
+
+namespace KTelepathy {
+
 class AddMetaContactJobPrivate : public TelepathyBaseJobPrivate
 {
     Q_DECLARE_PUBLIC(AddMetaContactJob)
@@ -45,6 +48,10 @@ public:
     // Operation Q_PRIVATE_SLOTS
     void __k__addMetaContact();
 };
+
+} // namespace KTelepathy
+
+using namespace KTelepathy;
 
 AddMetaContactJob::AddMetaContactJob(const QString& name, const QList< Nepomuk::PersonContact > contacts,
                                      QObject *parent)

@@ -21,7 +21,15 @@
 
 #include <abstractrequestchanneljob.h>
 #include <kdemacros.h>
+#include <QVariantMap>
 
+
+namespace Nepomuk {
+    class PersonContact;
+    class Person;
+}
+
+namespace KTelepathy {
 
 class RequestGenericChannelJobPrivate;
 class KDE_EXPORT RequestGenericChannelJob : public AbstractRequestChannelJob
@@ -43,12 +51,6 @@ protected:
 };
 
 
-#include <QVariantMap>
-namespace Nepomuk {
-    class PersonContact;
-    class Person;
-}
-
 
 KDE_EXPORT RequestGenericChannelJob* requestGenericChannel(const Nepomuk::PersonContact& contact,
                                              const QVariantMap& request,
@@ -67,6 +69,8 @@ KDE_EXPORT RequestGenericChannelJob* requestGenericChannel(const QString room,
                                              const QString& preferredHandler = QString(),
                                              KTelepathy::RequestChannelFlags requestchannelflags = KTelepathy::RequestChannelAnyMode,
                                              QObject* parent = 0);
+
+} // namespace KTelepathy
 
 
 #endif // REQUESTGENERICCHANNELJOB_H

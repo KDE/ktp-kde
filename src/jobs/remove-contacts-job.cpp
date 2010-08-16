@@ -51,6 +51,8 @@
 #include <Nepomuk/Query/ComparisonTerm>
 #include <Nepomuk/Query/Result>
 
+namespace KTelepathy {
+
 class RemoveContactsJobPrivate : public TelepathyBaseJobPrivate
 {
     Q_DECLARE_PUBLIC(RemoveContactsJob)
@@ -75,6 +77,10 @@ public:
     void __k__removeMetaContact();
     void __k__removeMetaContacts();
 };
+
+} // namespace KTelepathy
+
+using namespace KTelepathy;
 
 RemoveContactsJob::RemoveContactsJob(const Nepomuk::PersonContact& contact, TelepathyBridge::RemovalModes modes, QObject *parent)
     : TelepathyBaseJob(*new RemoveContactsJobPrivate(RemoveContactMode, modes), parent)

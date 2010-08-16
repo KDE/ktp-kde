@@ -24,6 +24,7 @@
 
 #include <TelepathyQt4/Channel>
 
+namespace KTelepathy {
 
 class AbstractHandleChannelJobPrivate : public TelepathyBaseJobPrivate
 {
@@ -50,5 +51,7 @@ public:
 private:
     //TODO methods to get nepomuk resources from the channel
 };
+
+} // namespace KTelepathy
 
 #endif // LIBKTELEPATHY_ABSTRACTHANDLECHANNELJOB_P_H

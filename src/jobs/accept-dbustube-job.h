@@ -32,6 +32,9 @@ namespace Tp {
 
 class QDBusConnection;
 
+
+namespace KTelepathy {
+
 class AcceptDBusTubeJobPrivate;
 class KDE_EXPORT AcceptDBusTubeJob : public TelepathyBaseJob
 {
@@ -57,5 +60,7 @@ class KDE_EXPORT AcceptDBusTubeJob : public TelepathyBaseJob
 
         Tp::IncomingDBusTubeChannelPtr incomingDBusTubeChannel();
 };
+
+} // namespace KTelepathy
 
 #endif // LIBKTELEPATHY_ACCEPT_DBUSTUBE_JOB_H

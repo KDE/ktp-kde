@@ -36,6 +36,9 @@
 #include <TelepathyQt4/ContactManager>
 #include <TelepathyQt4/PendingContacts>
 
+
+namespace KTelepathy {
+
 class AddContactJobPrivate : public TelepathyBaseJobPrivate
 {
     Q_DECLARE_PUBLIC(AddContactJob)
@@ -53,6 +56,10 @@ public:
     void __k__addContact();
     void __k__onContactsRetrieved(Tp::PendingOperation* op);
 };
+
+} // namespace KTelepathy
+
+using namespace KTelepathy;
 
 AddContactJob::AddContactJob(const Nepomuk::IMAccount& account, const QString& contactId,
                              const QString& petName, const Nepomuk::Person& metacontact, QObject *parent)

@@ -30,6 +30,9 @@
 #include <TelepathyQt4/PendingReady>
 #include <TelepathyQt4/PendingOperation>
 
+
+namespace KTelepathy {
+
 class AcceptFileTransferJobPrivate : public TelepathyBaseJobPrivate
 {
     Q_DECLARE_PUBLIC(AcceptFileTransferJob)
@@ -53,6 +56,10 @@ class AcceptFileTransferJobPrivate : public TelepathyBaseJobPrivate
 
         bool transferCompleted;
 };
+
+} // namespace KTelepathy
+
+using namespace KTelepathy;
 
 AcceptFileTransferJob::AcceptFileTransferJob(Tp::ChannelPtr channel,
                                              QString filename,

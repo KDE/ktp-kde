@@ -37,6 +37,8 @@ namespace Tp {
 
 class QLocalServer;
 
+namespace KTelepathy {
+
 class OfferLocalStreamTubeJobPrivate;
 class KDE_EXPORT OfferLocalStreamTubeJob : public TelepathyBaseJob
 {
@@ -82,5 +84,7 @@ class KDE_EXPORT OfferLocalStreamTubeJob : public TelepathyBaseJob
         QLocalServer* localServer();
         Tp::OutgoingStreamTubeChannelPtr outgoingStreamTubeChannel();
 };
+
+} // namespace KTelepathy
 
 #endif // LIBKTELEPATHY_OFFER_LOCAL_STREAMTUBE_JOB_H

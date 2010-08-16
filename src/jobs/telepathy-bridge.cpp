@@ -71,6 +71,8 @@
 #include <Nepomuk/Query/Result>
 #include <KMessageBox>
 
+using namespace KTelepathy;
+
 class TelepathyBridgeHelper
 {
 public:

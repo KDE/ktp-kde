@@ -24,9 +24,12 @@
 
 #include "telepathy-base-job.h"
 
+
 namespace Tp {
 class PendingOperation;
 }
+
+namespace KTelepathy {
 
 class TelepathyBaseJobPrivate
 {
@@ -48,5 +51,7 @@ public:
     void __k__tpOperationFinished(Tp::PendingOperation* op);
     void __k__doEmitResult();
 };
+
+} // namespace KTelepathy
 
 #endif // LIBKTELEPATHY_TELEPATHY_BASE_JOB_P_H

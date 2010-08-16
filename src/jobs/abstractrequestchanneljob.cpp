@@ -31,6 +31,7 @@
 #include <KLocalizedString>
 
 
+using namespace KTelepathy;
 
 AbstractRequestChannelJob::AbstractRequestChannelJob(AbstractRequestChannelJobPrivate &dd, QObject *parent)
     : TelepathyBaseJob(dd, parent)

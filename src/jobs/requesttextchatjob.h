@@ -23,6 +23,15 @@
 #include <abstractrequestchanneljob.h>
 #include <kdemacros.h>
 
+
+namespace Nepomuk {
+    class PersonContact;
+    class Person;
+}
+
+
+namespace KTelepathy {
+
 class RequestTextChatJobPrivate;
 class KDE_EXPORT RequestTextChatJob : public AbstractRequestChannelJob
 {
@@ -38,11 +47,6 @@ public:
     virtual bool canEnsureChannel();
 };
 
-
-namespace Nepomuk {
-    class PersonContact;
-    class Person;
-}
 
 
 /*
@@ -61,4 +65,6 @@ KDE_EXPORT RequestTextChatJob* requestTextChat(const Nepomuk::PersonContact& con
 KDE_EXPORT RequestTextChatJob* requestTextChat(const Nepomuk::Person& metacontact,
                                                const QString& preferredHandler,
                                                QObject* parent);
+} // namespace KTelepathy
+
 #endif // LIBKTELEPATHY_REQUESTTEXTCHATJOB_H

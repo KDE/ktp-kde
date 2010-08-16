@@ -29,6 +29,9 @@
 #include <TelepathyQt4/PendingReady>
 #include <TelepathyQt4/PendingOperation>
 
+
+namespace KTelepathy {
+
 class AcceptTcpStreamTubeJobPrivate : public TelepathyBaseJobPrivate
 {
     Q_DECLARE_PUBLIC(AcceptTcpStreamTubeJob)
@@ -50,6 +53,10 @@ class AcceptTcpStreamTubeJobPrivate : public TelepathyBaseJobPrivate
         void __k__onStreamTubeAccepted(Tp::PendingOperation* op);
         void __k__onInvalidated();
 };
+
+} // namespace KTelepathy
+
+using namespace KTelepathy;
 
 /* TODO?
 AcceptTcpStreamTubeJob::AcceptTcpStreamTubeJob(const QHostAddress& allowedAddress,

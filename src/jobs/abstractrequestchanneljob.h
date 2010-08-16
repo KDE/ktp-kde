@@ -23,6 +23,11 @@
 #include <kdemacros.h>
 
 
+namespace Tp {
+    class PendingOperation;
+    class PendingChannelRequest;
+}
+
 namespace KTelepathy {
 
     enum RequestChannelFlag {
@@ -34,15 +39,6 @@ namespace KTelepathy {
     Q_DECLARE_FLAGS(RequestChannelFlags, RequestChannelFlag)
     //Q_FLAGS(RequestChannelFlags) //TODO REMOVE?
 
-} // namespace KTelepathy
-
-Q_DECLARE_OPERATORS_FOR_FLAGS(KTelepathy::RequestChannelFlags)
-
-
-namespace Tp {
-    class PendingOperation;
-    class PendingChannelRequest;
-}
 
 class AbstractRequestChannelJobPrivate;
 class KDE_EXPORT AbstractRequestChannelJob : public TelepathyBaseJob // TODO Remove KDE_EXPORT?
@@ -84,6 +80,10 @@ Q_SIGNALS:
     void requestChannelFinished();
 
 };
+
+} // namespace KTelepathy
+
+Q_DECLARE_OPERATORS_FOR_FLAGS(KTelepathy::RequestChannelFlags)
 
 
 #endif // LIBKTELEPATHY_ABSTRACTREQUESTCHANNELJOB_H

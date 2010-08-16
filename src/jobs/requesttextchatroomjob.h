@@ -23,6 +23,8 @@
 #include <abstractrequestchanneljob.h>
 #include <kdemacros.h>
 
+namespace KTelepathy {
+
 class RequestTextChatroomJobPrivate;
 class KDE_EXPORT RequestTextChatroomJob : public AbstractRequestChannelJob
 {
@@ -48,5 +50,7 @@ KDE_EXPORT RequestTextChatroomJob* requestTextChatroom(const QString& room,
 KDE_EXPORT RequestTextChatroomJob* requestTextChatroom(const QString& room,
                                                        const QString& preferredHandler,
                                                        QObject* parent);
+
+} // namespace KTelepathy
 
 #endif // LIBKTELEPATHY_REQUESTTEXTCHATROOMJOB_H

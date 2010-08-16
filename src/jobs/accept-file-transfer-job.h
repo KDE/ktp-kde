@@ -30,6 +30,9 @@ namespace Tp {
     class PendingOperation;
 }
 
+
+namespace KTelepathy {
+
 class AcceptFileTransferJobPrivate;
 class KDE_EXPORT AcceptFileTransferJob : public TelepathyBaseJob
 {
@@ -52,5 +55,7 @@ class KDE_EXPORT AcceptFileTransferJob : public TelepathyBaseJob
         virtual void start();
 
 };
+
+} // namespace KTelepathy
 
 #endif // LIBKTELEPATHY_ACCEPT_FILE_TRANSFER_JOB_H

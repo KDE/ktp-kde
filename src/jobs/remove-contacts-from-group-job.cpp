@@ -39,6 +39,8 @@
 #include <TelepathyQt4/ContactManager>
 #include <TelepathyQt4/PendingOperation>
 
+namespace KTelepathy {
+
 class RemoveContactsFromGroupJobPrivate : public TelepathyBaseJobPrivate
 {
     Q_DECLARE_PUBLIC(RemoveContactsFromGroupJob)
@@ -63,6 +65,10 @@ public:
     void __k__removeMetaContactFromGroup();
     void __k__removeMetaContactsFromGroup();
 };
+
+} // namespace KTelepathy
+
+using namespace KTelepathy;
 
 RemoveContactsFromGroupJob::RemoveContactsFromGroupJob(const QString& group, const Nepomuk::PersonContact& contact,
                                                        QObject *parent)

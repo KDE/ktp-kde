@@ -27,7 +27,6 @@
 #include <TelepathyQt4/OutgoingDBusTubeChannel>
 #include <TelepathyQt4/Contact>
 
-class QDBusConnection;
 namespace Nepomuk {
     class PersonContact;
     class Person;
@@ -38,6 +37,8 @@ namespace Tp {
 }
 
 class QDBusConnection;
+
+namespace KTelepathy {
 
 class OfferDBusTubeJobPrivate;
 class KDE_EXPORT OfferDBusTubeJob : public TelepathyBaseJob
@@ -82,5 +83,7 @@ class KDE_EXPORT OfferDBusTubeJob : public TelepathyBaseJob
         QDBusConnection dbusConnection();
         Tp::OutgoingDBusTubeChannelPtr outgoingDBusTubeChannel();
 };
+
+} // namespace KTelepathy
 
 #endif // LIBKTELEPATHY_OFFER_DBUSTUBE_JOB_H

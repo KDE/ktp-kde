@@ -23,6 +23,13 @@
 #include <abstractrequestchanneljob.h>
 #include <kdemacros.h>
 
+namespace Nepomuk {
+    class PersonContact;
+    class Person;
+}
+
+namespace KTelepathy {
+
 class RequestStreamTubeJobPrivate;
 class KDE_EXPORT RequestStreamTubeJob : public AbstractRequestChannelJob
 {
@@ -37,12 +44,6 @@ public:
     virtual Tp::PendingChannelRequest* createChannel();
     virtual bool canCreateChannel();
 };
-
-
-namespace Nepomuk {
-    class PersonContact;
-    class Person;
-}
 
 
 /*
@@ -65,4 +66,7 @@ KDE_EXPORT RequestStreamTubeJob* requestStreamTube(const Nepomuk::Person& metaco
                                                    const QString& service,
                                                    const QString& preferredHandler,
                                                    QObject* parent);
+
+} // namespace KTelepathy
+
 #endif // LIBKTELEPATHY_REQUESTSTREAMTUBEJOB_H

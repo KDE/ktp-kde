@@ -23,6 +23,12 @@
 #include <kdemacros.h>
 #include <TelepathyQt4/Feature>
 
+
+namespace Tp {
+    class PendingOperation;
+}
+
+
 namespace KTelepathy {
 
     enum HandleChannelFlag {
@@ -34,14 +40,6 @@ namespace KTelepathy {
     Q_DECLARE_FLAGS(HandleChannelFlags, HandleChannelFlag)
     //Q_FLAGS(HandleChannelFlags) // TODO REMOVE?
 
-} // namespace KTelepathy
-
-Q_DECLARE_OPERATORS_FOR_FLAGS(KTelepathy::HandleChannelFlags)
-
-
-namespace Tp {
-    class PendingOperation;
-}
 
 class AbstractHandleChannelJobPrivate;
 class KDE_EXPORT AbstractHandleChannelJob : public TelepathyBaseJob // TODO Remove KDE_EXPORT?
@@ -75,5 +73,11 @@ public:
     virtual void start();
     virtual bool kill(KJob::KillVerbosity verbosity = KJob::Quietly);
 };
+
+
+} // namespace KTelepathy
+
+Q_DECLARE_OPERATORS_FOR_FLAGS(KTelepathy::HandleChannelFlags)
+
 
 #endif // ABSTRACTHANDLECHANNELJOB_H

@@ -23,6 +23,7 @@
 #include <TelepathyQt4/Account>
 #include <KDebug>
 
+namespace KTelepathy {
 
 class RequestGenericChannelJobPrivate : public AbstractRequestChannelJobPrivate
 {
@@ -98,6 +99,9 @@ public:
     }
 };
 
+} // namespace KTelepathy
+
+using namespace KTelepathy;
 
 RequestGenericChannelJob::RequestGenericChannelJob(RequestGenericChannelJobPrivate &dd, QObject *parent)
     : AbstractRequestChannelJob(dd, parent)
@@ -210,3 +214,5 @@ RequestGenericChannelJobPrivate::~RequestGenericChannelJobPrivate()
 {
     kDebug();
 }
+
+#include "requestgenericchanneljob.moc"

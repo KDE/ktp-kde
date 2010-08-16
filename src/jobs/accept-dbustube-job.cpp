@@ -29,6 +29,8 @@
 #include <TelepathyQt4/PendingReady>
 #include <TelepathyQt4/PendingOperation>
 
+namespace KTelepathy {
+
 class AcceptDBusTubeJobPrivate : public TelepathyBaseJobPrivate
 {
     Q_DECLARE_PUBLIC(AcceptDBusTubeJob)
@@ -47,6 +49,11 @@ class AcceptDBusTubeJobPrivate : public TelepathyBaseJobPrivate
         void __k__onDBusTubeAccepted(Tp::PendingOperation* op);
         void __k__onInvalidated();
 };
+
+} // namespace KTelepathy
+
+using namespace KTelepathy;
+
 /* TODO?
 AcceptDBusTubeJob::AcceptDBusTubeJob(const QVariantMap& parameters,
                                      QObject* parent)

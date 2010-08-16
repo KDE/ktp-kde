@@ -36,6 +36,7 @@ namespace Tp {
     class PendingOperation;
 }
 
+namespace KTelepathy {
 
 class OfferFileTransferJobPrivate;
 class KDE_EXPORT OfferFileTransferJob : public TelepathyBaseJob
@@ -69,5 +70,7 @@ class KDE_EXPORT OfferFileTransferJob : public TelepathyBaseJob
         virtual void start();
         virtual bool doKill();
 };
+
+} // namespace KTelepathy
 
 #endif // LIBKTELEPATHY_OFFER_FILE_TRANSFER_JOB_H

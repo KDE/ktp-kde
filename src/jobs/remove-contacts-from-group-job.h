@@ -31,6 +31,8 @@ class PersonContact;
 class Person;
 }
 
+namespace KTelepathy {
+
 class RemoveContactsFromGroupJobPrivate;
 class KDE_EXPORT RemoveContactsFromGroupJob : public TelepathyBaseJob
 {
@@ -60,5 +62,7 @@ public:
 
     virtual void start();
 };
+
+} // namespace KTelepathy
 
 #endif // LIBKTELEPATHY_REMOVE_CONTACTS_FROM_GROUP_JOB_H

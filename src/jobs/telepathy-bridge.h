@@ -46,6 +46,8 @@ class QStringList;
 class QLocalServer;
 class QTcpServer;
 
+namespace KTelepathy {
+
 class TelepathyBridgePrivate;
 /**
  * @class TelepathyBridge telepathy-bridge.h
@@ -757,11 +759,12 @@ private:
     friend class OfferFileTransferJobPrivate;
     friend class OfferLocalStreamTubeJobPrivate;
     friend class OfferTcpStreamTubeJobPrivate;
-
     friend class AbstractRequestChannelJobPrivate;
     friend class AbstractHandleChannelJobPrivate;
 };
 
-Q_DECLARE_OPERATORS_FOR_FLAGS(TelepathyBridge::RemovalModes)
+} // namespace KTelepathy
+
+Q_DECLARE_OPERATORS_FOR_FLAGS(KTelepathy::TelepathyBridge::RemovalModes)
 
 #endif // LIBKTELEPATHY_TELEPATHY_BRIDGE_P

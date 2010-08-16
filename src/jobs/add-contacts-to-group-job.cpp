@@ -39,6 +39,8 @@
 #include <TelepathyQt4/ContactManager>
 #include <TelepathyQt4/PendingOperation>
 
+namespace KTelepathy {
+
 class AddContactsToGroupJobPrivate : public TelepathyBaseJobPrivate
 {
     Q_DECLARE_PUBLIC(AddContactsToGroupJob)
@@ -63,6 +65,10 @@ public:
     void __k__addMetaContactFromGroup();
     void __k__addMetaContactsFromGroup();
 };
+
+} // namespace KTelepathy
+
+using namespace KTelepathy;
 
 AddContactsToGroupJob::AddContactsToGroupJob(const QString& group, const Nepomuk::PersonContact& contact,
                                                        QObject *parent)

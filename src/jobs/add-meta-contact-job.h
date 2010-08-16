@@ -30,6 +30,9 @@ namespace Nepomuk {
 class PersonContact;
 }
 
+
+namespace KTelepathy {
+
 class AddMetaContactJobPrivate;
 class KDE_EXPORT AddMetaContactJob : public TelepathyBaseJob
 {
@@ -46,5 +49,7 @@ public:
 
     virtual void start();
 };
+
+} // namespace KTelepathy
 
 #endif // LIBKTELEPATHY_ADD_META_CONTACT_JOB_H

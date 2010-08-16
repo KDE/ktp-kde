@@ -28,6 +28,9 @@
 
 #include <TelepathyQt4/Types>
 
+
+namespace KTelepathy {
+
 class TelepathyAccountProxyPrivate;
 class KDE_EXPORT TelepathyAccountProxy : public QObject
 {
@@ -53,5 +56,7 @@ private:
     Q_PRIVATE_SLOT(d_func(), void __k__onHaveConnectionChanged(bool))
     Q_PRIVATE_SLOT(d_func(), void __k__onConnectionReady(Tp::PendingOperation*))
 };
+
+} // namespace KTelepathy
 
 #endif // LIBKTELEPATHY_TELEPATHY_ACCOUNT_PROXY_H

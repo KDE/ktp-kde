@@ -23,6 +23,8 @@
 #include <KDebug>
 #include "ontologies/imaccount.h"
 
+namespace KTelepathy {
+
 class RequestStreamTubeJobPrivate : public AbstractRequestChannelJobPrivate
 {
     Q_DECLARE_PUBLIC(RequestStreamTubeJob)
@@ -76,6 +78,9 @@ public:
     }
 };
 
+} // namespace KTelepathy
+
+using namespace KTelepathy;
 
 RequestStreamTubeJob::RequestStreamTubeJob(RequestStreamTubeJobPrivate &dd, QObject *parent)
     : AbstractRequestChannelJob(dd, parent)

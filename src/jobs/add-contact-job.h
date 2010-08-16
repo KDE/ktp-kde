@@ -31,6 +31,8 @@ namespace Nepomuk {
     class Person;
 }
 
+namespace KTelepathy {
+
 class AddContactJobPrivate;
 class KDE_EXPORT AddContactJob : public TelepathyBaseJob
 {
@@ -49,5 +51,7 @@ public:
 
     virtual void start();
 };
+
+} // namespace KTelepathy
 
 #endif // LIBKTELEPATHY_ADD_CONTACT_JOB_H

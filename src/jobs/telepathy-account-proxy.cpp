@@ -28,6 +28,8 @@
 
 #include <KDebug>
 
+namespace KTelepathy {
+
 class TelepathyAccountProxyPrivate
 {
     Q_DECLARE_PUBLIC(TelepathyAccountProxy)
@@ -57,6 +59,10 @@ public:
     void __k__onHaveConnectionChanged(bool);
     void __k__onConnectionReady(Tp::PendingOperation*);
 };
+
+} // namespace KTelepathy
+
+using namespace KTelepathy;
 
 void TelepathyAccountProxyPrivate::__k__onAccountReady(Tp::PendingOperation* op)
 {

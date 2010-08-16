@@ -43,6 +43,7 @@
 #include <TelepathyQt4/OutgoingStreamTubeChannel>
 #include <TelepathyQt4/ConnectionCapabilities>
 
+namespace KTelepathy {
 
 class OfferTcpStreamTubeJobPrivate : public TelepathyBaseJobPrivate
 {
@@ -79,6 +80,10 @@ class OfferTcpStreamTubeJobPrivate : public TelepathyBaseJobPrivate
 
         bool findBestContactFromMetaContact();
 };
+
+} // namespace KTelepathy
+
+using namespace KTelepathy;
 
 OfferTcpStreamTubeJob::OfferTcpStreamTubeJob(const Nepomuk::PersonContact& contact,
                                              const QVariantMap& parameters,

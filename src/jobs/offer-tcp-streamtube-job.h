@@ -39,6 +39,8 @@ class QTcpServer;
 class QTcpSocket;
 class QHostAddress;
 
+namespace KTelepathy {
+
 class OfferTcpStreamTubeJobPrivate;
 class KDE_EXPORT OfferTcpStreamTubeJob : public TelepathyBaseJob
 {
@@ -84,5 +86,7 @@ class KDE_EXPORT OfferTcpStreamTubeJob : public TelepathyBaseJob
         QTcpServer* tcpServer();
         Tp::OutgoingStreamTubeChannelPtr outgoingStreamTubeChannel();
 };
+
+} // namespace KTelepathy
 
 #endif // LIBKTELEPATHY_OFFER_TCP_STREAMTUBE_JOB_H

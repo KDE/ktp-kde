@@ -30,6 +30,7 @@
 #include <TelepathyQt4/PendingOperation>
 
 
+namespace KTelepathy {
 
 class HandleP2PDBusTubeJobPrivate : public AbstractHandleChannelJobPrivate
 {
@@ -81,6 +82,9 @@ public:
     }
 };
 
+} // namespace KTelepathy
+
+using namespace KTelepathy;
 
 HandleP2PDBusTubeJob::HandleP2PDBusTubeJob(HandleP2PDBusTubeJobPrivate& dd, QObject* parent)
     : AbstractHandleChannelJob(dd, parent)

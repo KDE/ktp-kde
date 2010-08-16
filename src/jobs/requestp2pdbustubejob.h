@@ -23,6 +23,13 @@
 #include <abstractrequestchanneljob.h>
 #include <kdemacros.h>
 
+namespace Nepomuk {
+    class PersonContact;
+    class Person;
+}
+
+namespace KTelepathy {
+
 class RequestP2PDBusTubeJobPrivate;
 class KDE_EXPORT RequestP2PDBusTubeJob : public AbstractRequestChannelJob
 {
@@ -37,12 +44,6 @@ public:
     virtual Tp::PendingChannelRequest* createChannel();
     virtual bool canCreateChannel();
 };
-
-
-namespace Nepomuk {
-    class PersonContact;
-    class Person;
-}
 
 
 /*
@@ -65,4 +66,7 @@ KDE_EXPORT RequestP2PDBusTubeJob* requestP2PDBusTube(const Nepomuk::Person& meta
                                                      const QString& serviceName,
                                                      const QString& preferredHandler,
                                                      QObject* parent);
+
+} // namespace KTelepathy
+
 #endif // LIBKTELEPATHY_REQUESTP2PDBUSTUBEJOB_H

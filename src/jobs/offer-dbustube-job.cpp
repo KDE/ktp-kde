@@ -44,6 +44,7 @@
 #include <TelepathyQt4/ConnectionCapabilities>
 #include <TelepathyQt4/Types>
 
+namespace KTelepathy {
 
 class OfferDBusTubeJobPrivate : public TelepathyBaseJobPrivate
 {
@@ -82,6 +83,10 @@ class OfferDBusTubeJobPrivate : public TelepathyBaseJobPrivate
 
         bool findBestContactFromMetaContact();
 };
+
+} // namespace KTelepathy
+
+using namespace KTelepathy;
 
 OfferDBusTubeJob::OfferDBusTubeJob(const Nepomuk::PersonContact& contact,
                                    const QString serviceName,

@@ -23,6 +23,8 @@
 #include <KDebug>
 #include "ontologies/imaccount.h"
 
+namespace KTelepathy {
+
 class RequestTextChatJobPrivate : public AbstractRequestChannelJobPrivate
 {
     Q_DECLARE_PUBLIC(RequestTextChatJob)
@@ -66,6 +68,9 @@ public:
     }
 };
 
+} // namespace KTelepathy
+
+using namespace KTelepathy;
 
 RequestTextChatJob::RequestTextChatJob(RequestTextChatJobPrivate &dd, QObject *parent)
     : AbstractRequestChannelJob(dd, parent)

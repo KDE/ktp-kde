@@ -27,6 +27,8 @@
 
 #include <KLocalizedString>
 
+using namespace KTelepathy;
+
 TelepathyBaseJobPrivate::TelepathyBaseJobPrivate()
     : q_ptr(0)
 {

@@ -30,6 +30,8 @@
 #include <TelepathyQt4/PendingReady>
 
 
+using namespace KTelepathy;
+
 AbstractHandleChannelJob::AbstractHandleChannelJob(AbstractHandleChannelJobPrivate &dd, QObject *parent)
     : TelepathyBaseJob(dd, parent)
 {

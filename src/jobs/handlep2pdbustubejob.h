@@ -33,6 +33,9 @@ namespace Tp {
 
 class QDBusConnection;
 
+
+namespace KTelepathy {
+
 class HandleP2PDBusTubeJobPrivate;
 class KDE_EXPORT HandleP2PDBusTubeJob : public AbstractHandleChannelJob
 {
@@ -72,5 +75,7 @@ KDE_EXPORT HandleP2PDBusTubeJob* handleP2PDBusTube(const Tp::ChannelPtr& channel
                                                    QObject* parent = 0);
 
 KDE_EXPORT Tp::ChannelClassList P2PDBusTubeClientHandlerChannelClassList(QString serviceName);
+
+} // namespace KTelepathy
 
 #endif // LIBKTELEPATHY_HANDLEP2PDBUSTUBEJOB_H

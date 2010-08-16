@@ -31,6 +31,8 @@ class PersonContact;
 class Person;
 }
 
+namespace KTelepathy {
+
 class AddContactsToGroupJobPrivate;
 class KDE_EXPORT AddContactsToGroupJob : public TelepathyBaseJob
 {
@@ -60,5 +62,7 @@ public:
 
     virtual void start();
 };
+
+} // namespace KTelepathy
 
 #endif // LIBKTELEPATHY_ADD_CONTACTS_TO_GROUP_JOB_H

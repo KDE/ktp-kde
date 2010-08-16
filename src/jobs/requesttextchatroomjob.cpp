@@ -22,6 +22,8 @@
 #include <TelepathyQt4/Account>
 #include <KDebug>
 
+namespace KTelepathy {
+
 class RequestTextChatroomJobPrivate : public AbstractRequestChannelJobPrivate
 {
     Q_DECLARE_PUBLIC(RequestTextChatroomJob)
@@ -48,6 +50,9 @@ public:
     }
 };
 
+} // namespace KTelepathy
+
+using namespace KTelepathy;
 
 RequestTextChatroomJob::RequestTextChatroomJob(RequestTextChatroomJobPrivate &dd, QObject *parent)
     : AbstractRequestChannelJob(dd, parent)
