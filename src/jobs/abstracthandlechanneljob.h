@@ -19,7 +19,7 @@
 #ifndef LIBKTELEPATHY_ABSTRACTHANDLECHANNELJOB_H
 #define LIBKTELEPATHY_ABSTRACTHANDLECHANNELJOB_H
 
-#include <telepathy-base-job.h>
+#include "telepathy-base-job.h"
 #include <kdemacros.h>
 #include <TelepathyQt4/Feature>
 

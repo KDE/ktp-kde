@@ -21,8 +21,8 @@
 
 #include <kdemacros.h>
 
-#include <modelmenu.h>
-#include <contacts-list-model.h>
+#include "modelmenu.h"
+#include "contacts-list-model.h"
 
 namespace Nepomuk {
     class PersonContact;

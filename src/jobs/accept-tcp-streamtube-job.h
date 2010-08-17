@@ -21,7 +21,7 @@
 
 #include <kdemacros.h>
 
-#include <telepathy-base-job.h>
+#include "telepathy-base-job.h"
 
 #include <QVariantMap>
 #include <QHostAddress>

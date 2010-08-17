@@ -22,7 +22,7 @@
 #ifndef LIBKTELEPATHY_ADD_CONTACT_JOB_H
 #define LIBKTELEPATHY_ADD_CONTACT_JOB_H
 
-#include <telepathy-base-job.h>
+#include "telepathy-base-job.h"
 
 #include <kdemacros.h>
 

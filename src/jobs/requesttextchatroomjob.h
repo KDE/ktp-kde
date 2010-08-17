@@ -20,7 +20,7 @@
 #define LIBKTELEPATHY_REQUESTTEXTCHATROOMJOB_H
 
 
-#include <abstractrequestchanneljob.h>
+#include "abstractrequestchanneljob.h"
 #include <kdemacros.h>
 
 namespace KTelepathy {

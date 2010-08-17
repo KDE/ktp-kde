@@ -21,7 +21,7 @@
 
 #include <kdemacros.h>
 
-#include <abstracthandlechanneljob.h>
+#include "abstracthandlechanneljob.h"
 
 #include <QVariantMap>
 #include <TelepathyQt4/Channel>
