@@ -3,10 +3,20 @@ include (KTelepathyTestLibMacros)
 include_directories ("${CMAKE_SOURCE_DIR}/src/core"
                      "${CMAKE_SOURCE_DIR}/src/jobs"
                      "${CMAKE_SOURCE_DIR}/src/ui"
+                     "${CMAKE_CURRENT_SOURCE_DIR}/modeltest"
+                     "${CMAKE_CURRENT_BUILD_DIR}/modeltest"
 )
 
 # Setup the KTelepathy test lib environment
 ktelepathy_setup_test_environment ()
+
+# Create a static lib out of modeltest to avoid compiling it repeatedly for each test that uses it.
+kde4_add_library (modeltest
+                  STATIC
+                  modeltest/modeltest.cpp
+)
+
+set_property(TARGET modeltest PROPERTY COMPILE_FLAGS -fPIC)
 
 ################################
 # People Manager test

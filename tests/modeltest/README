@@ -1,0 +1,24 @@
+ModelTest provides a way to check for common errors in implementations of QAbstractItemModel.
+
+ModelTest continuously checks a model as it changes, helping to verify the state and catching many common errors the moment they show up such as:
+ - Verifing X number of rows have been inserted in the correct place after the signal rowsAboutToBeInserted() says X rows will be inserted.
+ - The parent of the first index of the first row is a QModelIndex()
+ - Calling index() twice in a row with the same values will return the same QModelIndex
+ - If rowCount() says there are X number of rows, model test will verify that is true.
+ - Many possible off by one bugs
+ - hasChildren() returns true if rowCount() is greater then zero.
+ - and many more...
+
+---
+
+To Use the model test do the following:
+
+1) In your source include "modeltest.h" and instantiate ModelTest with your model so the test can live for the lifetime of your model.
+   For example:
+
+        #include <modeltest.h>
+
+        QDirModel *model = new QDirModel(this);
+        new ModelTest(model, this);
+
+2) That is it.  When the test finds a problem it will assert.  modeltest.cpp contains some hints on how to fix problems that the test finds.
