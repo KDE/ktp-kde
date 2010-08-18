@@ -41,6 +41,28 @@ add_ktelepathy_nepomuk_test (PeopleManagerTest
 )
 
 ################################
+# Everyone Person Set test
+kde4_add_executable (everyone-person-set-test
+                     everyone-person-set-test.cpp
+)
+
+target_link_libraries (everyone-person-set-test
+                       ${KTELEPATHYTESTLIB_LIBRARIES}
+                       ${QT_LIBRARIES}
+                       ${KDE4_KDEUI_LIBS}
+                       ${TELEPATHY_QT4_LIBRARIES}
+                       ${NEPOMUK_LIBRARIES}
+                       ${NEPOMUK_QUERY_LIBRARIES}
+                       ${QT_QTTEST_LIBRARY}
+                       ktelepathy
+                       ontologies
+)
+
+add_ktelepathy_nepomuk_test (EveryonePersonSetTest
+                          ${CMAKE_CURRENT_BINARY_DIR}/everyone-person-set-test
+)
+
+################################
 # Person Set test
 kde4_add_executable (person-set-test
                      person-set-test.cpp

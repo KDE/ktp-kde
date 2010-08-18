@@ -1,7 +1,7 @@
 /*
  * This file is part of libktelepathy
  *
- * Copyright (C) 2009-2010 Collabora Ltd. <info@collabora.co.uk>
+ * Copyright (C) 2010 Collabora Ltd. <info@collabora.co.uk>
  *   @author George Goldberg <george.goldberg@collabora.co.uk>
  *
  * This library is free software; you can redistribute it and/or
@@ -19,8 +19,8 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#ifndef PEOPLEMANAGER_TEST_H
-#define PEOPLEMANAGER_TEST_H
+#ifndef LIBKTELEPATHY_TESTS_EVERYONE_PERSON_SET_TEST_H
+#define LIBKTELEPATHY_TESTS_EVERYONE_PERSON_SET_TEST_H
 
 #include "person.h"
 #include "person-set.h"
@@ -29,28 +29,42 @@
 
 #include <Nepomuk/Resource>
 
-class PeopleManagerTest : public TelepathyBaseTest
+class EveryonePersonSetTest : public TelepathyBaseTest
 {
     Q_OBJECT
 
 public:
-    PeopleManagerTest(QObject* parent = 0);
-    virtual ~PeopleManagerTest();
+    EveryonePersonSetTest(QObject* parent = 0);
+    virtual ~EveryonePersonSetTest();
 
 protected Q_SLOTS:
+    // testAddRemove()
+    void addRemoveOnPersonAdded1(const KTelepathy::PersonPtr &person);
+    void addRemoveOnPersonRemoved1(const KTelepathy::PersonPtr &person);
+    void addRemoveOnPersonAdded2(const KTelepathy::PersonPtr &person);
+    void addRemoveOnPersonRemoved2(const KTelepathy::PersonPtr &person);
+    void addRemoveOnPersonAdded3(const KTelepathy::PersonPtr &person);
+    void addRemoveOnPersonRemoved3(const KTelepathy::PersonPtr &person);
 
 private Q_SLOTS:
     void initTestCase();
     void init();
 
-    void testPersonFromResource();
-    void testEveryone();
+    void testAddRemove();
 
     void cleanup();
     void cleanupTestCase();
 
 private:
-
+    // testAddRemove()
+    Nepomuk::Resource m_addRemovePerson1;
+    Nepomuk::Resource m_addRemovePerson2;
+    Nepomuk::Resource m_addRemovePerson3;
+    Nepomuk::Resource m_addRemovePerson4;
+    KTelepathy::PersonSetPtr m_addRemovePersonSet;
+    bool m_addRemovePerson1Added;
+    bool m_addRemovePerson2Added;
+    bool m_addRemovePerson3Added;
 };
 
 

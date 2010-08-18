@@ -111,218 +111,26 @@ void PeopleManagerTest::testPersonFromResource()
 
 void PeopleManagerTest::testEveryone()
 {
-    kDebug();
-
-    // Set up member vars used for this test
-    m_everyonePerson1Added = false;
-    m_everyonePerson2Added = false;
-    m_everyonePerson3Added = false;
-
-    // Prepopulate Nepomuk with a load of misc
-    m_everyonePerson1 = QUrl::fromEncoded("nepomuk:/everyone-test-1");
-    m_everyonePerson2 = QUrl::fromEncoded("nepomuk:/everyone-test-2");
-    m_everyonePerson3 = QUrl::fromEncoded("nepomuk:/everyone-test-3");
-
-    Nepomuk::Thing thing1(m_everyonePerson1);
-    QVERIFY(!thing1.exists());
-    thing1.addType(Nepomuk::Vocabulary::PIMO::Person());
-    QVERIFY(thing1.exists());
-    QVERIFY(thing1.hasType(Nepomuk::Vocabulary::PIMO::Person()));
-
-    Nepomuk::Thing thing2(m_everyonePerson2);
-    QVERIFY(!thing2.exists());
-    thing2.addType(Nepomuk::Vocabulary::PIMO::Person());
-    QVERIFY(thing2.exists());
-    QVERIFY(thing2.hasType(Nepomuk::Vocabulary::PIMO::Person()));
-
-    Nepomuk::Thing thing3(m_everyonePerson3);
-    QVERIFY(!thing3.exists());
-    thing3.addType(Nepomuk::Vocabulary::PIMO::Person());
-    QVERIFY(thing3.exists());
-    QVERIFY(thing3.hasType(Nepomuk::Vocabulary::PIMO::Person()));
-
     // Get the People Manager instance
     PeopleManager *pm = PeopleManager::instance();
     QVERIFY(pm);
 
     // Get the PersonSet containing Everyone
-    m_everyonePersonSet = pm->everyone();
-    QVERIFY(!m_everyonePersonSet.isNull());
+    PersonSetPtr everyonePersonSet = pm->everyone();
+    QVERIFY(!everyonePersonSet.isNull());
 
-    // The person set should be empty to begin with
-    QCOMPARE(m_everyonePersonSet->people().size(), 0);
-
-    // Connect to the PersonSet's signals
-    connect(m_everyonePersonSet.data(),
-            SIGNAL(personAdded(KTelepathy::PersonPtr)),
-            SLOT(everyoneOnPersonAdded1(KTelepathy::PersonPtr)));
-    connect(m_everyonePersonSet.data(),
-            SIGNAL(personRemoved(KTelepathy::PersonPtr)),
-            SLOT(everyoneOnPersonRemoved1(KTelepathy::PersonPtr)));
-
-    // Launch the mainloop
-    mLoop->exec();
-
-    QCOMPARE(m_everyonePersonSet->people().size(), 3);
-
-    // Disconnect the signals from part one of the test.
-    disconnect(m_everyonePersonSet.data(),
-               SIGNAL(personAdded(KTelepathy::PersonPtr)),
-               this,
-               SLOT(everyoneOnPersonAdded1(KTelepathy::PersonPtr)));
-    disconnect(m_everyonePersonSet.data(),
-               SIGNAL(personRemoved(KTelepathy::PersonPtr)),
-               this,
-               SLOT(everyoneOnPersonRemoved1(KTelepathy::PersonPtr)));
-
-    // Next, we add a new person to Nepomuk and see if the set picks it up.
-    m_everyonePerson4 = QUrl::fromEncoded("nepomuk:/everyone-test-4");
-    Nepomuk::Thing thing4(m_everyonePerson4);
-    QVERIFY(!thing4.exists());
-    thing4.addType(Nepomuk::Vocabulary::PIMO::Person());
-    QVERIFY(thing4.exists());
-    QVERIFY(thing4.hasType(Nepomuk::Vocabulary::PIMO::Person()));
-
-    // Connect to the signals
-    connect(m_everyonePersonSet.data(),
-            SIGNAL(personAdded(KTelepathy::PersonPtr)),
-            SLOT(everyoneOnPersonAdded2(KTelepathy::PersonPtr)));
-    connect(m_everyonePersonSet.data(),
-            SIGNAL(personRemoved(KTelepathy::PersonPtr)),
-            SLOT(everyoneOnPersonRemoved2(KTelepathy::PersonPtr)));
-
-    // Launch the mainloop
-    mLoop->exec();
-
-    QCOMPARE(m_everyonePersonSet->people().size(), 4);
-
-    // Disconnect the signals from part two of the test.
-    disconnect(m_everyonePersonSet.data(),
-               SIGNAL(personAdded(KTelepathy::PersonPtr)),
-               this,
-               SLOT(everyoneOnPersonAdded2(KTelepathy::PersonPtr)));
-    disconnect(m_everyonePersonSet.data(),
-               SIGNAL(personRemoved(KTelepathy::PersonPtr)),
-               this,
-               SLOT(everyoneOnPersonRemoved2(KTelepathy::PersonPtr)));
-
-    // Next, remove a person from Nepomuk to see if it picks it up.
-    m_everyonePerson2.remove();
-
-    // Connect to the signals
-    connect(m_everyonePersonSet.data(),
-            SIGNAL(personAdded(KTelepathy::PersonPtr)),
-            SLOT(everyoneOnPersonAdded3(KTelepathy::PersonPtr)));
-    connect(m_everyonePersonSet.data(),
-            SIGNAL(personRemoved(KTelepathy::PersonPtr)),
-            SLOT(everyoneOnPersonRemoved3(KTelepathy::PersonPtr)));
-
-    // Launch the mainloop
-    mLoop->exec();
-
-    QCOMPARE(m_everyonePersonSet->people().size(), 3);
-
-    // Disconnect the signals from part three of the test.
-    disconnect(m_everyonePersonSet.data(),
-               SIGNAL(personAdded(KTelepathy::PersonPtr)),
-               this,
-               SLOT(everyoneOnPersonAdded2(KTelepathy::PersonPtr)));
-    disconnect(m_everyonePersonSet.data(),
-               SIGNAL(personRemoved(KTelepathy::PersonPtr)),
-               this,
-               SLOT(everyoneOnPersonRemoved2(KTelepathy::PersonPtr)));
-
-    // Check that the everyonePersonSet is cached properly.
+    // Check that the EveryonePersonSet is cached properly.
     PersonSetPtr personSet = pm->everyone();
-    QCOMPARE(personSet, m_everyonePersonSet);
+    QCOMPARE(personSet.data(), everyonePersonSet.data());
 
     // Check the cache gets cleared properly
-    m_everyonePersonSet.clear();
+    QWeakPointer<PersonSet> weakPtr = everyonePersonSet.toWeakRef();
+    everyonePersonSet.clear();
     personSet.clear();
 
-    // When the cached everyonePersonSet has been cleared, the new one should be empty until the
-    // main loop is run.
-    personSet = pm->everyone();
-    QCOMPARE(personSet->people().size(), 0);
-
-    personSet.clear();
-
-    // Cleanup this test
-    m_everyonePerson1.remove();
-    m_everyonePerson3.remove();
-    m_everyonePerson4.remove();
-}
-
-void PeopleManagerTest::everyoneOnPersonAdded1(const PersonPtr &person)
-{
-    kDebug();
-
-    // See which person was added.
-    if (person->resource() == m_everyonePerson1) {
-        QVERIFY(!m_everyonePerson1Added);
-        m_everyonePerson1Added = true;
-    } else if (person->resource() == m_everyonePerson2) {
-        QVERIFY(!m_everyonePerson2Added);
-        m_everyonePerson2Added = true;
-    } else if (person->resource() == m_everyonePerson3) {
-        QVERIFY(!m_everyonePerson3Added);
-        m_everyonePerson3Added = true;
-    } else {
-        QVERIFY(false);
-    }
-
-    // If all three are added, this part of the test is over
-    if (m_everyonePerson1Added && m_everyonePerson2Added && m_everyonePerson3Added) {
-        mLoop->quit();
-    }
-}
-
-void PeopleManagerTest::everyoneOnPersonRemoved1(const PersonPtr &person)
-{
-    kDebug();
-
-    Q_UNUSED(person);
-
-    // This *should* never be called
-    QVERIFY(false);
-}
-
-void PeopleManagerTest::everyoneOnPersonAdded2(const PersonPtr &person)
-{
-    kDebug();
-
-    QCOMPARE(person->resource(), m_everyonePerson4);
-
-    mLoop->quit();
-}
-
-void PeopleManagerTest::everyoneOnPersonRemoved2(const PersonPtr &person)
-{
-    kDebug();
-
-    Q_UNUSED(person);
-
-    // This *should* never be called
-    QVERIFY(false);
-}
-
-void PeopleManagerTest::everyoneOnPersonAdded3(const PersonPtr &person)
-{
-    kDebug();
-
-    Q_UNUSED(person);
-
-    // This *should* never be called
-    QVERIFY(false);
-}
-
-void PeopleManagerTest::everyoneOnPersonRemoved3(const PersonPtr &person)
-{
-    kDebug();
-
-    QCOMPARE(person->resource(), m_everyonePerson2);
-
-    mLoop->quit();
+    PersonSetPtr newPersonSet = pm->everyone();
+    QVERIFY(!newPersonSet.isNull());
+    QVERIFY(weakPtr.isNull());
 }
 
 void PeopleManagerTest::cleanup() {
