@@ -189,7 +189,7 @@ QModelIndex PersonSetModel::index(int row, int column, const QModelIndex &parent
     }
 
     // Check the row is within the bounds of the list
-    if (row >= d->rootItem->children.size()) {
+    if (row >= d->rootItem->children.size() || row < 0) {
         return QModelIndex();
     }
 
