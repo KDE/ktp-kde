@@ -55,8 +55,8 @@ public:
     virtual int rowCount(const QModelIndex &parent = QModelIndex()) const;
 
 private Q_SLOTS:
-    void onPersonAdded(const PersonPtr &person);
-    void onPersonRemoved(const PersonPtr &person);
+    void onPersonAdded(const KTelepathy::PersonPtr &person);
+    void onPersonRemoved(const KTelepathy::PersonPtr &person);
 
 private:
     Q_DISABLE_COPY(PersonSetModel);

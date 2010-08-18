@@ -57,6 +57,13 @@ Person::Person(const Nepomuk::Resource &pimoPerson)
     }
 }
 
+Person::Person()
+  : Entity(),
+    d(new Private)
+{
+    kDebug();
+}
+
 Person::~Person()
 {
     kDebug();

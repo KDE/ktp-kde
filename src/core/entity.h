@@ -54,7 +54,7 @@ public:
      * valid, it is possible to actually make use of it for something, and resource will return
      * the resource this entity wraps.
      */
-    bool isValid() const;
+    virtual bool isValid() const;
 
     /**
      * @brief get the resource this entity wraps.
@@ -69,7 +69,7 @@ public:
      * the URI of the wrapped Nepomuk resource in a way which guarantees to provide it even if the
      * resource is removed from the nepomuk store, call resourceUri() instead.
      */
-    Nepomuk::Resource resource() const;
+    virtual Nepomuk::Resource resource() const;
 
     /**
      * @brief returns the URI of the resource this entity wraps, even if the resource no longer exists.
@@ -79,7 +79,7 @@ public:
      * from the Nepomuk storage, and therefore the properties of the corresponding Nepomuk::Resource
      * object have been reset.
      */
-    QUrl resourceUri() const;
+    virtual QUrl resourceUri() const;
 
     bool operator==(const Entity &other) const;
     bool operator!=(const Entity &other) const;
@@ -89,6 +89,11 @@ protected:
      * Constructor is protected since only PeopleManager can create Entity instances.
      */
     explicit Entity(const Nepomuk::Resource &resource);
+
+    /**
+     * Construct an invalid Entity object
+     */
+    Entity();
 
     /**
      * Sub-classes use this method to indicate if the Entity should be valid or not. It should be

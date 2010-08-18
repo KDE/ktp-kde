@@ -53,6 +53,11 @@ protected:
      */
     explicit Person(const Nepomuk::Resource &pimoPerson);
 
+    /**
+     * Construct an invalid Person object
+     */
+    Person();
+
 private:
     Q_DISABLE_COPY(Person);
 

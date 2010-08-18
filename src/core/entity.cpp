@@ -47,6 +47,12 @@ Entity::Entity(const Nepomuk::Resource &resource)
     d->resourceUri = resource.resourceUri();
 }
 
+Entity::Entity()
+  : d(new Entity::Private)
+{
+    kDebug();
+}
+
 Entity::~Entity()
 {
     kDebug();

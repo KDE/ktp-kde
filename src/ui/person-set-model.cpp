@@ -105,11 +105,11 @@ void PersonSetModel::setPersonSet(const PersonSetPtr &personSet)
     // Set the new PersonSet, and connect to its add/remove signals
     d->personSet = personSet;
     connect(d->personSet.data(),
-            SIGNAL(personAdded(PersonPtr)),
-            SLOT(onPersonAdded(PersonPtr)));
+            SIGNAL(personAdded(KTelepathy::PersonPtr)),
+            SLOT(onPersonAdded(KTelepathy::PersonPtr)));
     connect(d->personSet.data(),
-            SIGNAL(personRemoved(PersonPtr)),
-            SLOT(onPersonRemoved(PersonPtr)));
+            SIGNAL(personRemoved(KTelepathy::PersonPtr)),
+            SLOT(onPersonRemoved(KTelepathy::PersonPtr)));
 
     // Simulate calling personAdded for each of the people already in the list
     Q_FOREACH (PersonPtr person, d->personSet->people()) {
