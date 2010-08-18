@@ -67,6 +67,8 @@ typedef QSharedPointer<Person> PersonPtr;
 
 }  // namespace KTelepathy
 
+Q_DECLARE_METATYPE(QSharedPointer<KTelepathy::Person>);
+
 
 #endif  // Header guard
 

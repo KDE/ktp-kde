@@ -38,6 +38,7 @@ set (ktelepathy_SRCS
      ui/meta-contact-item.cpp
      ui/modelmenu.cpp
      ui/nepomuk-signal-watcher.cpp
+     ui/person-set-model.cpp
 )
 
 set (ktelepathy_INST_HDRS
