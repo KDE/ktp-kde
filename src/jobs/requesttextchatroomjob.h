@@ -23,6 +23,10 @@
 #include "abstractrequestchanneljob.h"
 #include <kdemacros.h>
 
+namespace Nepomuk {
+    class IMAccount;
+}
+
 namespace KTelepathy {
 
 class RequestTextChatroomJobPrivate;
@@ -40,7 +44,6 @@ public:
     virtual bool canEnsureChannel();
 };
 
-
 /*
 KDE_EXPORT RequestTextChatroomJob* requestTextChatroom(const QString& room,
                                                        const QString& preferredHandler = QString(),
@@ -48,6 +51,17 @@ KDE_EXPORT RequestTextChatroomJob* requestTextChatroom(const QString& room,
                                                        QObject* parent = 0);
 */
 KDE_EXPORT RequestTextChatroomJob* requestTextChatroom(const QString& room,
+                                                       const QString& preferredHandler,
+                                                       QObject* parent);
+/*
+KDE_EXPORT RequestTextChatroomJob* requestTextChatroom(const Nepomuk::IMAccount& account,
+                                                       const QString& room,
+                                                       const QString& preferredHandler = QString(),
+                                                       const RequestChannelJob::RequestFlags requestchannelflags = RequestChannelJob::RequestModeEnsure,
+                                                       QObject* parent = 0);
+*/
+KDE_EXPORT RequestTextChatroomJob* requestTextChatroom(const Nepomuk::IMAccount& account,
+                                                       const QString& room,
                                                        const QString& preferredHandler,
                                                        QObject* parent);
 

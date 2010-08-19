@@ -32,6 +32,10 @@ public:
     RequestTextChatroomJobPrivate(const QString& r,
                                   const QString& ph,
                                   const KTelepathy::RequestChannelFlags rcf);
+    RequestTextChatroomJobPrivate(const Nepomuk::IMAccount& a,
+                                  const QString& r,
+                                  const QString& ph,
+                                  const KTelepathy::RequestChannelFlags rcf);
     ~RequestTextChatroomJobPrivate();
 
     static inline RequestTextChatroomJob* newJob(const QString& room,
@@ -43,6 +47,23 @@ public:
         kDebug() << preferredHandler;
         kDebug() << requestchannelflags;
         RequestTextChatroomJob *job = new RequestTextChatroomJob(*new RequestTextChatroomJobPrivate(room,
+                                                                                                    preferredHandler,
+                                                                                                    requestchannelflags),
+                                                                 parent);
+        return job;
+    }
+    static inline RequestTextChatroomJob* newJob(const Nepomuk::IMAccount& account,
+                                                 const QString& room,
+                                                 const QString& preferredHandler,
+                                                 const KTelepathy::RequestChannelFlags requestchannelflags,
+                                                 QObject* parent)
+    {
+        kDebug() << account.genericLabel();
+        kDebug() << room;
+        kDebug() << preferredHandler;
+        kDebug() << requestchannelflags;
+        RequestTextChatroomJob *job = new RequestTextChatroomJob(*new RequestTextChatroomJobPrivate(account,
+                                                                                                    room,
                                                                                                     preferredHandler,
                                                                                                     requestchannelflags),
                                                                  parent);
@@ -90,6 +111,16 @@ RequestTextChatroomJobPrivate::RequestTextChatroomJobPrivate(const QString& r,
 }
 
 
+RequestTextChatroomJobPrivate::RequestTextChatroomJobPrivate(const Nepomuk::IMAccount& a,
+                                                             const QString& r,
+                                                             const QString& ph,
+                                                             const KTelepathy::RequestChannelFlags rcf)
+    : AbstractRequestChannelJobPrivate(a, r, ph, rcf)
+{
+    kDebug();
+}
+
+
 RequestTextChatroomJobPrivate::~RequestTextChatroomJobPrivate()
 {
     kDebug();
@@ -117,6 +148,34 @@ RequestTextChatroomJob* requestTextChatroom(const QString& room,
 {
     kDebug();
     return RequestTextChatroomJobPrivate::newJob(room,
+                                                 preferredHandler,
+                                                 KTelepathy::RequestChannelEnsureMode,
+                                                 parent);
+}
+
+/*
+RequestTextChatroomJob* requestTextChatroom(const Nepomuk::IMAccount& account,
+                                            const QString& room,
+                                            const QString& preferredHandler,
+                                            const KTelepathy::RequestChannelFlags requestchannelflags,
+                                            QObject* parent)
+{
+    return RequestTextChatroomJobPrivate::newJob(account,
+                                                 room,
+                                                 preferredHandler,
+                                                 requestchannelflags,
+                                                 parent);
+}
+*/
+
+RequestTextChatroomJob* requestTextChatroom(const Nepomuk::IMAccount& account,
+                                            const QString& room,
+                                            const QString& preferredHandler,
+                                            QObject* parent)
+{
+    kDebug();
+    return RequestTextChatroomJobPrivate::newJob(account,
+                                                 room,
                                                  preferredHandler,
                                                  KTelepathy::RequestChannelEnsureMode,
                                                  parent);
