@@ -71,6 +71,7 @@ set (ktelepathy_INST_HDRS
      ui/meta-contact-item.h
      ui/modelmenu.h
      ui/nepomuk-signal-watcher.h
+     ui/person-set-model.h
 )
 
 set (ktelepathy_PRETTY_HDRS
@@ -95,6 +96,7 @@ set (ktelepathy_PRETTY_HDRS
      KTelepathy/PeopleManager
      KTelepathy/PersonSet
      KTelepathy/Person
+     KTelepathy/PersonSetModel
      KTelepathy/RemoveContactsFromGroupJob
      KTelepathy/RemoveContactsJob
      KTelepathy/RequestGenericChannelJob
