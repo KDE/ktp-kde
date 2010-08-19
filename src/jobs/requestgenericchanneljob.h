@@ -27,6 +27,7 @@
 namespace Nepomuk {
     class PersonContact;
     class Person;
+    class IMAccount;
 }
 
 namespace KTelepathy {
@@ -53,22 +54,29 @@ protected:
 
 
 KDE_EXPORT RequestGenericChannelJob* requestGenericChannel(const Nepomuk::PersonContact& contact,
-                                             const QVariantMap& request,
-                                             const QString& preferredHandler = QString(),
-                                             KTelepathy::RequestChannelFlags requestchannelflags = KTelepathy::RequestChannelAnyMode,
-                                             QObject* parent = 0);
+                                                           const QVariantMap& request,
+                                                           const QString& preferredHandler = QString(),
+                                                           KTelepathy::RequestChannelFlags requestchannelflags = KTelepathy::RequestChannelAnyMode,
+                                                           QObject* parent = 0);
 
 KDE_EXPORT RequestGenericChannelJob* requestGenericChannel(const Nepomuk::Person& metacontact,
-                                             const QVariantMap& request,
-                                             const QString& preferredHandler = QString(),
-                                             KTelepathy::RequestChannelFlags requestchannelflags = KTelepathy::RequestChannelAnyMode,
-                                             QObject* parent = 0);
+                                                           const QVariantMap& request,
+                                                           const QString& preferredHandler = QString(),
+                                                           KTelepathy::RequestChannelFlags requestchannelflags = KTelepathy::RequestChannelAnyMode,
+                                                           QObject* parent = 0);
 
 KDE_EXPORT RequestGenericChannelJob* requestGenericChannel(const QString room,
-                                             const QVariantMap& request,
-                                             const QString& preferredHandler = QString(),
-                                             KTelepathy::RequestChannelFlags requestchannelflags = KTelepathy::RequestChannelAnyMode,
-                                             QObject* parent = 0);
+                                                           const QVariantMap& request,
+                                                           const QString& preferredHandler = QString(),
+                                                           KTelepathy::RequestChannelFlags requestchannelflags = KTelepathy::RequestChannelAnyMode,
+                                                           QObject* parent = 0);
+
+KDE_EXPORT RequestGenericChannelJob* requestGenericChannel(const Nepomuk::IMAccount& account,
+                                                           const QString room,
+                                                           const QVariantMap& request,
+                                                           const QString& preferredHandler = QString(),
+                                                           KTelepathy::RequestChannelFlags requestchannelflags = KTelepathy::RequestChannelAnyMode,
+                                                           QObject* parent = 0);
 
 } // namespace KTelepathy
 

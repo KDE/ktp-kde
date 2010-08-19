@@ -42,6 +42,11 @@ public:
                                     const QVariantMap& rq,
                                     const QString& ph,
                                     const KTelepathy::RequestChannelFlags rcf);
+    RequestGenericChannelJobPrivate(const Nepomuk::IMAccount& a,
+                                    const QString& r,
+                                    const QVariantMap& rq,
+                                    const QString& ph,
+                                    const KTelepathy::RequestChannelFlags rcf);
     ~RequestGenericChannelJobPrivate();
 
     QVariantMap request;
@@ -91,6 +96,26 @@ public:
         kDebug() << preferredHandler;
         kDebug() << requestchannelflags;
         RequestGenericChannelJob *job = new RequestGenericChannelJob(*new RequestGenericChannelJobPrivate(room,
+                                                                                                          request,
+                                                                                                          preferredHandler,
+                                                                                                          requestchannelflags),
+                                                                     parent);
+        return job;
+    }
+    static inline RequestGenericChannelJob* newJob( const Nepomuk::IMAccount account,
+                                                    const QString room,
+                                                    const QVariantMap& request,
+                                                    const QString& preferredHandler,
+                                                    const KTelepathy::RequestChannelFlags requestchannelflags,
+                                                    QObject* parent)
+    {
+        kDebug() << account.genericLabel();
+        kDebug() << room;
+        kDebug() << request;
+        kDebug() << preferredHandler;
+        kDebug() << requestchannelflags;
+        RequestGenericChannelJob *job = new RequestGenericChannelJob(*new RequestGenericChannelJobPrivate(account,
+                                                                                                          room,
                                                                                                           request,
                                                                                                           preferredHandler,
                                                                                                           requestchannelflags),
@@ -204,6 +229,18 @@ RequestGenericChannelJobPrivate::RequestGenericChannelJobPrivate(const QString& 
                                                                  const QString& ph,
                                                                  const KTelepathy::RequestChannelFlags rcf)
     : AbstractRequestChannelJobPrivate(r, ph, rcf),
+      request(rq)
+{
+    kDebug();
+}
+
+
+RequestGenericChannelJobPrivate::RequestGenericChannelJobPrivate(const Nepomuk::IMAccount& a,
+                                                                 const QString& r,
+                                                                 const QVariantMap& rq,
+                                                                 const QString& ph,
+                                                                 const KTelepathy::RequestChannelFlags rcf)
+    : AbstractRequestChannelJobPrivate(a, r, ph, rcf),
       request(rq)
 {
     kDebug();
