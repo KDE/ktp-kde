@@ -337,8 +337,22 @@ void AbstractRequestChannelJobPrivate::initTargetsModeMetaContact()
 void AbstractRequestChannelJobPrivate::initTargetsModeRoom()
 {
     kDebug();
-    kWarning() << "Not implemented yet!";
-    //TODO Init account
+    QList< TelepathyAccountProxy* > proxies = TelepathyBridge::instance()->d_func()->accountProxies;
+    // TODO order by preference?
+
+    foreach(TelepathyAccountProxy* proxy, proxies)
+    {
+        kWarning() << "Using the first account!"; //TODO check for capabilities
+        account = proxy->account();
+        if (account->isValid())
+            return;
+    }
+
+    Q_Q(AbstractRequestChannelJob);
+    q->setError(KJob::UserDefinedError);
+    q->setErrorText(i18n("Cannot find a valid account."));
+    QTimer::singleShot(0, q, SLOT(__k__doEmitResult()));
+}
 }
 
 #include "abstractrequestchanneljob.moc"
