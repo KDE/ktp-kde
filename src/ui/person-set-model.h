@@ -70,5 +70,5 @@ private:
 }  // Namespace KTelepathy
 
 
-#endif // LIBKTELEPATHY_PERSON_STE_MODEL_H
+#endif // LIBKTELEPATHY_PERSON_SET_MODEL_H
 
