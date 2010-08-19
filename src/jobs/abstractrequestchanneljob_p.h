@@ -24,6 +24,8 @@
 
 #include "ontologies/person.h"
 #include "ontologies/personcontact.h"
+#include "ontologies/imaccount.h"
+
 #include <QDateTime>
 #include <TelepathyQt4/Types>
 
@@ -47,6 +49,23 @@ public:
     AbstractRequestChannelJobPrivate(const QString& r,
                                      const QString& ph,
                                      const KTelepathy::RequestChannelFlags rcf);
+/*
+// TODO This should not be useful
+    AbstractRequestChannelJobPrivate(const Nepomuk::IMAccount& a,
+                                     const Nepomuk::PersonContact& c,
+                                     const QString& ph,
+                                     const KTelepathy::RequestChannelFlags rcf);
+*/
+/* TODO
+    AbstractRequestChannelJobPrivate(const Nepomuk::IMAccount& a,
+                                     const Nepomuk::Person& mc,
+                                     const QString& ph,
+                                     const KTelepathy::RequestChannelFlags rcf);
+*/
+    AbstractRequestChannelJobPrivate(const Nepomuk::IMAccount& a,
+                                     const QString& r,
+                                     const QString& ph,
+                                     const KTelepathy::RequestChannelFlags rcf);
 /* TODO
     AbstractRequestChannelJobPrivate(const QString& r,
                                      const QList<Nepomuk::PersonContact>& cl,
@@ -57,6 +76,7 @@ public:
                                      const QList<Nepomuk::Person>& mcl,
                                      const QString& ph,
                                      const KTelepathy::RequestChannelFlags rcf);
+    TODO same + account?
 */
 
     virtual ~AbstractRequestChannelJobPrivate();
@@ -66,6 +86,7 @@ public:
     const KTelepathy::RequestChannelFlags requestchannelflags;
 
     // Target (input)
+    const Nepomuk::IMAccount accountResource;
     Nepomuk::PersonContact contactResource; // TODO const?
     const Nepomuk::Person metacontactResource;
     const QString room;
@@ -92,6 +113,7 @@ private:
     void initTargetsModeContact();
     void initTargetsModeMetaContact();
     void initTargetsModeRoom();
+    void initTargetsModeAccountRoom();
 };
 
 } // namespace KTelepathy

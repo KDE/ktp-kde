@@ -128,6 +128,7 @@ AbstractRequestChannelJobPrivate::AbstractRequestChannelJobPrivate( const Nepomu
     initTargets();
 }
 
+
 AbstractRequestChannelJobPrivate::AbstractRequestChannelJobPrivate( const QString& r,
                                                                     const QString& ph,
                                                                     const KTelepathy::RequestChannelFlags rcf)
@@ -143,6 +144,58 @@ AbstractRequestChannelJobPrivate::AbstractRequestChannelJobPrivate( const QStrin
     initTargets();
 }
 
+/*
+AbstractRequestChannelJobPrivate::AbstractRequestChannelJobPrivate( const Nepomuk::IMAccount& a,
+                                                                    const Nepomuk::PersonContact& c,
+                                                                    const QString& ph,
+                                                                    const KTelepathy::RequestChannelFlags rcf)
+    : TelepathyBaseJobPrivate(),
+      targetmode(AbstractRequestChannelJob::TargetModeContact),
+      requestchannelflags(rcf),
+      accountResource(a),
+      contactResource(c),
+      useractiontime(QDateTime::currentDateTime()),
+      preferredHandler(ph),
+      pendingchannelrequest(0)
+{
+    kDebug();
+    initTargets();
+}
+*/
+/*
+AbstractRequestChannelJobPrivate::AbstractRequestChannelJobPrivate( const Nepomuk::IMAccount& a,
+                                                                    const Nepomuk::Person& mc,
+                                                                    const QString& ph,
+                                                                    const KTelepathy::RequestChannelFlags rcf)
+    : TelepathyBaseJobPrivate(),
+      targetmode(AbstractRequestChannelJob::TargetModeMetaContact),
+      requestchannelflags(rcf),
+      accountResource(a),
+      metacontactResource(mc),
+      useractiontime(QDateTime::currentDateTime()),
+      preferredHandler(ph),
+      pendingchannelrequest(0)
+{
+    kDebug();
+    initTargets();
+}
+*/
+AbstractRequestChannelJobPrivate::AbstractRequestChannelJobPrivate( const Nepomuk::IMAccount& a,
+                                                                    const QString& r,
+                                                                    const QString& ph,
+                                                                    const KTelepathy::RequestChannelFlags rcf)
+    : TelepathyBaseJobPrivate(),
+      targetmode(AbstractRequestChannelJob::TargetModeAccountRoom),
+      requestchannelflags(rcf),
+      accountResource(a),
+      room(r),
+      useractiontime(QDateTime::currentDateTime()),
+      preferredHandler(ph),
+      pendingchannelrequest(0)
+{
+    kDebug();
+    initTargets();
+}
 
 AbstractRequestChannelJobPrivate::~AbstractRequestChannelJobPrivate()
 {
@@ -247,8 +300,15 @@ void AbstractRequestChannelJobPrivate::initTargets()
         case AbstractRequestChannelJob::TargetModeRoom:
             initTargetsModeRoom();
             break;
+        case AbstractRequestChannelJob::TargetModeAccountRoom:
+            initTargetsModeAccountRoom();
+            break;
         case AbstractRequestChannelJob::TargetModeRoomContactsList:
         case AbstractRequestChannelJob::TargetModeRoomMetaContactsList:
+        case AbstractRequestChannelJob::TargetModeAccountContact:
+        case AbstractRequestChannelJob::TargetModeAccountMetaContact:
+        case AbstractRequestChannelJob::TargetModeAccountRoomContactsList:
+        case AbstractRequestChannelJob::TargetModeAccountRoomMetaContactsList:
         case AbstractRequestChannelJob::TargetModeError:
         default:
             // Hmm?
@@ -353,6 +413,20 @@ void AbstractRequestChannelJobPrivate::initTargetsModeRoom()
     q->setErrorText(i18n("Cannot find a valid account."));
     QTimer::singleShot(0, q, SLOT(__k__doEmitResult()));
 }
+
+
+void AbstractRequestChannelJobPrivate::initTargetsModeAccountRoom()
+{
+    kDebug();
+    TelepathyAccountProxy* proxy = TelepathyBridge::instance()->d_func()->accountProxyForAccount(accountResource);
+    account = proxy->account();
+    if (!account->isValid())
+    {
+        Q_Q(AbstractRequestChannelJob);
+        q->setError(KJob::UserDefinedError);
+        q->setErrorText(i18n("Requested account is not valid."));
+        QTimer::singleShot(0, q, SLOT(__k__doEmitResult()));
+    }
 }
 
 #include "abstractrequestchanneljob.moc"

@@ -54,7 +54,12 @@ protected:
          TargetModeMetaContact,
          TargetModeRoom,
          TargetModeRoomContactsList,
-         TargetModeRoomMetaContactsList
+         TargetModeRoomMetaContactsList,
+         TargetModeAccountContact, //TODO Remove?
+         TargetModeAccountMetaContact,
+         TargetModeAccountRoom,
+         TargetModeAccountRoomContactsList,
+         TargetModeAccountRoomMetaContactsList,
     };
 
     // Our Q_PRIVATE_SLOTS who perform the real job
