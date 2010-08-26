@@ -28,6 +28,8 @@
 
 #include <Nepomuk/Resource>
 
+#include <QtCore/QHash>
+
 using namespace KTelepathy;
 
 
@@ -50,6 +52,8 @@ public:
     QWeakPointer<EveryonePersonSet> everyonePersonSet;
 
     Nepomuk::Resource mePimoPerson;
+
+    QHash<QUrl, QWeakPointer<Person> > personCache;
 
 };
 
@@ -116,11 +120,22 @@ PersonSetPtr PeopleManager::everyone()
 
 PersonPtr PeopleManager::personForResource(const Nepomuk::Resource &resource)
 {
-    // TODO: Cache Person objects, and return the cached one where possible.
-    // FIXME: For now, just create a Person object and return.
+    // If the Nepomuk::Resource does not have a valid URI, then return a null Person.
+    if (resource.resourceUri().isEmpty()) {
+        return QSharedPointer<Person>();
+    }
+
+    // Look in the cache to see if the person exists already.
+    QWeakPointer<Person> weakPerson = d->personCache.value(resource.resourceUri());
+    if (!weakPerson.isNull() && weakPerson.data()->isValid()) {
+        return weakPerson.toStrongRef();
+    }
+
+    // Person is not in the cache. Create a new one and insert it into the cache
     QSharedPointer<Person> person(new Person(resource));
 
     if (person->isValid()) {
+        d->personCache.insert(resource.resourceUri(), person);
         return person;
     }
 
