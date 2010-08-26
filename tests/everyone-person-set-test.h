@@ -45,6 +45,14 @@ protected Q_SLOTS:
     void addRemoveOnPersonRemoved2(const KTelepathy::PersonPtr &person);
     void addRemoveOnPersonAdded3(const KTelepathy::PersonPtr &person);
     void addRemoveOnPersonRemoved3(const KTelepathy::PersonPtr &person);
+    void addRemoveOnPersonAdded4(const KTelepathy::PersonPtr &person);
+    void addRemoveOnPersonRemoved4(const KTelepathy::PersonPtr &person);
+    void addRemoveOnPersonAdded5(const KTelepathy::PersonPtr &person);
+    void addRemoveOnPersonRemoved5(const KTelepathy::PersonPtr &person);
+    void addRemoveOnPersonAdded6(const KTelepathy::PersonPtr &person);
+    void addRemoveOnPersonRemoved6(const KTelepathy::PersonPtr &person);
+    void addRemoveOnPersonAdded7(const KTelepathy::PersonPtr &person);
+    void addRemoveOnPersonRemoved7(const KTelepathy::PersonPtr &person);
 
 private Q_SLOTS:
     void initTestCase();
