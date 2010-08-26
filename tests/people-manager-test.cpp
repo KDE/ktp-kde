@@ -99,6 +99,27 @@ void PeopleManagerTest::testPersonFromResource()
     PersonPtr person3 = pm->personForResource(nonExistantResource);
     QVERIFY(person3.isNull());
 
+    // Check that the caching works if we request the Person for the same resource again.
+    PersonPtr person4 = pm->personForResource(relevantPersonResource);
+    QVERIFY(!person4.isNull());
+    QVERIFY(person4->isValid());
+    QCOMPARE(person4->resource(), relevantPersonResource);
+    QCOMPARE(person1.data(), person4.data());
+
+    // Check that clearing the cache works
+    QWeakPointer<Person> weakPerson1 = person1.toWeakRef();
+    QVERIFY(!weakPerson1.isNull());
+    person1.clear();
+    QVERIFY(person1.isNull());
+    person4.clear();
+    QVERIFY(person4.isNull());
+
+    // And that re-requesting one of the resoures after this still works
+    person1 = pm->personForResource(relevantPersonResource);
+    QVERIFY(!person1.isNull());
+    QVERIFY(person1->isValid());
+    QCOMPARE(person1->resource(), relevantPersonResource);
+
     // Cleanup: remove our three created resources
     relevantPersonResource.remove();
     irrelevantThingResource.remove();
