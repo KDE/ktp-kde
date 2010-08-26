@@ -24,14 +24,19 @@
 #include "people-manager.h"
 #include "person.h"
 
+#include "ontologies/nco.h"
 #include "ontologies/pimo.h"
+#include "ontologies/telepathy.h"
 
 #include <KDebug>
 
 #include <Nepomuk/Resource>
 #include <Nepomuk/Variant>
 
+#include <Nepomuk/Query/AndTerm>
+#include <Nepomuk/Query/ComparisonTerm>
 #include <Nepomuk/Query/QueryServiceClient>
+#include <Nepomuk/Query/ResourceTerm>
 #include <Nepomuk/Query/ResourceTypeTerm>
 #include <Nepomuk/Query/Result>
 
@@ -73,14 +78,52 @@ EveryonePersonSet::EveryonePersonSet(const Nepomuk::Resource &mePimoPerson)
             this, SLOT(onEntriesRemoved(QList<QUrl>)));
 
     // Get all PIMO:Persons
-    // FIXME: Make this query only return people that can be contacted in some way by Telepathy.
     {
         using namespace Nepomuk::Query;
+        using namespace Nepomuk::Vocabulary;
+        // subquery to match grouding occurrences of me
+        ComparisonTerm goterm(PIMO::groundingOccurrence(),
+                              ResourceTerm(d->mePimoPerson));
+        goterm.setInverted(true);
 
-        Query query(ResourceTypeTerm(Nepomuk::Vocabulary::PIMO::Person()));
+        // combine that with only nco:PersonContacts
+        AndTerm pcgoterm(ResourceTypeTerm(NCO::PersonContact()),
+                         goterm);
+
+        // now look for im accounts of those grounding occurrences (pcgoterm will become the subject of this comparison,
+        // thus the comparison will match the im accounts)
+        ComparisonTerm impcgoterm(NCO::hasIMAccount(),
+                                  pcgoterm);
+        impcgoterm.setInverted(true);
+
+        // now look for all buddies of the accounts
+        ComparisonTerm buddyTerm(Telepathy::isBuddyOf(),
+                                 impcgoterm);
+        // set the name of the variable (i.e. the buddies) to be able to match it later
+        buddyTerm.setVariableName(QLatin1String("t"));
+
+        // same comparison, other property, but use the same variable name to match them
+        ComparisonTerm ppterm(Telepathy::publishesPresenceTo(),
+                              ResourceTypeTerm(NCO::IMAccount()));
+        ppterm.setVariableName(QLatin1String("t"));
+
+        // combine both to complete the matching of the im account ?account
+        AndTerm accountTerm(ResourceTypeTerm(NCO::IMAccount()),
+                            buddyTerm, ppterm);
+
+        // match the account and select it for the results
+        ComparisonTerm imaccountTerm(NCO::hasIMAccount(), accountTerm);
+        imaccountTerm.setVariableName(QLatin1String("account"));
+
+        // the resulting person contact should be a grounding occurrence of something
+        ComparisonTerm isgoterm(PIMO::groundingOccurrence(),
+                                AndTerm(ResourceTypeTerm(NCO::PersonContact()), imaccountTerm));
+
+        // Get the pimo:person of which the imaccountTerm is the grounding occurence.
+        Query query(AndTerm(ResourceTypeTerm(PIMO::Person()),
+                            isgoterm));
 
         bool queryResult = d->query->query(query);
-        kDebug() << "Metacontact query result " << queryResult;
 
         if (!queryResult) {
             kWarning() << "Failed to query the Nepomuk database. QueryServiceClient may not be running";
