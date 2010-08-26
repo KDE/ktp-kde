@@ -1,0 +1,16 @@
+#!/bin/sh
+#
+lcov --directory @CMAKE_BINARY_DIR@ --zerocounters
+find @CMAKE_BINARY_DIR@ -name '*.gcda' -exec rm -f '{}' ';'
+rm -rf @CMAKE_BINARY_DIR@/lcov.html
+rm -rf @CMAKE_BINARY_DIR@/lcov.info
+make test
+lcov --directory @CMAKE_BINARY_DIR@ --capture --output-file @CMAKE_BINARY_DIR@/lcov.info
+mkdir -p @CMAKE_BINARY_DIR@/lcov.html
+genhtml --title LibKTelepathy --output-directory @CMAKE_BINARY_DIR@/lcov.html lcov.info
+echo
+echo 'lcov report can be found in:'
+echo 'file://@CMAKE_BINARY_DIR@/lcov.html/index.html'
+echo
+
+ 

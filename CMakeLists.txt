@@ -49,5 +49,6 @@ add_subdirectory (icons)
 
 if (KTelepathyTestLib_DIR)
     add_subdirectory (tests)
+    add_subdirectory (tools)
 endif (KTelepathyTestLib_DIR)
 
