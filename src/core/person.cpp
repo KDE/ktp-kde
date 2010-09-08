@@ -21,6 +21,8 @@
 
 #include "person.h"
 
+#include "contact-set.h"
+
 #include "ontologies/pimo.h"
 
 #include <KDebug>
@@ -36,6 +38,7 @@ public:
     { }
 
     Nepomuk::Thing pimoPerson;
+    ContactSetPtr contacts;
 
 };
 
@@ -52,6 +55,7 @@ Person::Person(const Nepomuk::Resource &pimoPerson)
         kDebug() << "We have been passed a valid PIMO:Person";
         setValid(true);
         d->pimoPerson = pimoPerson;
+        d->contacts = QSharedPointer<ContactSet>(new ContactSet(d->pimoPerson));
     } else {
         kWarning() << "Person object requires a valid PIMO:Person";
     }

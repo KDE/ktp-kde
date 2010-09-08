@@ -21,6 +21,8 @@
 
 #include "contact-set.h"
 
+#include "ontologies/pimo.h"
+
 #include <KDebug>
 
 #include <QtCore/QSet>
@@ -34,14 +36,19 @@ public:
     { }
 
     QSet<ContactPtr> contacts;
+    Nepomuk::Resource pimoPerson;
 
 };
 
-ContactSet::ContactSet()
+ContactSet::ContactSet(const Nepomuk::Resource &pimoPerson)
   : QObject(0),
     d(new ContactSet::Private)
 {
     kDebug();
+
+    // Assume that we are passed a valid PIMO:Person, since the Person object creating us
+    // should have made sure of this.
+    d->pimoPerson = pimoPerson;
 }
 
 ContactSet::~ContactSet()

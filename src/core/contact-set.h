@@ -57,7 +57,7 @@ protected:
      * Protected constructor since library users should create new instances of this class by
      * calling the static member create().
      */
-    explicit ContactSet();
+    explicit ContactSet(const Nepomuk::Resource &pimoPerson);
 
     /**
      * @brief add a new person to the set.
@@ -102,6 +102,8 @@ Q_SIGNALS:
 
 private:
     Q_DISABLE_COPY(ContactSet);
+
+    friend class Person;
 
     class Private;
     Private * const d;
