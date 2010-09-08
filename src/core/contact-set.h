@@ -26,9 +26,13 @@
 
 #include <kdemacros.h>
 
+#include <Nepomuk/Query/Result>
+
+#include <QtCore/QList>
 #include <QtCore/QObject>
 #include <QtCore/QSet>
 #include <QtCore/QSharedPointer>
+#include <QtCore/QUrl>
 
 class QUrl;
 
@@ -99,6 +103,10 @@ Q_SIGNALS:
      * @brief emitted when a person is removed from this PersonSet.
      */
     void contactRemoved(const KTelepathy::ContactPtr &contact);
+
+private Q_SLOTS:
+    void onNewEntries(const QList<Nepomuk::Query::Result> &entries);
+    void onEntriesRemoved(const QList<QUrl> &entries);
 
 private:
     Q_DISABLE_COPY(ContactSet);
