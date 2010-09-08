@@ -23,6 +23,8 @@
 
 #include "ontologies/nco.h"
 
+#include "ontologies/personcontact.h"
+
 #include <KDebug>
 
 #include <Nepomuk/Resource>
@@ -34,6 +36,8 @@ class Contact::Private {
 public:
     Private()
     { }
+
+    Nepomuk::PersonContact personContact;
 };
 
 
@@ -47,6 +51,7 @@ Contact::Contact(const Nepomuk::Resource &ncoPersonContact)
     if (ncoPersonContact.hasType(Nepomuk::Vocabulary::NCO::PersonContact())) {
         kDebug() << "We have been passed a valid NCO:PersonContact";
         setValid(true);
+        d->personContact = ncoPersonContact;
     } else {
         kWarning() << "Person object requires a valid NCO:PersonContact";
     }
