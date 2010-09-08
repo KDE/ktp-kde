@@ -75,6 +75,11 @@ Person::~Person()
     delete d;
 }
 
+ContactSetPtr Person::contacts() const
+{
+    return d->contacts;
+}
+
 
 #include "person.moc"
 

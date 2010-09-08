@@ -24,6 +24,8 @@
 
 #include "entity.h"
 
+#include "contact-set.h"
+
 #include <kdemacros.h>
 
 #include <QtCore/QSharedPointer>
@@ -46,6 +48,14 @@ class KDE_EXPORT Person : public Entity {
 
 public:
     virtual ~Person();
+
+    /**
+     * Return a shared-pointer to the ContactSet containing all the contacts that are linked
+     * to this Person.
+     *
+     * If the Person is invalid, the ContactSet returned may be null.
+     */
+    ContactSetPtr contacts() const;
 
 protected:
     /**
