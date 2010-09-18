@@ -109,6 +109,34 @@ protected:
      */
     virtual void onStatementRemoved(const Soprano::Statement &statement);
 
+Q_SIGNALS:
+    /**
+     * Emitted when the avatar has changed.
+     */
+    void avatarChanged(const QPixmap &avatar);
+
+    /**
+     * Emitted when the avatar with presence overlay has changed. This may be emitted on more
+     * occassions than the avatarChanged() signal because not only a change in avatar but also
+     * a change in the presence icon will trigger its emission.
+     */
+    void avatarWithOverlayChanged(const QPixmap &avatarWithOverlay);
+
+    /**
+     * Emitted when the capabilities have changed
+     */
+    void capabilitiesChanged(const QStringList &capabilities);
+
+    /**
+     * Emitted when the display name has changed
+     */
+    void displayNameChanged(const QString &displayName);
+
+    /**
+     * Emitted when the presence Icon has changed.
+     */
+    void presenceIconChanged(const KIcon &presenceIcon);
+
 private Q_SLOTS:
     /**
      * Updates the avatar.

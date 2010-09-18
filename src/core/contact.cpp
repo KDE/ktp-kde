@@ -225,6 +225,8 @@ void Contact::updateAvatar()
                                                    true);
     }
 
+    Q_EMIT avatarChanged(d->avatar);
+
     // This method *must* be called *after* updatePresenceIcon is called for the first time.
     Q_ASSERT(d->presenceIcon);
 
@@ -245,6 +247,8 @@ void Contact::updateAvatar()
                             32 - overlaySize - 1);
         painter.drawPixmap(startPoint, iconPixmap);
     }
+
+    Q_EMIT avatarWithOverlayChanged(d->avatarWithOverlay);
 }
 
 void Contact::updateDisplayName()
@@ -295,6 +299,8 @@ void Contact::updatePresenceIcon()
     }
 
     d->presenceIcon = new KIcon(iconName);
+
+    Q_EMIT presenceIconChanged(*d->presenceIcon);
 }
 
 
