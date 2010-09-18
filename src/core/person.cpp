@@ -101,13 +101,13 @@ void Person::onContactAdded(const KTelepathy::ContactPtr &contact)
             SIGNAL(avatarChanged(QPixmap)),
             SLOT(updateAvatar()));
     connect(contact.data(),
-            SIGNAL(capabilitiesChanged(QStringList)),
+            SIGNAL(capabilitiesChanged(QSet<QString>)),
             SLOT(updateCapabilities()));
     connect(contact.data(),
             SIGNAL(displayNameChanged(QString)),
             SLOT(updateDisplayName()));
     connect(contact.data(),
-            SIGNAL(groupsChanged(QStringList)),
+            SIGNAL(groupsChanged(QSet<QString>)),
             SLOT(updateGroups()));
     connect(contact.data(),
             SIGNAL(presenceIconChanged(KIcon)),
