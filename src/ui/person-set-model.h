@@ -76,6 +76,8 @@ private:
 
 }  // Namespace KTelepathy
 
+Q_DECLARE_METATYPE(QSet<QString>);
+
 
 #endif // LIBKTELEPATHY_PERSON_SET_MODEL_H
 

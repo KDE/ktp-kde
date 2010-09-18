@@ -165,7 +165,7 @@ QVariant PersonSetModel::data(const QModelIndex &index, int role) const
         data.setValue<PersonPtr>(item->person);
         break;
     case PersonSetModel::GroupsRole:
-        data.setValue(item->person->groups());
+        data.setValue<QSet<QString> >(item->person->groups());
         break;
     case PersonSetModel::CapabilitiesRole:
         // TODO: Implement me!

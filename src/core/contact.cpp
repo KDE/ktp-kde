@@ -61,7 +61,6 @@ public:
 
     KIcon *presenceIcon;
     QPixmap avatar;
-    QPixmap avatarWithOverlay;
 };
 
 
@@ -116,16 +115,16 @@ Contact::~Contact()
 }
 
 // FIXME: Use a flag, not a bool
-const QPixmap &Contact::avatar(bool withOverlay) const
+const QPixmap &Contact::avatar() const
 {
     // FIXME: Change notification
-    return withOverlay ? d->avatarWithOverlay : d->avatar;
+    return d->avatar;
 }
 
-QStringList Contact::capabilities() const
+QSet<QString> Contact::capabilities() const
 {
     // TODO: Implement me!
-    return QStringList();
+    return QSet<QString>();
 }
 
 QString Contact::displayName() const
@@ -134,10 +133,10 @@ QString Contact::displayName() const
     return d->imAccount.imNicknames().first();
 }
 
-QStringList Contact::groups() const
+QSet<QString> Contact::groups() const
 {
     // TODO: Implement me!
-    return QStringList();
+    return QSet<QString>();
 }
 
 const KIcon &Contact::presenceIcon() const
@@ -214,41 +213,7 @@ void Contact::updateAvatar()
         }
     }
 
-    if (d->avatar.isNull()) {
-        // try to load the action icon
-        d->avatar = KIconLoader::global()->loadIcon(QLatin1String("im-user"),
-                                                   KIconLoader::NoGroup,
-                                                   32,
-                                                   KIconLoader::DefaultState,
-                                                   QStringList(),
-                                                   0,
-                                                   true);
-    }
-
     Q_EMIT avatarChanged(d->avatar);
-
-    // This method *must* be called *after* updatePresenceIcon is called for the first time.
-    Q_ASSERT(d->presenceIcon);
-
-    // Copy the avatar pixmap ready for updating the overlayed version.
-    d->avatarWithOverlay = d->avatar;
-
-    // create a painter to paint the action icon over the key icon
-    QPainter painter(&d->avatarWithOverlay);
-    // the the emblem icon to size 12
-    int overlaySize = 12;
-    // try to load the action icon
-    const QPixmap iconPixmap = d->presenceIcon->pixmap(overlaySize);
-    // if we're able to load the action icon paint it over
-    if (!d->avatarWithOverlay.isNull()) {
-        QPoint startPoint;
-        // bottom right corner
-        startPoint = QPoint(32 - overlaySize - 1,
-                            32 - overlaySize - 1);
-        painter.drawPixmap(startPoint, iconPixmap);
-    }
-
-    Q_EMIT avatarWithOverlayChanged(d->avatarWithOverlay);
 }
 
 void Contact::updateDisplayName()

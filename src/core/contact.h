@@ -61,12 +61,12 @@ public:
     /**
      * Returns the avatar of this person
      */
-    const QPixmap &avatar(bool withOverlay = false) const;
+    const QPixmap &avatar() const;
 
     /**
      * Returns the capabilities of this person
      */
-    QStringList capabilities() const;
+    QSet<QString> capabilities() const;
 
     /**
      * Returns the display name of the person
@@ -76,7 +76,7 @@ public:
     /**
      * Returns the groups to which this person belongs
      */
-    QStringList groups() const;
+    QSet<QString> groups() const;
 
     /**
      * Returns the presence Icon for this person
@@ -116,21 +116,19 @@ Q_SIGNALS:
     void avatarChanged(const QPixmap &avatar);
 
     /**
-     * Emitted when the avatar with presence overlay has changed. This may be emitted on more
-     * occassions than the avatarChanged() signal because not only a change in avatar but also
-     * a change in the presence icon will trigger its emission.
-     */
-    void avatarWithOverlayChanged(const QPixmap &avatarWithOverlay);
-
-    /**
      * Emitted when the capabilities have changed
      */
-    void capabilitiesChanged(const QStringList &capabilities);
+    void capabilitiesChanged(const QSet<QString> &capabilities);
 
     /**
      * Emitted when the display name has changed
      */
     void displayNameChanged(const QString &displayName);
+
+    /**
+     * Emitted when the groups have changed
+     */
+    void groupsChanged(const QSet<QString> &groups);
 
     /**
      * Emitted when the presence Icon has changed.

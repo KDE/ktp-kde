@@ -65,12 +65,12 @@ public:
     /**
      * Returns the avatar of this person
      */
-    const QPixmap &avatar() const;
+    const QPixmap &avatar(bool withOverlay = false) const;
 
     /**
      * Returns the capabilities of this person
      */
-    QStringList capabilities() const;
+    QSet<QString> capabilities() const;
 
     /**
      * Returns the display name of the person
@@ -80,7 +80,7 @@ public:
     /**
      * Returns the groups to which this person belongs
      */
-    QStringList groups() const;
+    QSet<QString> groups() const;
 
     /**
      * Returns the presence Icon for this person
@@ -97,6 +97,25 @@ protected:
      * Construct an invalid Person object
      */
     Person();
+
+Q_SIGNALS:
+    void avatarChanged(const QPixmap &avatar);
+    void avatarWithOverlayChanged(const QPixmap &avatar);
+    void capabilitiesChanged(const QSet<QString> &capabilities);
+    void displayNameChanged(const QString &displayName);
+    void groupsChanged(const QSet<QString> &groups);
+    void presenceIconChanged(const KIcon &presenceIcon);
+
+private Q_SLOTS:
+    void onContactAdded(const KTelepathy::ContactPtr &contact);
+    void onContactRemoved(const KTelepathy::ContactPtr &contact);
+
+    void updateAvatar();
+    void updateAvatarWithOverlay();
+    void updateCapabilities();
+    void updateDisplayName();
+    void updateGroups();
+    void updatePresenceIcon();
 
 private:
     Q_DISABLE_COPY(Person);
