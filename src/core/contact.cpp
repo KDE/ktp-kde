@@ -49,6 +49,7 @@ class Contact::Private {
 
 public:
     Private()
+      : presenceIcon(0)
     { }
 
     Nepomuk::PersonContact personContact;
