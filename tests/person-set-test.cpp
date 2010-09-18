@@ -25,6 +25,7 @@
 
 #include "ontologies/pimo.h"
 
+#include <qtest_kde.h>
 #include <KDebug>
 
 #include <Nepomuk/Thing>
@@ -53,6 +54,23 @@ void PersonSetTest::initTestCase()
 void PersonSetTest::init()
 {
     initImpl();
+}
+
+void PersonSetTest::testConstructorDestructorCreate()
+{
+    // Create a PersonSet.
+    PersonSetPtr personSet = PersonSet::create();
+    QVERIFY(!personSet.isNull());
+
+    // Get a QWeakPointer to it, for testing destruction.
+    QWeakPointer<PersonSet> weakPtr = personSet.toWeakRef();
+
+    // Remove the only strong ref.
+    personSet.clear();
+
+    // Check the PersonSet was deleted OK
+    QVERIFY(personSet.isNull());
+    QVERIFY(weakPtr.isNull());
 }
 
 void PersonSetTest::testAddRemove()
@@ -263,9 +281,43 @@ void PersonSetTest::addRemoveOnPersonRemoved4(const PersonPtr &person)
     m_addRemoveSlotCalled = true;
 }
 
-void PersonSetTest::cleanup() {
-    // Clear the Nepomuk DB
-    // TODO: Implement me!
+void PersonSetTest::testPeople()
+{
+    // Create a person set.
+    PersonSetPtr personSet = PersonSet::create();
+    QVERIFY(personSet);
+    QVERIFY(personSet->people().isEmpty());
+
+    // Create a couple of PIMO:Person's
+    Nepomuk::Thing person1(QUrl::fromEncoded("nepomuk:/test-people-person-1"));
+    Nepomuk::Thing person2(QUrl::fromEncoded("nepomuk:/test-people-person-2"));
+    person1.addType(Nepomuk::Vocabulary::PIMO::Person());
+    person2.addType(Nepomuk::Vocabulary::PIMO::Person());
+    QVERIFY(person1.exists());
+    QVERIFY(person2.exists());
+    QVERIFY(person1.hasType(Nepomuk::Vocabulary::PIMO::Person()));
+    QVERIFY(person2.hasType(Nepomuk::Vocabulary::PIMO::Person()));
+
+    // Add the PIMO:Person's to the PersonSet.
+    PeopleManager *pm = PeopleManager::instance();
+    PersonPtr personPtr1 = pm->personForResource(person1);
+    PersonPtr personPtr2 = pm->personForResource(person2);
+    QVERIFY(personPtr1.data() != personPtr2.data());
+    personSet->addPerson(personPtr1);
+    personSet->addPerson(personPtr2);
+
+    // Check that both people are in PersonSet
+    QCOMPARE(personSet->people().size(), 2);
+    QVERIFY(personSet->people().contains(personPtr1));
+    QVERIFY(personSet->people().contains(personPtr2));
+
+    // Cleanup: remove created Nepomuk resources
+    person1.remove();
+    person2.remove();
+}
+
+void PersonSetTest::cleanup()
+{
     cleanupImpl();
 }
 
@@ -275,7 +327,7 @@ void PersonSetTest::cleanupTestCase()
 }
 
 
-QTEST_MAIN(PersonSetTest)
+QTEST_KDEMAIN(PersonSetTest, GUI)
 
 
 #include "person-set-test.moc"

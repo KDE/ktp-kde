@@ -49,7 +49,9 @@ private Q_SLOTS:
     void initTestCase();
     void init();
 
+    void testConstructorDestructorCreate();
     void testAddRemove();
+    void testPeople();
 
     void cleanup();
     void cleanupTestCase();
