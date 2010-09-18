@@ -168,7 +168,7 @@ QVariant PersonSetModel::data(const QModelIndex &index, int role) const
         data.setValue<QSet<QString> >(item->person->groups());
         break;
     case PersonSetModel::CapabilitiesRole:
-        // TODO: Implement me!
+        data.setValue<QSet<QString> >(item->person->capabilities());
         break;
     case PersonSetModel::AvatarRole:
         data.setValue<QPixmap>(item->person->avatar());
@@ -188,6 +188,8 @@ Qt::ItemFlags PersonSetModel::flags(const QModelIndex &index) const
 QVariant PersonSetModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
     Q_UNUSED(section);
+    Q_UNUSED(orientation);
+    Q_UNUSED(role);
 
     return QVariant();
 }
@@ -239,7 +241,26 @@ void PersonSetModel::onPersonAdded(const KTelepathy::PersonPtr &person)
     item->parent = d->rootItem;
     item->person = person;
 
-    // TODO: Connect to signals that say the item has changed in some way (once those signals exist)
+    // Connect to all the properties-changed signals for the person so we can update views when
+    // any properties change.
+    connect(person.data(),
+            SIGNAL(avatarChanged(QPixmap)),
+            SLOT(onPersonDataChanged()));
+    connect(person.data(),
+            SIGNAL(avatarWithOverlayChanged(QPixmap)),
+            SLOT(onPersonDataChanged()));
+    connect(person.data(),
+            SIGNAL(capabilitiesChanged(QSet<QString>)),
+            SLOT(onPersonDataChanged()));
+    connect(person.data(),
+            SIGNAL(displayNameChanged(QString)),
+            SLOT(onPersonDataChanged()));
+    connect(person.data(),
+            SIGNAL(groupsChanged(QSet<QString>)),
+            SLOT(onPersonDataChanged()));
+    connect(person.data(),
+            SIGNAL(presenceIconChanged(KIcon)),
+            SLOT(onPersonDataChanged()));
 
     // Add the new item to the model data.
     d->rootItem->children.append(item);
@@ -273,10 +294,41 @@ void PersonSetModel::onPersonRemoved(const KTelepathy::PersonPtr &person)
     delete d->rootItem->children.value(row);
     d->rootItem->children.removeAt(row);
 
-    // TODO: Disconnect from the signals that say the item has changed in some way (once they exist)
+    // Disconnect from all the person's property-change-notification signals.
+    disconnect(person.data(), SIGNAL(avatarChanged(QPixmap)));
+    disconnect(person.data(), SIGNAL(avatarWithOverlayChanged(QPixmap)));
+    disconnect(person.data(), SIGNAL(capabilitiesChanged(QSet<QString>)));
+    disconnect(person.data(), SIGNAL(displayNameChanged(QString)));
+    disconnect(person.data(), SIGNAL(groupsChanged(QSet<QString>)));
+    disconnect(person.data(), SIGNAL(presenceIconChanged(KIcon)));
 
     // Notify the views that we have finished removing rows.
     endRemoveRows();
+}
+
+void PersonSetModel::onPersonDataChanged()
+{
+    // This slot is called when a person has changed.
+    Person *person = qobject_cast<Person*>(sender());
+
+    Q_ASSERT(person);
+    if (!person) {
+        kWarning() << "Sender is null. Returning early.";
+        return;
+    }
+
+    // Find the row number of the Person which has changed.
+    Q_FOREACH (Item *item, d->rootItem->children) {
+        if (item->person.data() == person) {
+            kDebug() << "Found the updated person.";
+            // Signal that this person has been changed.
+            QModelIndex idx = index(d->rootItem->children.indexOf(item), 0, QModelIndex());
+            dataChanged(idx, idx);
+            return;
+        }
+    }
+
+    kWarning() << "Received update notification from person who isn't in the model.";
 }
 
 

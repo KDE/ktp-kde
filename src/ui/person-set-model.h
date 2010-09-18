@@ -64,6 +64,7 @@ public:
 private Q_SLOTS:
     void onPersonAdded(const KTelepathy::PersonPtr &person);
     void onPersonRemoved(const KTelepathy::PersonPtr &person);
+    void onPersonDataChanged();
 
 private:
     Q_DISABLE_COPY(PersonSetModel);
