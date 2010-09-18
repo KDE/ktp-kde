@@ -22,6 +22,7 @@
 #include "contact.h"
 
 #include "ontologies/nco.h"
+#include "ontologies/telepathy.h"
 
 #include "ontologies/dataobject.h"
 #include "ontologies/imaccount.h"
@@ -41,6 +42,9 @@
 #include <QtGui/QPainter>
 #include <QtGui/QPixmap>
 
+#include <Soprano/Node>
+#include <Soprano/Statement>
+
 #include <TelepathyQt4/Constants>
 
 using namespace KTelepathy;
@@ -57,6 +61,7 @@ public:
 
     KIcon *presenceIcon;
     QPixmap avatar;
+    QPixmap avatarWithOverlay;
 };
 
 
@@ -74,11 +79,18 @@ Contact::Contact(const Nepomuk::Resource &ncoPersonContact, const Nepomuk::Resou
         setValid(true);
         d->personContact = ncoPersonContact;
         d->imAccount = ncoImAccount;
+
+        // Watch for changes on both the IMAccount and the PersonContact.
+        NepomukSignalWatcher *sw = NepomukSignalWatcher::instance();
+        sw->registerCallbackOnSubject(d->personContact, this);
+        sw->registerCallbackOnSubject(d->imAccount, this);
     } else {
         kWarning() << "Person object requires a valid NCO:PersonContact and NCO:IMAccount";
     }
 
-    updatePresenceIconAndAvatar();
+    updatePresenceIcon();
+    updateAvatar();
+    updateDisplayName();
 }
 
 Contact::Contact()
@@ -95,13 +107,19 @@ Contact::~Contact()
 {
     kDebug();
 
+    // Unregister nepomuk watcher callbacks OR THERE WILL BE A CRASH!
+    NepomukSignalWatcher *sw = NepomukSignalWatcher::instance();
+    sw->unregisterCallbackOnSubject(d->personContact, this);
+    sw->unregisterCallbackOnSubject(d->imAccount, this);
+
     delete d;
 }
 
-const QPixmap &Contact::avatar() const
+// FIXME: Use a flag, not a bool
+const QPixmap &Contact::avatar(bool withOverlay) const
 {
     // FIXME: Change notification
-    return d->avatar;
+    return withOverlay ? d->avatarWithOverlay : d->avatar;
 }
 
 QStringList Contact::capabilities() const
@@ -127,48 +145,58 @@ const KIcon &Contact::presenceIcon() const
     return *(d->presenceIcon);
 }
 
-void Contact::updatePresenceIconAndAvatar()
+void Contact::onStatementAdded(const Soprano::Statement& statement)
 {
-    // First, delete the old Icon.
-    delete d->presenceIcon;
+    kDebug() << "Statement added.";
+    Soprano::Node subject = statement.subject();
+    Soprano::Node predicate = statement.predicate();
+    Soprano::Node object = statement.object();
 
-    // FIXME: Use the correct way to calculate the presence state (not just the PresenceType enum)
+    // Deal with the statement if it is added to the personContact.
+    if (subject.uri() == d->personContact.resourceUri()) {
 
-    // Now find out the current status.
-    QList<qint64> statusTypes = d->imAccount.statusTypes();
+        // TODO: Implement me!
 
-    // If no presenceType set, then null KIcon.
-    if (statusTypes.size() == 0) {
-        d->presenceIcon = new KIcon();
+        kWarning() << "Unrecognised statement added to PersonContact.";
         return;
     }
 
-    // Get the presence type and set the icon appropriately from it.
-    QString iconName;
+    // Deal with the statement if it is added to the imAccount
+    if (subject.uri() == d->imAccount.resourceUri()) {
+        if (predicate.uri() == Nepomuk::Vocabulary::NCO::imNickname()) {
+            updateDisplayName();
+            return;
+        }
 
-    switch (statusTypes.first()) {
-    case Tp::ConnectionPresenceTypeAvailable:
-        iconName = QLatin1String("user-online");
-        break;
-    case Tp::ConnectionPresenceTypeAway:
-        iconName = QLatin1String("user-away");
-        break;
-    case Tp::ConnectionPresenceTypeExtendedAway:
-        iconName = QLatin1String("user-away-extended");
-        break;
-    case Tp::ConnectionPresenceTypeHidden:
-        iconName = QLatin1String("user-invisible");
-        break;
-    case Tp::ConnectionPresenceTypeBusy:
-        iconName = QLatin1String("user-busy");
-        break;
-    default:
-        iconName = QLatin1String("user-offline");
-        break;
+        if ((predicate.uri() == Nepomuk::Vocabulary::NCO::imStatus())
+            || (predicate.uri() == Nepomuk::Vocabulary::Telepathy::statusType()))
+        {
+            // FIXME: separate out presence icon and avatar update methods.
+            updatePresenceIcon();
+            updateAvatar();
+            return;
+        }
+
+        if (predicate.uri() == Nepomuk::Vocabulary::NCO::photo()) {
+            updateAvatar();
+            return;
+        }
+
+        kWarning() << "Unrecognised statement added to IMAccount.";
+        return;
     }
 
-    d->presenceIcon = new KIcon(iconName);
+    kWarning() << "Unrecognised statement added.";
+}
 
+void Contact::onStatementRemoved(const Soprano::Statement& statement)
+{
+    kDebug() << "Statement removed.";
+}
+
+void Contact::updateAvatar()
+{
+    // FIXME: Only update the avatar if it has actually changed
     kDebug() << "Attempt to build the avatar" << d->personContact.resourceUri();
     // Ok, now build the avatar
     d->avatar = QPixmap();
@@ -197,20 +225,76 @@ void Contact::updatePresenceIconAndAvatar()
                                                    true);
     }
 
+    // This method *must* be called *after* updatePresenceIcon is called for the first time.
+    Q_ASSERT(d->presenceIcon);
+
+    // Copy the avatar pixmap ready for updating the overlayed version.
+    d->avatarWithOverlay = d->avatar;
+
     // create a painter to paint the action icon over the key icon
-    QPainter painter(&d->avatar);
+    QPainter painter(&d->avatarWithOverlay);
     // the the emblem icon to size 12
     int overlaySize = 12;
     // try to load the action icon
     const QPixmap iconPixmap = d->presenceIcon->pixmap(overlaySize);
     // if we're able to load the action icon paint it over
-    if (!d->avatar.isNull()) {
+    if (!d->avatarWithOverlay.isNull()) {
         QPoint startPoint;
         // bottom right corner
         startPoint = QPoint(32 - overlaySize - 1,
                             32 - overlaySize - 1);
         painter.drawPixmap(startPoint, iconPixmap);
     }
+}
+
+void Contact::updateDisplayName()
+{
+    // TODO: Implement me!
+}
+
+void Contact::updatePresenceIcon()
+{
+    // FIXME: Only recreate the icon if it has actually changed.
+
+    // First, delete the old Icon.
+    delete d->presenceIcon;
+
+    // FIXME: Use the correct way to calculate the presence state (not just the PresenceType enum)
+
+    // Now find out the current status.
+    QList<qint64> statusTypes = d->imAccount.statusTypes();
+
+    // If no presenceType set, then null KIcon.
+    if (statusTypes.size() == 0) {
+        d->presenceIcon = new KIcon();
+        return;
+    }
+
+    // Get the presence type and set the icon appropriately from it.
+    QString iconName;
+
+    switch (statusTypes.first()) {
+        case Tp::ConnectionPresenceTypeAvailable:
+            iconName = QLatin1String("user-online");
+            break;
+        case Tp::ConnectionPresenceTypeAway:
+            iconName = QLatin1String("user-away");
+            break;
+        case Tp::ConnectionPresenceTypeExtendedAway:
+            iconName = QLatin1String("user-away-extended");
+            break;
+        case Tp::ConnectionPresenceTypeHidden:
+            iconName = QLatin1String("user-invisible");
+            break;
+        case Tp::ConnectionPresenceTypeBusy:
+            iconName = QLatin1String("user-busy");
+            break;
+        default:
+            iconName = QLatin1String("user-offline");
+            break;
+    }
+
+    d->presenceIcon = new KIcon(iconName);
 }
 
 

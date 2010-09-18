@@ -23,6 +23,7 @@
 #define LIBKTELEPATHY_CONTACT_H
 
 #include "entity.h"
+#include "nepomuk-signal-watcher.h"
 
 #include <kdemacros.h>
 
@@ -50,7 +51,7 @@ namespace KTelepathy {
  * local account/buddy combination that should be used when opening a channel, rather than allowing
  * libktelepathy to automagically use the most suitable one.
  */
-class KDE_EXPORT Contact : public Entity {
+class KDE_EXPORT Contact : public Entity, public NepomukSignalWatcher::Watcher {
 
     Q_OBJECT
 
@@ -60,7 +61,7 @@ public:
     /**
      * Returns the avatar of this person
      */
-    const QPixmap &avatar() const;
+    const QPixmap &avatar(bool withOverlay = false) const;
 
     /**
      * Returns the capabilities of this person
@@ -94,11 +95,35 @@ protected:
      */
     Contact();
 
+    /**
+     * Called whenever a statement is added to a resource that we are watching.
+     * 
+     * Reimplemented from NepomukSignalWatcher::Watcher.
+     */
+    virtual void onStatementAdded(const Soprano::Statement &statement);
+
+    /**
+     * Called whenever a statement is removed from a resource that we are watching.
+     * 
+     * Reimplemented from NepomukSignalWatcher::Watcher
+     */
+    virtual void onStatementRemoved(const Soprano::Statement &statement);
+
 private Q_SLOTS:
     /**
-     * Updates the avatar and presence icon.
+     * Updates the avatar.
      */
-    void updatePresenceIconAndAvatar();
+    void updateAvatar();
+
+    /**
+     * Updates the presence icon.
+     */
+    void updatePresenceIcon();
+
+    /**
+     * Updates the display name property.
+     */
+    void updateDisplayName();
 
 private:
     Q_DISABLE_COPY(Contact);
