@@ -130,6 +130,10 @@ QSet<QString> Contact::capabilities() const
 QString Contact::displayName() const
 {
     // FIXME: Change notification
+    if (d->imAccount.imNicknames().isEmpty()) {
+        return QString();
+    }
+
     return d->imAccount.imNicknames().first();
 }
 

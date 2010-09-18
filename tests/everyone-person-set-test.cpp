@@ -27,6 +27,8 @@
 #include "ontologies/pimo.h"
 #include "ontologies/telepathy.h"
 
+#include <qtest_kde.h>
+
 #include <KDebug>
 
 #include <Nepomuk/Thing>
@@ -581,8 +583,8 @@ void EveryonePersonSetTest::cleanupTestCase()
     cleanupTestCaseImpl();
 }
 
-
-QTEST_MAIN(EveryonePersonSetTest)
+//QTEST_MAIN(EveryonePersonSet)
+QTEST_KDEMAIN(EveryonePersonSetTest, GUI)
 
 
 #include "everyone-person-set-test.moc"

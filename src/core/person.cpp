@@ -173,6 +173,7 @@ void Person::updateAvatar()
 {
     d->avatar = QPixmap();
 
+    // FIXME: clever way to pick which avatar, rather than the last in the list?
     Q_FOREACH (ContactPtr contact, d->contacts->contacts()) {
         if (!contact->avatar().isNull()) {
             d->avatar = contact->avatar();
