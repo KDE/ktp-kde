@@ -180,7 +180,7 @@ void ContactSet::onNewEntries(const QList<Nepomuk::Query::Result> &entries)
 
     foreach (const Nepomuk::Query::Result &entry, entries) {
         kDebug() << entry.resource();
-        ContactPtr contact(new Contact(entry.resource()));
+        ContactPtr contact(new Contact(entry.resource(), entry.additionalBinding(QLatin1String("account")).toResource()));
         if (!contact.isNull()) {
             addContact(contact);
         } else {

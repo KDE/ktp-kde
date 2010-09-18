@@ -27,10 +27,15 @@
 #include <kdemacros.h>
 
 #include <QtCore/QSharedPointer>
+#include <QtCore/QString>
+#include <QtCore/QStringList>
 
 namespace Nepomuk {
     class Resource;
 }
+
+class KIcon;
+class QPixmap;
 
 namespace KTelepathy {
 
@@ -52,17 +57,48 @@ class KDE_EXPORT Contact : public Entity {
 public:
     virtual ~Contact();
 
+    /**
+     * Returns the avatar of this person
+     */
+    const QPixmap &avatar() const;
+
+    /**
+     * Returns the capabilities of this person
+     */
+    QStringList capabilities() const;
+
+    /**
+     * Returns the display name of the person
+     */
+    QString displayName() const;
+
+    /**
+     * Returns the groups to which this person belongs
+     */
+    QStringList groups() const;
+
+    /**
+     * Returns the presence Icon for this person
+     */
+    const KIcon &presenceIcon() const;
+
 protected:
     /**
      * Constrcutor is protected because only ContactSet objects should directly create
      * Contact objects.
      */
-    explicit Contact(const Nepomuk::Resource &ncoPersonContact);
+    explicit Contact(const Nepomuk::Resource &ncoPersonContact, const Nepomuk::Resource &ncoImAccount);
 
     /**
      * Construct an invalid Contact object
      */
     Contact();
+
+private Q_SLOTS:
+    /**
+     * Updates the avatar and presence icon.
+     */
+    void updatePresenceIconAndAvatar();
 
 private:
     Q_DISABLE_COPY(Contact);

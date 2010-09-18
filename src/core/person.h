@@ -29,10 +29,15 @@
 #include <kdemacros.h>
 
 #include <QtCore/QSharedPointer>
+#include <QtCore/QString>
+#include <QtCore/QStringList>
 
 namespace Nepomuk {
     class Resource;
 }
+
+class KIcon;
+class QPixmap;
 
 namespace KTelepathy {
 
@@ -56,6 +61,31 @@ public:
      * If the Person is invalid, the ContactSet returned may be null.
      */
     ContactSetPtr contacts() const;
+
+    /**
+     * Returns the avatar of this person
+     */
+    const QPixmap &avatar() const;
+
+    /**
+     * Returns the capabilities of this person
+     */
+    QStringList capabilities() const;
+
+    /**
+     * Returns the display name of the person
+     */
+    QString displayName() const;
+
+    /**
+     * Returns the groups to which this person belongs
+     */
+    QStringList groups() const;
+
+    /**
+     * Returns the presence Icon for this person
+     */
+    const KIcon &presenceIcon() const;
 
 protected:
     /**

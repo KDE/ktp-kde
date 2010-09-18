@@ -22,6 +22,7 @@
 #include "person-set-model.h"
 
 #include <KDebug>
+#include <KIcon>
 
 using namespace KTelepathy;
 
@@ -155,7 +156,22 @@ QVariant PersonSetModel::data(const QModelIndex &index, int role) const
     switch(role)
     {
     case Qt::DisplayRole:
+        data.setValue(item->person->displayName());
+        break;
+    case Qt::DecorationRole:
+        data.setValue<QIcon>(item->person->presenceIcon());
+        break;
+    case PersonSetModel::PersonRole:
         data.setValue<PersonPtr>(item->person);
+        break;
+    case PersonSetModel::GroupsRole:
+        data.setValue(item->person->groups());
+        break;
+    case PersonSetModel::CapabilitiesRole:
+        // TODO: Implement me!
+        break;
+    case PersonSetModel::AvatarRole:
+        data.setValue<QPixmap>(item->person->avatar());
         break;
     default:
         break;
@@ -243,6 +259,7 @@ void PersonSetModel::onPersonRemoved(const KTelepathy::PersonPtr &person)
         }
     }
 
+    // FIXME: The assert and the condition appear to contradict here?!
     Q_ASSERT(row >= 0);
     if (row >= 0) {
         kWarning() << "Tried to remove a person from the model which is not in the model.";

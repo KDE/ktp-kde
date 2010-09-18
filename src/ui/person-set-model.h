@@ -35,6 +35,13 @@ class KDE_EXPORT PersonSetModel : public QAbstractItemModel
     Q_OBJECT
 
 public:
+    enum {
+        PersonRole = Qt::UserRole,
+        GroupsRole,
+        CapabilitiesRole,
+        AvatarRole,
+    };
+
     explicit PersonSetModel(QObject *parent = 0);
     explicit PersonSetModel(const PersonSetPtr &personSet, QObject *parent = 0);
     virtual ~PersonSetModel();

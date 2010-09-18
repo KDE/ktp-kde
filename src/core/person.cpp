@@ -26,8 +26,11 @@
 #include "ontologies/pimo.h"
 
 #include <KDebug>
+#include <KIcon>
 
 #include <Nepomuk/Thing>
+
+#include <QtGui/QPixmap>
 
 using namespace KTelepathy;
 
@@ -35,11 +38,14 @@ class Person::Private {
 
 public:
     Private()
+      : invalidIcon(new KIcon)
     { }
 
     Nepomuk::Thing pimoPerson;
     ContactSetPtr contacts;
 
+    KIcon *invalidIcon;
+    QPixmap invalidPixmap;
 };
 
 
@@ -78,6 +84,59 @@ Person::~Person()
 ContactSetPtr Person::contacts() const
 {
     return d->contacts;
+}
+
+const QPixmap &Person::avatar() const
+{
+    // HACK: If there are child contacts, choose the first
+    // FIXME: ContactSet population race condition again (and change-notification of course)
+    if (d->contacts->contacts().size() >= 1) {
+        return d->contacts->contacts().toList().first()->avatar();
+    }
+
+    return d->invalidPixmap;
+}
+
+QStringList Person::capabilities() const
+{
+    // HACK: FIXME: TODO: As all the other properties
+    if (d->contacts->contacts().size() >= 1) {
+        return d->contacts->contacts().toList().first()->capabilities();
+    }
+
+    return QStringList();
+}
+
+QString Person::displayName() const
+{
+    // FIXME: Get the display name properly.
+    // HACK: If there are child contacts, choose the first
+    // FIXME: Race condition populating the contactset here. We should signal when display name is updated somehow.
+    if (d->contacts->contacts().size() >= 1) {
+        return d->contacts->contacts().toList().first()->displayName();
+    }
+
+    return QString();
+}
+
+QStringList Person::groups() const
+{
+    // HACK: FIXME: TODO: As all the other properties
+    if (d->contacts->contacts().size() >= 1) {
+        return d->contacts->contacts().toList().first()->groups();
+    }
+
+    return QStringList();
+}
+
+const KIcon &Person::presenceIcon() const
+{
+    // HACK: FIXME: TODO: As all the other properties
+    if (d->contacts->contacts().size() >= 1) {
+        return d->contacts->contacts().toList().first()->presenceIcon();
+    }
+
+    return *(d->invalidIcon);
 }
 
 
