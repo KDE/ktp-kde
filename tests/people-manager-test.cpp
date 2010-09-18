@@ -26,6 +26,8 @@
 
 #include "ontologies/pimo.h"
 
+#include <qtest_kde.h>
+
 #include <KDebug>
 
 #include <Nepomuk/Thing>
@@ -54,14 +56,29 @@ void PeopleManagerTest::init()
 
 }
 
-void PeopleManagerTest::testPersonFromResource()
+void PeopleManagerTest::testConstructorDestructorInstance()
+{
+    // This class is a global singleton (K_GLOBAL_STATIC), so I can't see any way to test
+    // the destructor.
+
+    // Check construction of a PeopleManager instance works OK
+    PeopleManager *pm = PeopleManager::instance();
+    QVERIFY(pm);
+
+    // Check that it really is a singleton.
+    PeopleManager *pm2 = PeopleManager::instance();
+    QVERIFY(pm2);
+    QCOMPARE(pm, pm2);
+}
+
+void PeopleManagerTest::testPersonForResource()
 {
     kDebug();
 
     // Nepomuk resources for this test
-    Nepomuk::Resource relevantPersonResource(QUrl::fromEncoded("nepomuk:/person-from-resource-test-person"));
-    Nepomuk::Resource irrelevantThingResource(QUrl::fromEncoded("nepomuk:/person-from-resource-test-random-thing"));
-    Nepomuk::Resource nonExistantResource(QUrl::fromEncoded("nepomuk:/person-from-resource-test-non-existant-resource"));
+    Nepomuk::Resource relevantPersonResource(QUrl::fromEncoded("nepomuk:/person-for-resource-test-person"));
+    Nepomuk::Resource irrelevantThingResource(QUrl::fromEncoded("nepomuk:/person-for-resource-test-random-thing"));
+    Nepomuk::Resource nonExistantResource(QUrl::fromEncoded("nepomuk:/person-for-resource-test-non-existant-resource"));
 
     // Insert a test person into the Nepomuk store.
     Nepomuk::Thing thing1(relevantPersonResource);
@@ -120,6 +137,10 @@ void PeopleManagerTest::testPersonFromResource()
     QVERIFY(person1->isValid());
     QCOMPARE(person1->resource(), relevantPersonResource);
 
+    // Check asking for the Person for an empty Resource URI
+    PersonPtr person5 = pm->personForResource(Nepomuk::Resource());
+    QVERIFY(person5.isNull());
+
     // Cleanup: remove our three created resources
     relevantPersonResource.remove();
     irrelevantThingResource.remove();
@@ -154,9 +175,9 @@ void PeopleManagerTest::testEveryone()
     QVERIFY(weakPtr.isNull());
 }
 
-void PeopleManagerTest::cleanup() {
-    // Clear the Nepomuk DB
-    // TODO: Implement me!
+void PeopleManagerTest::cleanup()
+{
+
 }
 
 void PeopleManagerTest::cleanupTestCase()
@@ -165,7 +186,7 @@ void PeopleManagerTest::cleanupTestCase()
 }
 
 
-QTEST_MAIN(PeopleManagerTest)
+QTEST_KDEMAIN(PeopleManagerTest, GUI)
 
 
 #include "people-manager-test.moc"

@@ -43,7 +43,8 @@ private Q_SLOTS:
     void initTestCase();
     void init();
 
-    void testPersonFromResource();
+    void testConstructorDestructorInstance();
+    void testPersonForResource();
     void testEveryone();
 
     void cleanup();
