@@ -156,6 +156,7 @@ private:
     Q_DISABLE_COPY(Contact);
 
     friend class ContactSet;
+    friend class Person;
 
     class Private;
     Private * const d;

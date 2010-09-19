@@ -27,17 +27,6 @@
 
 #include <KDebug>
 
-#include <Nepomuk/Resource>
-#include <Nepomuk/Variant>
-
-#include <Nepomuk/Query/AndTerm>
-#include <Nepomuk/Query/ComparisonTerm>
-#include <Nepomuk/Query/NegationTerm>
-#include <Nepomuk/Query/Query>
-#include <Nepomuk/Query/QueryServiceClient>
-#include <Nepomuk/Query/ResourceTerm>
-#include <Nepomuk/Query/ResourceTypeTerm>
-
 #include <QtCore/QSet>
 
 using namespace KTelepathy;
@@ -46,85 +35,16 @@ class ContactSet::Private {
 
 public:
     Private()
-      : mePimoPerson(QUrl::fromEncoded("nepomuk:/myself"))
     { }
 
     QSet<ContactPtr> contacts;
-    Nepomuk::Resource pimoPerson;
-    Nepomuk::Resource mePimoPerson;
-    Nepomuk::Query::QueryServiceClient *query;
 };
 
-ContactSet::ContactSet(const Nepomuk::Resource &pimoPerson)
+ContactSet::ContactSet()
   : QObject(0),
     d(new ContactSet::Private)
 {
     kDebug();
-
-    // Assume that we are passed a valid PIMO:Person, since the Person object creating us
-    // should have made sure of this.
-    d->pimoPerson = pimoPerson;
-
-    d->query = new Nepomuk::Query::QueryServiceClient(this);
-
-    connect(d->query, SIGNAL(newEntries(QList<Nepomuk::Query::Result>)),
-            this, SLOT(onNewEntries(QList<Nepomuk::Query::Result>)));
-    connect(d->query, SIGNAL(entriesRemoved(QList<QUrl>)),
-            this, SLOT(onEntriesRemoved(QList<QUrl>)));
-
-    // Get all Telepathy PersonContacts which belong to this PIMO:Person
-    {
-        using namespace Nepomuk::Query;
-        using namespace Nepomuk::Vocabulary;
-        // subquery to match grouding occurrences of me
-        ComparisonTerm goterm(PIMO::groundingOccurrence(),
-                              ResourceTerm(d->mePimoPerson));
-        goterm.setInverted(true);
-
-        // combine that with only nco:PersonContacts
-        AndTerm pcgoterm(ResourceTypeTerm(NCO::PersonContact()),
-                         goterm);
-
-        // now look for im accounts of those grounding occurrences (pcgoterm will become the subject of this comparison,
-        // thus the comparison will match the im accounts)
-        ComparisonTerm impcgoterm(NCO::hasIMAccount(),
-                                  pcgoterm);
-        impcgoterm.setInverted(true);
-
-        // now look for all buddies of the accounts
-        ComparisonTerm buddyTerm(Telepathy::isBuddyOf(),
-                                 impcgoterm);
-        // set the name of the variable (i.e. the buddies) to be able to match it later
-        buddyTerm.setVariableName(QLatin1String("t"));
-
-        // same comparison, other property, but use the same variable name to match them
-        ComparisonTerm ppterm(Telepathy::publishesPresenceTo(),
-                              ResourceTypeTerm(NCO::IMAccount()));
-        ppterm.setVariableName(QLatin1String("t"));
-
-        // combine both to complete the matching of the im account ?account
-        AndTerm accountTerm(ResourceTypeTerm(NCO::IMAccount()),
-                            buddyTerm, ppterm);
-
-        // match the account and select it for the results
-        ComparisonTerm imaccountTerm(NCO::hasIMAccount(), accountTerm);
-        imaccountTerm.setVariableName(QLatin1String("account"));
-
-        // and finally only include those contacts that are a grounding occurrence of this PIMO:Person
-        ComparisonTerm personTerm(PIMO::groundingOccurrence(),
-                                  ResourceTerm(d->pimoPerson));
-        personTerm.setInverted(true);
-
-        // and all combined
-        Query query(AndTerm(ResourceTypeTerm(Nepomuk::Vocabulary::NCO::PersonContact()),
-                            imaccountTerm, personTerm));
-
-        bool queryResult = d->query->query(query);
-
-        if (!queryResult) {
-            kWarning() << "Failed to query the Nepomuk database. QueryServiceClient may not be running";
-        }
-    }
 }
 
 ContactSet::~ContactSet()
@@ -172,30 +92,6 @@ void ContactSet::removeContact(const QUrl &uri)
 QSet<ContactPtr> ContactSet::contacts() const
 {
     return d->contacts;
-}
-
-void ContactSet::onNewEntries(const QList<Nepomuk::Query::Result> &entries)
-{
-    kDebug();
-
-    foreach (const Nepomuk::Query::Result &entry, entries) {
-        kDebug() << entry.resource();
-        ContactPtr contact(new Contact(entry.resource(), entry.additionalBinding(QLatin1String("account")).toResource()));
-        if (!contact.isNull()) {
-            addContact(contact);
-        } else {
-            kWarning() << "Got a Nepomuk Resource URI that is not a valid NCO:PersonContact";
-        }
-    }
-}
-
-void ContactSet::onEntriesRemoved(const QList<QUrl> &entries)
-{
-    kDebug();
-
-    foreach (const QUrl &entry, entries) {
-        removeContact(entry);
-    }
 }
 
 

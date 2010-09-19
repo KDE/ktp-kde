@@ -22,9 +22,8 @@
 #ifndef LIBKTELEPATHY_PERSON_H
 #define LIBKTELEPATHY_PERSON_H
 
-#include "entity.h"
-
 #include "contact-set.h"
+#include "entity.h"
 
 #include <kdemacros.h>
 
@@ -48,20 +47,12 @@ namespace KTelepathy {
  * This class is a subclass of Entity, representing a Person object (basically a wrapper around a
  * PIMO:Person in the Nepomuk store).
  */
-class KDE_EXPORT Person : public QObject, public Entity {
+class KDE_EXPORT Person : public ContactSet, public Entity {
 
     Q_OBJECT
 
 public:
     virtual ~Person();
-
-    /**
-     * Return a shared-pointer to the ContactSet containing all the contacts that are linked
-     * to this Person.
-     *
-     * If the Person is invalid, the ContactSet returned may be null.
-     */
-    ContactSetPtr contacts() const;
 
     /**
      * Returns the avatar of this person
@@ -110,6 +101,8 @@ Q_SIGNALS:
 private Q_SLOTS:
     void onContactAdded(const KTelepathy::ContactPtr &contact);
     void onContactRemoved(const KTelepathy::ContactPtr &contact);
+    void onNewEntries(const QList<Nepomuk::Query::Result> &entries);
+    void onEntriesRemoved(const QList<QUrl> &entries);
 
     void updateAvatar();
     void updateAvatarWithOverlay();

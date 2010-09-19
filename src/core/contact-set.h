@@ -56,12 +56,21 @@ public:
      */
     virtual ~ContactSet();
 
+    /**
+     * @brief Get all the people who are stored in this set.
+     * @return a QSet containing PersonPtrs to all the people currently stored in this set.
+     *
+     * This method provides a QSet with QSharedPointers to all the Person objects currently
+     * stored in this PersonSet.
+     */
+    QSet<ContactPtr> contacts() const;
+
 protected:
     /**
      * Protected constructor since library users should create new instances of this class by
      * calling the static member create().
      */
-    explicit ContactSet(const Nepomuk::Resource &pimoPerson);
+    explicit ContactSet();
 
     /**
      * @brief add a new person to the set.
@@ -84,15 +93,6 @@ protected:
      */
     void removeContact(const QUrl &uri);
 
-    /**
-     * @brief Get all the people who are stored in this set.
-     * @return a QSet containing PersonPtrs to all the people currently stored in this set.
-     *
-     * This method provides a QSet with QSharedPointers to all the Person objects currently
-     * stored in this PersonSet.
-     */
-    QSet<ContactPtr> contacts() const;
-
 Q_SIGNALS:
     /**
      * @brief emitted when a new person is added to this PersonSet.
@@ -104,14 +104,8 @@ Q_SIGNALS:
      */
     void contactRemoved(const KTelepathy::ContactPtr &contact);
 
-private Q_SLOTS:
-    void onNewEntries(const QList<Nepomuk::Query::Result> &entries);
-    void onEntriesRemoved(const QList<QUrl> &entries);
-
 private:
     Q_DISABLE_COPY(ContactSet);
-
-    friend class Person;
 
     class Private;
     Private * const d;

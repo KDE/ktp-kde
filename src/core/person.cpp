@@ -23,13 +23,25 @@
 
 #include "contact-set.h"
 
+#include "ontologies/nco.h"
 #include "ontologies/pimo.h"
+#include "ontologies/telepathy.h"
 
 #include <KDebug>
 #include <KIcon>
 #include <KIconLoader>
 
+#include <Nepomuk/Resource>
 #include <Nepomuk/Thing>
+#include <Nepomuk/Variant>
+
+#include <Nepomuk/Query/AndTerm>
+#include <Nepomuk/Query/ComparisonTerm>
+#include <Nepomuk/Query/NegationTerm>
+#include <Nepomuk/Query/Query>
+#include <Nepomuk/Query/QueryServiceClient>
+#include <Nepomuk/Query/ResourceTerm>
+#include <Nepomuk/Query/ResourceTypeTerm>
 
 #include <QtCore/QSet>
 
@@ -42,11 +54,13 @@ class Person::Private {
 
 public:
     Private()
-      : presenceIcon(new KIcon)
+      : mePimoPerson(QUrl::fromEncoded("nepomuk:/myself")),
+        presenceIcon(new KIcon)
     { }
 
     Nepomuk::Thing pimoPerson;
-    ContactSetPtr contacts;
+    Nepomuk::Thing mePimoPerson;
+    Nepomuk::Query::QueryServiceClient *query;
 
     QPixmap avatar;
     QPixmap avatarWithOverlay;
@@ -58,7 +72,7 @@ public:
 
 
 Person::Person(const Nepomuk::Resource &pimoPerson)
-  : QObject(0),
+  : ContactSet(),
     Entity(pimoPerson),
     d(new Private)
 {
@@ -69,20 +83,75 @@ Person::Person(const Nepomuk::Resource &pimoPerson)
         kDebug() << "We have been passed a valid PIMO:Person";
         setValid(true);
         d->pimoPerson = pimoPerson;
-        d->contacts = QSharedPointer<ContactSet>(new ContactSet(d->pimoPerson));
-        connect(d->contacts.data(),
-                SIGNAL(contactAdded(const KTelepathy::ContactPtr &)),
-                SLOT(onContactAdded(const KTelepathy::ContactPtr &)));
-        connect(d->contacts.data(),
-                SIGNAL(contactRemoved(const KTelepathy::ContactPtr &)),
-                SLOT(onContactRemoved(const KTelepathy::ContactPtr &)));
+
+        // Setup the contact set.
+        d->query = new Nepomuk::Query::QueryServiceClient(this);
+        
+        connect(d->query, SIGNAL(newEntries(QList<Nepomuk::Query::Result>)),
+                this, SLOT(onNewEntries(QList<Nepomuk::Query::Result>)));
+        connect(d->query, SIGNAL(entriesRemoved(QList<QUrl>)),
+                this, SLOT(onEntriesRemoved(QList<QUrl>)));
+        
+        // Get all Telepathy PersonContacts which belong to this PIMO:Person
+        {
+            using namespace Nepomuk::Query;
+            using namespace Nepomuk::Vocabulary;
+            // subquery to match grouding occurrences of me
+            ComparisonTerm goterm(PIMO::groundingOccurrence(),
+                                  ResourceTerm(d->mePimoPerson));
+            goterm.setInverted(true);
+            
+            // combine that with only nco:PersonContacts
+            AndTerm pcgoterm(ResourceTypeTerm(NCO::PersonContact()),
+                             goterm);
+            
+            // now look for im accounts of those grounding occurrences (pcgoterm will become the subject of this comparison,
+            // thus the comparison will match the im accounts)
+            ComparisonTerm impcgoterm(NCO::hasIMAccount(),
+                                      pcgoterm);
+            impcgoterm.setInverted(true);
+            
+            // now look for all buddies of the accounts
+            ComparisonTerm buddyTerm(Telepathy::isBuddyOf(),
+                                     impcgoterm);
+            // set the name of the variable (i.e. the buddies) to be able to match it later
+            buddyTerm.setVariableName(QLatin1String("t"));
+            
+            // same comparison, other property, but use the same variable name to match them
+            ComparisonTerm ppterm(Telepathy::publishesPresenceTo(),
+                                  ResourceTypeTerm(NCO::IMAccount()));
+            ppterm.setVariableName(QLatin1String("t"));
+            
+            // combine both to complete the matching of the im account ?account
+            AndTerm accountTerm(ResourceTypeTerm(NCO::IMAccount()),
+                                buddyTerm, ppterm);
+            
+            // match the account and select it for the results
+            ComparisonTerm imaccountTerm(NCO::hasIMAccount(), accountTerm);
+            imaccountTerm.setVariableName(QLatin1String("account"));
+            
+            // and finally only include those contacts that are a grounding occurrence of this PIMO:Person
+            ComparisonTerm personTerm(PIMO::groundingOccurrence(),
+                                      ResourceTerm(d->pimoPerson));
+            personTerm.setInverted(true);
+            
+            // and all combined
+            Query query(AndTerm(ResourceTypeTerm(Nepomuk::Vocabulary::NCO::PersonContact()),
+                                imaccountTerm, personTerm));
+            
+            bool queryResult = d->query->query(query);
+            
+            if (!queryResult) {
+                kWarning() << "Failed to query the Nepomuk database. QueryServiceClient may not be running";
+            }
+        }
     } else {
         kWarning() << "Person object requires a valid PIMO:Person";
     }
 }
 
 Person::Person()
-  : QObject(0),
+  : ContactSet(),
     Entity(),
     d(new Private)
 {
@@ -94,6 +163,30 @@ Person::~Person()
     kDebug();
 
     delete d;
+}
+
+void Person::onNewEntries(const QList<Nepomuk::Query::Result> &entries)
+{
+    kDebug();
+
+    foreach (const Nepomuk::Query::Result &entry, entries) {
+        kDebug() << entry.resource();
+        ContactPtr contact(new Contact(entry.resource(), entry.additionalBinding(QLatin1String("account")).toResource()));
+        if (!contact.isNull()) {
+            addContact(contact);
+        } else {
+            kWarning() << "Got a Nepomuk Resource URI that is not a valid NCO:PersonContact";
+        }
+    }
+}
+
+void Person::onEntriesRemoved(const QList<QUrl> &entries)
+{
+    kDebug();
+
+    foreach (const QUrl &entry, entries) {
+        removeContact(entry);
+    }
 }
 
 void Person::onContactAdded(const KTelepathy::ContactPtr &contact)
@@ -140,11 +233,6 @@ void Person::onContactRemoved(const KTelepathy::ContactPtr &contact)
     updatePresenceIcon();
 }
 
-ContactSetPtr Person::contacts() const
-{
-    return d->contacts;
-}
-
 // FIXME: Use flags instead of a bool for withOverlay?
 const QPixmap &Person::avatar(bool withOverlay) const
 {
@@ -176,7 +264,7 @@ void Person::updateAvatar()
     d->avatar = QPixmap();
 
     // FIXME: clever way to pick which avatar, rather than the last in the list?
-    Q_FOREACH (ContactPtr contact, d->contacts->contacts()) {
+    Q_FOREACH (ContactPtr contact, contacts()) {
         if (!contact->avatar().isNull()) {
             d->avatar = contact->avatar();
         }
@@ -227,7 +315,7 @@ void Person::updateCapabilities()
 {
     // Person's capabilities are the union of the capabilities of the child contacts.
     QSet<QString> capabilities;
-    Q_FOREACH (ContactPtr contact, d->contacts->contacts()) {
+    Q_FOREACH (ContactPtr contact, contacts()) {
         capabilities.unite(contact->capabilities());
     }
 
@@ -241,7 +329,7 @@ void Person::updateCapabilities()
 void Person::updateDisplayName()
 {
     // FIXME: Choose the most suitable overall displayName some better way.
-    Q_FOREACH (ContactPtr contact, d->contacts->contacts()) {
+    Q_FOREACH (ContactPtr contact, contacts()) {
         d->displayName = contact->displayName();
     }
 
@@ -253,7 +341,7 @@ void Person::updateGroups()
 {
     // Person's groups are the union of all groups of the child contacts.
     QSet<QString> groups;
-    Q_FOREACH (ContactPtr contact, d->contacts->contacts()) {
+    Q_FOREACH (ContactPtr contact, contacts()) {
         groups.unite(contact->groups());
     }
 
@@ -267,7 +355,7 @@ void Person::updateGroups()
 void Person::updatePresenceIcon()
 {
     // FIXME: Choose the most suitable overall presence some better way.
-    Q_FOREACH (ContactPtr contact, d->contacts->contacts()) {
+    Q_FOREACH (ContactPtr contact, contacts()) {
         *(d->presenceIcon) = contact->presenceIcon();
     }
 
