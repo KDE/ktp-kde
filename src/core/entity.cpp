@@ -38,8 +38,7 @@ public:
 };
 
 Entity::Entity(const Nepomuk::Resource &resource)
-  : QObject(0),
-    d(new Entity::Private)
+  : d(new Entity::Private)
 {
     kDebug();
 
@@ -93,10 +92,6 @@ bool Entity::operator==(const Entity &other) const
 bool Entity::operator!=(const Entity &other) const
 {
     return !(*this == other);
-}
-
-uint qHash(Entity key) {
-    return qHash(key.resourceUri());
 }
 
 uint qHash(EntityPtr key) {

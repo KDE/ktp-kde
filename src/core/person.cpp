@@ -58,7 +58,8 @@ public:
 
 
 Person::Person(const Nepomuk::Resource &pimoPerson)
-  : Entity(pimoPerson),
+  : QObject(0),
+    Entity(pimoPerson),
     d(new Private)
 {
     kDebug();
@@ -81,7 +82,8 @@ Person::Person(const Nepomuk::Resource &pimoPerson)
 }
 
 Person::Person()
-  : Entity(),
+  : QObject(0),
+    Entity(),
     d(new Private)
 {
     kDebug();

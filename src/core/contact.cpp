@@ -65,7 +65,8 @@ public:
 
 
 Contact::Contact(const Nepomuk::Resource &ncoPersonContact, const Nepomuk::Resource &ncoImAccount)
-  : Entity(ncoPersonContact),
+  : QObject(0),
+    Entity(ncoPersonContact),
     d(new Private)
 {
     kDebug();
@@ -93,7 +94,8 @@ Contact::Contact(const Nepomuk::Resource &ncoPersonContact, const Nepomuk::Resou
 }
 
 Contact::Contact()
-  : Entity(),
+  : QObject(0),
+    Entity(),
     d(new Private)
 {
     kDebug();

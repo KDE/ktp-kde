@@ -27,6 +27,7 @@
 
 #include <kdemacros.h>
 
+#include <QtCore/QObject>
 #include <QtCore/QSharedPointer>
 #include <QtCore/QString>
 #include <QtCore/QStringList>
@@ -51,7 +52,7 @@ namespace KTelepathy {
  * local account/buddy combination that should be used when opening a channel, rather than allowing
  * libktelepathy to automagically use the most suitable one.
  */
-class KDE_EXPORT Contact : public Entity, public NepomukSignalWatcher::Watcher {
+class KDE_EXPORT Contact : public QObject, public Entity, public NepomukSignalWatcher::Watcher {
 
     Q_OBJECT
 

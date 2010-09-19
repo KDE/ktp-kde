@@ -28,6 +28,7 @@
 
 #include <kdemacros.h>
 
+#include <QtCore/QObject>
 #include <QtCore/QSharedPointer>
 #include <QtCore/QString>
 #include <QtCore/QStringList>
@@ -47,7 +48,7 @@ namespace KTelepathy {
  * This class is a subclass of Entity, representing a Person object (basically a wrapper around a
  * PIMO:Person in the Nepomuk store).
  */
-class KDE_EXPORT Person : public Entity {
+class KDE_EXPORT Person : public QObject, public Entity {
 
     Q_OBJECT
 

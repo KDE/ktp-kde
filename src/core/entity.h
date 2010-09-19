@@ -26,7 +26,6 @@
 
 #include <Nepomuk/Resource>
 
-#include <QtCore/QObject>
 #include <QtCore/QSharedPointer>
 #include <QtCore/QUrl>
 
@@ -38,9 +37,7 @@ namespace KTelepathy {
  * Provides the base class for objects that are simply backed by a Nepomuk resource, such as
  * PIMO:Person based Person objects and NCO:Contact based Contact objects.
  */
-class KDE_EXPORT Entity : public QObject {
-
-    Q_OBJECT
+class KDE_EXPORT Entity {
 
 public:
     virtual ~Entity();
@@ -117,7 +114,6 @@ typedef QSharedPointer<Entity> EntityPtr;
 
 }  // namespace KTelepathy
 
-uint KDE_EXPORT qHash(KTelepathy::Entity key);
 uint KDE_EXPORT qHash(KTelepathy::EntityPtr key);
 
 
