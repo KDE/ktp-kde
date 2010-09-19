@@ -22,9 +22,9 @@
 #ifndef LIBKTELEPATHY_TESTS_ENTITY_TEST_H
 #define LIBKTELEPATHY_TESTS_ENTITY_TEST_H
 
-#include <KTelepathy/TestLib/telepathy-base-test.h>
+#include <KTelepathy/TestLib/NepomukTest>
 
-class EntityTest : public TelepathyBaseTest
+class EntityTest : public Tp::NepomukTest
 {
     Q_OBJECT
 

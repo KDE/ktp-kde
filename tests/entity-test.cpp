@@ -32,7 +32,7 @@
 using namespace KTelepathy;
 
 EntityTest::EntityTest(QObject* parent)
-: TelepathyBaseTest(parent)
+: Tp::NepomukTest(parent)
 {
     
 }

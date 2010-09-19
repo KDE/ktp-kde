@@ -91,7 +91,12 @@ Person::Person(const Nepomuk::Resource &pimoPerson)
                 this, SLOT(onNewEntries(QList<Nepomuk::Query::Result>)));
         connect(d->query, SIGNAL(entriesRemoved(QList<QUrl>)),
                 this, SLOT(onEntriesRemoved(QList<QUrl>)));
-        
+
+        connect(this, SIGNAL(contactAdded(KTelepathy::ContactPtr)),
+                SLOT(onContactAdded(KTelepathy::ContactPtr)));
+        connect(this, SIGNAL(contactRemoved(KTelepathy::ContactPtr)),
+                SLOT(onContactRemoved(KTelepathy::ContactPtr)));
+
         // Get all Telepathy PersonContacts which belong to this PIMO:Person
         {
             using namespace Nepomuk::Query;
