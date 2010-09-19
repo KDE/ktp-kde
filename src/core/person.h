@@ -51,7 +51,7 @@ class KDE_EXPORT Person : public ContactSet, public Entity {
 
     Q_OBJECT
 
-    Q_PROPERTY(ContactSetPtr contacts READ contacts /* TODO NOTIFY countChanged */)
+//    Q_PROPERTY(ContactSetPtr contacts READ contacts /* TODO NOTIFY countChanged */)
     Q_PROPERTY(QPixmap avatar READ avatar NOTIFY avatarChanged) /* TODO With overlay? */
     Q_PROPERTY(QSet<QString> capabilities READ capabilities NOTIFY capabilitiesChanged)
     Q_PROPERTY(QString displayName READ displayName NOTIFY displayNameChanged)
