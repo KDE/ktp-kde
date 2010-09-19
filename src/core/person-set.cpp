@@ -37,11 +37,6 @@ public:
 
 };
 
-QSharedPointer<PersonSet> PersonSet::create()
-{
-    return QSharedPointer<PersonSet>(new PersonSet);
-}
-
 PersonSet::PersonSet()
   : QObject(0),
     d(new PersonSet::Private)

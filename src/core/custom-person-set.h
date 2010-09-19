@@ -19,10 +19,10 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#ifndef LIBKTELEPATHY_PERSON_SET_H
-#define LIBKTELEPATHY_PERSON_SET_H
+#ifndef LIBKTELEPATHY_CUSTOM_PERSON_SET_H
+#define LIBKTELEPATHY_CUSTOM_PERSON_SET_H
 
-#include "person.h"
+#include "person-set.h"
 
 #include <kdemacros.h>
 
@@ -42,31 +42,30 @@ namespace KTelepathy {
  * are added and removed from the PersonSet, allowing subclasses which provide dynamically updated
  * sets of Persons.
  */
-class KDE_EXPORT PersonSet : public QObject {
+class KDE_EXPORT CustomPersonSet : public PersonSet {
 
     Q_OBJECT
 
 public:
     /**
-     * Destrcutor
+     * @brief create a new empty person set.
+     * @return a shared pointer pointing to the new person set.
+     *
+     * This method creates a new empty PersonSet and returns a shared pointer to it.
      */
-    virtual ~PersonSet();
+    static QSharedPointer<CustomPersonSet> create();
 
     /**
-     * @brief Get all the people who are stored in this set.
-     * @return a QSet containing PersonPtrs to all the people currently stored in this set.
-     *
-     * This method provides a QSet with QSharedPointers to all the Person objects currently
-     * stored in this PersonSet.
+     * Destrcutor
      */
-    QSet<PersonPtr> people() const;
+    virtual ~CustomPersonSet();
 
 protected:
     /**
      * Protected constructor since library users should create new instances of this class by
      * calling the static member create().
      */
-    explicit PersonSet();
+    explicit CustomPersonSet();
 
     /**
      * @brief add a new person to the set.
@@ -89,26 +88,15 @@ protected:
      */
     virtual void removePerson(const QUrl &uri);
 
-Q_SIGNALS:
-    /**
-     * @brief emitted when a new person is added to this PersonSet.
-     */
-    void personAdded(const KTelepathy::PersonPtr &person);
-
-    /**
-     * @brief emitted when a person is removed from this PersonSet.
-     */
-    void personRemoved(const KTelepathy::PersonPtr &person);
-
 private:
-    Q_DISABLE_COPY(PersonSet);
+    Q_DISABLE_COPY(CustomPersonSet);
 
     class Private;
     Private * const d;
 
 };
 
-typedef QSharedPointer<PersonSet> PersonSetPtr;
+typedef QSharedPointer<CustomPersonSet> CustomPersonSetPtr;
 
 }  // namespace KTelepathy
 
