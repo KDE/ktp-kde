@@ -38,16 +38,16 @@ target_link_libraries (people-manager-test
 )
 
 add_ktelepathy_nepomuk_test (PeopleManagerTest
-                          ${CMAKE_CURRENT_BINARY_DIR}/people-manager-test
+                             ${CMAKE_CURRENT_BINARY_DIR}/people-manager-test
 )
 
 ################################
-# Everyone Person Set test
-kde4_add_executable (everyone-person-set-test
-                     everyone-person-set-test.cpp
+# Entity test
+kde4_add_executable (entity-test
+                     entity-test.cpp
 )
 
-target_link_libraries (everyone-person-set-test
+target_link_libraries (entity-test
                        ${KTELEPATHYTESTLIB_LIBRARIES}
                        ${QT_LIBRARIES}
                        ${KDE4_KDEUI_LIBS}
@@ -59,8 +59,8 @@ target_link_libraries (everyone-person-set-test
                        ontologies
 )
 
-add_ktelepathy_nepomuk_test (EveryonePersonSetTest
-                          ${CMAKE_CURRENT_BINARY_DIR}/everyone-person-set-test
+add_ktelepathy_nepomuk_test (EntityTest
+                             ${CMAKE_CURRENT_BINARY_DIR}/entity-test
 )
 
 ################################
@@ -82,7 +82,29 @@ target_link_libraries (person-set-test
 )
 
 add_ktelepathy_nepomuk_test (PersonSetTest
-                          ${CMAKE_CURRENT_BINARY_DIR}/person-set-test
+                             ${CMAKE_CURRENT_BINARY_DIR}/person-set-test
+)
+
+################################
+# Everyone Person Set test
+kde4_add_executable (everyone-person-set-test
+                     everyone-person-set-test.cpp
+)
+
+target_link_libraries (everyone-person-set-test
+                       ${KTELEPATHYTESTLIB_LIBRARIES}
+                       ${QT_LIBRARIES}
+                       ${KDE4_KDEUI_LIBS}
+                       ${TELEPATHY_QT4_LIBRARIES}
+                       ${NEPOMUK_LIBRARIES}
+                       ${NEPOMUK_QUERY_LIBRARIES}
+                       ${QT_QTTEST_LIBRARY}
+                       ktelepathy
+                       ontologies
+)
+
+add_ktelepathy_nepomuk_test (EveryonePersonSetTest
+                             ${CMAKE_CURRENT_BINARY_DIR}/everyone-person-set-test
 )
 
 ################################
