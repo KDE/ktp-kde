@@ -5,6 +5,7 @@ include_directories ("${CMAKE_SOURCE_DIR}/src/core"
                      "${CMAKE_SOURCE_DIR}/src/ui"
                      "${CMAKE_CURRENT_SOURCE_DIR}/modeltest"
                      "${CMAKE_CURRENT_BUILD_DIR}/modeltest"
+                     ${KTELEPATHYTESTLIB_INCLUDE_DIR}
 )
 
 # Setup the KTelepathy test lib environment

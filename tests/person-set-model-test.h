@@ -24,11 +24,11 @@
 
 #include "person-set-model.h"
 
-#include <KTelepathy/TestLib/telepathy-base-test.h>
+#include <KTelepathy/TestLib/NepomukTest>
 
 #include "modeltest.h"
 
-class PersonSetModelTest : public TelepathyBaseTest
+class PersonSetModelTest : public Tp::NepomukTest
 {
     Q_OBJECT
 

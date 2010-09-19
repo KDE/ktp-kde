@@ -37,7 +37,7 @@
 using namespace KTelepathy;
 
 PeopleManagerTest::PeopleManagerTest(QObject* parent)
-    : TelepathyBaseTest(parent)
+    : Tp::NepomukTest(parent)
 {
 
 }

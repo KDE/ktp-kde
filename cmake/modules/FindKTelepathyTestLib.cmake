@@ -5,5 +5,5 @@
 # Redistribution and use is allowed according to the terms of the BSD license.
 # For details see the accompanying COPYING-CMAKE-SCRIPTS file.
 
-find_package( KTelepathyTestLib QUIET NO_MODULE PATHS ${LIB_INSTALL_DIR}/KTelepathy/cmake ) 
+find_package( KTelepathyTestLib QUIET NO_MODULE PATHS ${LIB_INSTALL_DIR}/KTelepathy/TestLib/cmake ) 
 
