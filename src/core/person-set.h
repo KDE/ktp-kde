@@ -106,6 +106,8 @@ private:
     class Private;
     Private * const d;
 
+    friend class TestBackdoors;
+
 };
 
 typedef QSharedPointer<PersonSet> PersonSetPtr;

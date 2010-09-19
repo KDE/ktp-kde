@@ -16,6 +16,7 @@ set (ktelepathy_SRCS
      core/person-set.cpp
      core/person.cpp
      core/simple-person-set.cpp
+     core/test-backdoors.cpp
      jobs/abstracthandlechanneljob.cpp
      jobs/abstractrequestchanneljob.cpp
      jobs/accept-file-transfer-job.cpp

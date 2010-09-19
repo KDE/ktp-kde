@@ -22,6 +22,7 @@
 #include "person-set-test.h"
 
 #include "people-manager.h"
+#include "test-backdoors.h"
 
 #include "ontologies/pimo.h"
 
@@ -59,7 +60,7 @@ void PersonSetTest::init()
 void PersonSetTest::testConstructorDestructorCreate()
 {
     // Create a PersonSet.
-    PersonSetPtr personSet = PersonSet::create();
+    PersonSetPtr personSet = TestBackdoors::createPersonSet();
     QVERIFY(!personSet.isNull());
 
     // Get a QWeakPointer to it, for testing destruction.
@@ -76,7 +77,7 @@ void PersonSetTest::testConstructorDestructorCreate()
 void PersonSetTest::testAddRemove()
 {
     // First, create the PersonSet.
-    m_addRemovePersonSet = PersonSet::create();
+    m_addRemovePersonSet = TestBackdoors::createPersonSet();
     QVERIFY(!m_addRemovePersonSet.isNull());
     QCOMPARE(m_addRemovePersonSet->people().size(), 0);
 
@@ -99,7 +100,7 @@ void PersonSetTest::testAddRemove()
     m_addRemoveSlotCalled = false;
 
     // Add the person to the set
-    m_addRemovePersonSet->addPerson(m_addRemovePerson1);
+    TestBackdoors::personSetAddPerson(m_addRemovePersonSet, m_addRemovePerson1);
     QCOMPARE(m_addRemovePersonSet->people().size(), 1);
 
     QVERIFY(m_addRemoveSlotCalled);
@@ -117,7 +118,7 @@ void PersonSetTest::testAddRemove()
             SLOT(addRemoveOnPersonAdded2(KTelepathy::PersonPtr)));
     m_addRemoveSlotCalled = false;
 
-    m_addRemovePersonSet->addPerson(m_addRemovePerson1);
+    TestBackdoors::personSetAddPerson(m_addRemovePersonSet, m_addRemovePerson1);
     QCOMPARE(m_addRemovePersonSet->people().size(), 1);
 
     // Check the slot wasn't called.
@@ -141,7 +142,7 @@ void PersonSetTest::testAddRemove()
     m_addRemovePerson2 = PeopleManager::instance()->personForResource(m_addRemovePersonResource2);
     QVERIFY(!m_addRemovePerson2.isNull());
 
-    m_addRemovePersonSet->addPerson(m_addRemovePerson2);
+    TestBackdoors::personSetAddPerson(m_addRemovePersonSet, m_addRemovePerson2);
     QCOMPARE(m_addRemovePersonSet->people().size(), 2);
 
     // Connect to the remove signal
@@ -152,7 +153,7 @@ void PersonSetTest::testAddRemove()
     m_addRemoveSlotCalled = false;
 
     // Remove a Person by Person object
-    m_addRemovePersonSet->removePerson(m_addRemovePerson1);
+    TestBackdoors::personSetRemovePerson(m_addRemovePersonSet, m_addRemovePerson1);
     QCOMPARE(m_addRemovePersonSet->people().size(), 1);
 
     // Check the slot was called.
@@ -172,7 +173,7 @@ void PersonSetTest::testAddRemove()
             SLOT(addRemoveOnPersonRemoved2(KTelepathy::PersonPtr)));
     m_addRemoveSlotCalled = false;
 
-    m_addRemovePersonSet->removePerson(m_addRemovePerson1);
+    TestBackdoors::personSetRemovePerson(m_addRemovePersonSet, m_addRemovePerson1);
     QCOMPARE(m_addRemovePersonSet->people().size(), 1);
 
     // Check the slot wasn't called
@@ -191,7 +192,7 @@ void PersonSetTest::testAddRemove()
             SLOT(addRemoveOnPersonRemoved3(KTelepathy::PersonPtr)));
     m_addRemoveSlotCalled = false;
 
-    m_addRemovePersonSet->removePerson(m_addRemovePerson2->resourceUri());
+    TestBackdoors::personSetRemovePerson(m_addRemovePersonSet, m_addRemovePerson2->resourceUri());
     QCOMPARE(m_addRemovePersonSet->people().size(), 0);
 
     // See if the slot was called.
@@ -210,7 +211,7 @@ void PersonSetTest::testAddRemove()
             SLOT(addRemoveOnPersonRemoved4(KTelepathy::PersonPtr)));
     m_addRemoveSlotCalled = false;
 
-    m_addRemovePersonSet->removePerson(m_addRemovePerson2->resourceUri());
+    TestBackdoors::personSetRemovePerson(m_addRemovePersonSet, m_addRemovePerson2->resourceUri());
     QCOMPARE(m_addRemovePersonSet->people().size(), 0);
 
     // Check the slot wasn't called.
@@ -284,7 +285,7 @@ void PersonSetTest::addRemoveOnPersonRemoved4(const PersonPtr &person)
 void PersonSetTest::testPeople()
 {
     // Create a person set.
-    PersonSetPtr personSet = PersonSet::create();
+    PersonSetPtr personSet = TestBackdoors::createPersonSet();
     QVERIFY(personSet);
     QVERIFY(personSet->people().isEmpty());
 
@@ -303,8 +304,8 @@ void PersonSetTest::testPeople()
     PersonPtr personPtr1 = pm->personForResource(person1);
     PersonPtr personPtr2 = pm->personForResource(person2);
     QVERIFY(personPtr1.data() != personPtr2.data());
-    personSet->addPerson(personPtr1);
-    personSet->addPerson(personPtr2);
+    TestBackdoors::personSetAddPerson(personSet, personPtr1);
+    TestBackdoors::personSetAddPerson(personSet, personPtr2);
 
     // Check that both people are in PersonSet
     QCOMPARE(personSet->people().size(), 2);
