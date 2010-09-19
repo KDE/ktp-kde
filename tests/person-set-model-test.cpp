@@ -24,6 +24,8 @@
 #include "fake-person.h"
 #include "fake-person-set.h"
 
+#include "test-backdoors.h"
+
 #include <KDebug>
 
 #include <QtCore/QTimer>
@@ -83,9 +85,9 @@ void PersonSetModelTest::testConstructorDestructor()
     QVERIFY(fakePerson3.data());
     QCOMPARE(fakePerson3->resourceUri(), QUrl::fromEncoded("nepomuk:/test3"));
 
-    fakePersonSet->addPerson(fakePerson1);
-    fakePersonSet->addPerson(fakePerson2);
-    fakePersonSet->addPerson(fakePerson3);
+    TestBackdoors::personSetAddPerson(fakePersonSet, fakePerson1);
+    TestBackdoors::personSetAddPerson(fakePersonSet, fakePerson2);
+    TestBackdoors::personSetAddPerson(fakePersonSet, fakePerson3);
 
     QCOMPARE(fakePersonSet->people().size(), 3);
 
