@@ -57,6 +57,14 @@ public:
       : q(parent),
         rootItem(new Item)
     {
+        QHash<int, QByteArray> roles = q->roleNames();
+        roles.insert(Qt::DisplayRole, QByteArray("displayName"));
+        roles.insert(Qt::DecorationRole, QByteArray("presenceIcon"));
+        roles.insert(PersonRole, QByteArray("person"));
+        roles.insert(GroupsRole, QByteArray("groups"));
+        roles.insert(CapabilitiesRole, QByteArray("capabilities"));
+        roles.insert(AvatarRole, QByteArray("avatar"));
+        q->setRoleNames(roles);
     }
 
     ~Private()
