@@ -19,53 +19,53 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#include "custom-person-set.h"
+#include "simple-person-set.h"
 
 #include <KDebug>
 
 using namespace KTelepathy;
 
-class CustomPersonSet::Private {
+class SimplePersonSet::Private {
 
 public:
     Private()
     { }
 };
 
-QSharedPointer<CustomPersonSet> CustomPersonSet::create()
+QSharedPointer<SimplePersonSet> SimplePersonSet::create()
 {
-    return QSharedPointer<CustomPersonSet>(new CustomPersonSet);
+    return QSharedPointer<SimplePersonSet>(new SimplePersonSet);
 }
 
-CustomPersonSet::CustomPersonSet()
+SimplePersonSet::SimplePersonSet()
 : PersonSet(),
-d(new CustomPersonSet::Private)
+d(new SimplePersonSet::Private)
 {
     kDebug();
 }
 
-CustomPersonSet::~CustomPersonSet()
+SimplePersonSet::~SimplePersonSet()
 {
     kDebug();
 
     delete d;
 }
 
-void CustomPersonSet::addPerson(const PersonPtr &person)
+void SimplePersonSet::addPerson(const PersonPtr &person)
 {
     PersonSet::addPerson(person);
 }
 
-void CustomPersonSet::removePerson(const PersonPtr &person)
+void SimplePersonSet::removePerson(const PersonPtr &person)
 {
     PersonSet::removePerson(person);
 }
 
-void CustomPersonSet::removePerson(const QUrl &uri)
+void SimplePersonSet::removePerson(const QUrl &uri)
 {
     PersonSet::removePerson(uri);
 }
 
 
-#include "custom-person-set.moc"
+#include "simple-person-set.moc"
 

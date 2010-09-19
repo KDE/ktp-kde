@@ -19,8 +19,8 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#ifndef LIBKTELEPATHY_CUSTOM_PERSON_SET_H
-#define LIBKTELEPATHY_CUSTOM_PERSON_SET_H
+#ifndef LIBKTELEPATHY_SIMPLE_PERSON_SET_H
+#define LIBKTELEPATHY_SIMPLE_PERSON_SET_H
 
 #include "person-set.h"
 
@@ -42,7 +42,7 @@ namespace KTelepathy {
  * are added and removed from the PersonSet, allowing subclasses which provide dynamically updated
  * sets of Persons.
  */
-class KDE_EXPORT CustomPersonSet : public PersonSet {
+class KDE_EXPORT SimplePersonSet : public PersonSet {
 
     Q_OBJECT
 
@@ -53,19 +53,12 @@ public:
      *
      * This method creates a new empty PersonSet and returns a shared pointer to it.
      */
-    static QSharedPointer<CustomPersonSet> create();
+    static QSharedPointer<SimplePersonSet> create();
 
     /**
      * Destrcutor
      */
-    virtual ~CustomPersonSet();
-
-protected:
-    /**
-     * Protected constructor since library users should create new instances of this class by
-     * calling the static member create().
-     */
-    explicit CustomPersonSet();
+    virtual ~SimplePersonSet();
 
     /**
      * @brief add a new person to the set.
@@ -88,15 +81,22 @@ protected:
      */
     virtual void removePerson(const QUrl &uri);
 
+protected:
+    /**
+     * Protected constructor since library users should create new instances of this class by
+     * calling the static member create().
+     */
+    explicit SimplePersonSet();
+
 private:
-    Q_DISABLE_COPY(CustomPersonSet);
+    Q_DISABLE_COPY(SimplePersonSet);
 
     class Private;
     Private * const d;
 
 };
 
-typedef QSharedPointer<CustomPersonSet> CustomPersonSetPtr;
+typedef QSharedPointer<SimplePersonSet> SimplePersonSetPtr;
 
 }  // namespace KTelepathy
 

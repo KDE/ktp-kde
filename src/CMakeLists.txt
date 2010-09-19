@@ -10,12 +10,12 @@ include_directories (${CMAKE_CURRENT_BINARY_DIR}
 set (ktelepathy_SRCS
      core/contact.cpp
      core/contact-set.cpp
-     core/custom-person-set.cpp
      core/entity.cpp
      core/everyone-person-set.cpp
      core/people-manager.cpp
      core/person-set.cpp
      core/person.cpp
+     core/simple-person-set.cpp
      jobs/abstracthandlechanneljob.cpp
      jobs/abstractrequestchanneljob.cpp
      jobs/accept-file-transfer-job.cpp
@@ -47,11 +47,11 @@ set (ktelepathy_SRCS
 set (ktelepathy_INST_HDRS
      core/contact.h
      core/contact-set.h
-     core/custom-person-set.h
      core/entity.h
      core/people-manager.h
      core/person-set.h
      core/person.h
+     core/simple-person-set.h
      jobs/abstracthandlechanneljob.h
      jobs/abstractrequestchanneljob.h
      jobs/accept-file-transfer-job.h
@@ -95,7 +95,6 @@ set (ktelepathy_PRETTY_HDRS
      KTelepathy/ContactSet
      KTelepathy/ContactsListModel
      KTelepathy/ContactsModelMenu
-     KTelepathy/CustomPersonSet
      KTelepathy/Entity
      KTelepathy/GroupedContactsProxyModel
      KTelepathy/MetaContactItem
@@ -111,6 +110,7 @@ set (ktelepathy_PRETTY_HDRS
      KTelepathy/RequestGenericChannelJob
      KTelepathy/RequestTextChatJob
      KTelepathy/RequestTextChatroomJob
+     KTelepathy/SimplePersonSet
      KTelepathy/TelepathyAccountProxy
      KTelepathy/TelepathyBaseJob
      KTelepathy/TelepathyBridge
