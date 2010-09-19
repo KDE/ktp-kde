@@ -84,6 +84,16 @@ public:
      */
     const KIcon &presenceIcon() const;
 
+    /**
+     * Returns the presence name for this person
+     */
+    QString presenceName() const;
+
+    /**
+     * Returns the presence message for this person
+     */
+    QString presenceMessage() const;
+
 protected:
     /**
      * Constrcutor is protected because only ContactSet objects should directly create
@@ -135,6 +145,16 @@ Q_SIGNALS:
      * Emitted when the presence Icon has changed.
      */
     void presenceIconChanged(const KIcon &presenceIcon);
+
+    /**
+     * Emitted when the presence message has changed.
+     */
+    void presenceMessageChanged(const QString &presenceMessage);
+
+    /**
+     * Emitted when the presence name has changed.
+     */
+    void presenceNameChanged(const QString &presenceName);
 
 private Q_SLOTS:
     /**

@@ -150,6 +150,21 @@ const KIcon &Contact::presenceIcon() const
     return *(d->presenceIcon);
 }
 
+QString Contact::presenceMessage() const
+{
+    if (d->imAccount.imStatusMessages().isEmpty()) {
+        return QString();
+    }
+
+    return d->imAccount.imStatusMessages().first();
+}
+
+QString Contact::presenceName() const
+{
+    return d->imAccount.imStatus();
+}
+
+
 void Contact::onStatementAdded(const Soprano::Statement& statement)
 {
     kDebug() << "Statement added.";

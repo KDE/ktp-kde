@@ -86,6 +86,16 @@ public:
      */
     const KIcon &presenceIcon() const;
 
+    /**
+     * Returns the presence message
+     */
+    QString presenceMessage() const;
+
+    /**
+     * Returns the presence name
+     */
+    QString presenceName() const;
+
 protected:
     /**
      * Constrcutor is protected because only PeopleManager should directly create Person objects.
@@ -104,6 +114,8 @@ Q_SIGNALS:
     void displayNameChanged(const QString &displayName);
     void groupsChanged(const QSet<QString> &groups);
     void presenceIconChanged(const KIcon &presenceIcon);
+    void presenceNameChanged(const QString &presenceName);
+    void presenceMessageChanged(const QString &presenceMessage);
 
 private Q_SLOTS:
     void onContactAdded(const KTelepathy::ContactPtr &contact);
@@ -117,6 +129,8 @@ private Q_SLOTS:
     void updateDisplayName();
     void updateGroups();
     void updatePresenceIcon();
+    void updatePresenceMessage();
+    void updatePresenceName();
 
 private:
     Q_DISABLE_COPY(Person);

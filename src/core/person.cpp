@@ -68,6 +68,8 @@ public:
     QString displayName;
     QSet<QString> groups;
     KIcon *presenceIcon;
+    QString presenceName;
+    QString presenceMessage;
 };
 
 
@@ -96,7 +98,7 @@ Person::Person(const Nepomuk::Resource &pimoPerson)
                 SLOT(onContactAdded(KTelepathy::ContactPtr)));
         connect(this, SIGNAL(contactRemoved(KTelepathy::ContactPtr)),
                 SLOT(onContactRemoved(KTelepathy::ContactPtr)));
-
+        
         // Get all Telepathy PersonContacts which belong to this PIMO:Person
         {
             using namespace Nepomuk::Query;
@@ -212,6 +214,12 @@ void Person::onContactAdded(const KTelepathy::ContactPtr &contact)
     connect(contact.data(),
             SIGNAL(presenceIconChanged(KIcon)),
             SLOT(updatePresenceIcon()));
+    connect(contact.data(),
+            SIGNAL(presenceMessageChanged(QString)),
+            SLOT(updatePresenceMessage()));
+    connect(contact.data(),
+            SIGNAL(presenceNameChanged(QString)),
+            SLOT(updatePresenceName()));
 
     // Update all the properties of the Person.
     updateAvatar();
@@ -219,6 +227,8 @@ void Person::onContactAdded(const KTelepathy::ContactPtr &contact)
     updateDisplayName();
     updateGroups();
     updatePresenceIcon();
+    updatePresenceMessage();
+    updatePresenceName();
 }
 
 void Person::onContactRemoved(const KTelepathy::ContactPtr &contact)
@@ -229,6 +239,8 @@ void Person::onContactRemoved(const KTelepathy::ContactPtr &contact)
     disconnect(contact.data(), SLOT(updateDisplayName()));
     disconnect(contact.data(), SLOT(updateGroups()));
     disconnect(contact.data(), SLOT(updatePresenceIcon()));
+    disconnect(contact.data(), SLOT(updatePresenceMessage()));
+    disconnect(contact.data(), SLOT(updatePresenceName()));
 
     // Update all the properties of the Person.
     updateAvatar();
@@ -236,6 +248,8 @@ void Person::onContactRemoved(const KTelepathy::ContactPtr &contact)
     updateDisplayName();
     updateGroups();
     updatePresenceIcon();
+    updatePresenceMessage();
+    updatePresenceName();
 }
 
 // FIXME: Use flags instead of a bool for withOverlay?
@@ -262,6 +276,16 @@ QSet<QString> Person::groups() const
 const KIcon &Person::presenceIcon() const
 {
     return *(d->presenceIcon);
+}
+
+QString Person::presenceMessage() const
+{
+    return d->presenceMessage;
+}
+
+QString Person::presenceName() const
+{
+    return d->presenceName;
 }
 
 void Person::updateAvatar()
@@ -370,6 +394,28 @@ void Person::updatePresenceIcon()
     // Since the presence icon has changed, we must now update the avatar with the presence
     // icon overlayed on it.
     updateAvatarWithOverlay();
+}
+
+void Person::updatePresenceMessage()
+{
+    // FIXME: Choose sensibly.
+    Q_FOREACH (ContactPtr contact, contacts()) {
+        d->presenceMessage = contact->presenceMessage();
+    }
+
+    // FIXME: Only emit this signal if the presenceIcon has actually changed.
+    Q_EMIT presenceMessageChanged(d->presenceMessage);
+}
+
+void Person::updatePresenceName()
+{
+    // FIXME: Choose sensibly.
+    Q_FOREACH (ContactPtr contact, contacts()) {
+        d->presenceName = contact->presenceName();
+    }
+
+    // FIXME: Only emit this signal if the presenceIcon has actually changed.
+    Q_EMIT presenceNameChanged(d->presenceName);
 }
 
 

@@ -59,6 +59,8 @@ public:
     {
         QHash<int, QByteArray> roles = q->roleNames();
         roles.insert(PersonRole, QByteArray("person"));
+        roles.insert(PresenceMessageRole, QByteArray("presenceMessage"));
+        roles.insert(PresenceNameRole, QByteArray("presenceName"));
         q->setRoleNames(roles);
     }
 
@@ -176,6 +178,12 @@ QVariant PersonSetModel::data(const QModelIndex &index, int role) const
     case PersonSetModel::AvatarRole:
         data.setValue<QPixmap>(item->person->avatar());
         break;
+    case PersonSetModel::PresenceMessageRole:
+        data.setValue<QString>(item->person->presenceMessage());
+        break;
+    case PersonSetModel::PresenceNameRole:
+        data.setValue<QString>(item->person->presenceName());
+        break;
     default:
         break;
     }
@@ -264,6 +272,12 @@ void PersonSetModel::onPersonAdded(const KTelepathy::PersonPtr &person)
     connect(person.data(),
             SIGNAL(presenceIconChanged(KIcon)),
             SLOT(onPersonDataChanged()));
+    connect(person.data(),
+            SIGNAL(presenceMessageChanged(QString)),
+            SLOT(onPersonDataChanged()));
+    connect(person.data(),
+            SIGNAL(presenceNameChanged(QString)),
+            SLOT(onPersonDataChanged()));
 
     // Add the new item to the model data.
     d->rootItem->children.append(item);
@@ -304,6 +318,8 @@ void PersonSetModel::onPersonRemoved(const KTelepathy::PersonPtr &person)
     disconnect(person.data(), SIGNAL(displayNameChanged(QString)));
     disconnect(person.data(), SIGNAL(groupsChanged(QSet<QString>)));
     disconnect(person.data(), SIGNAL(presenceIconChanged(KIcon)));
+    disconnect(person.data(), SIGNAL(presenceMessageChanged(QString)));
+    disconnect(person.data(), SIGNAL(presenceNameChanged(QString)));
 
     // Notify the views that we have finished removing rows.
     endRemoveRows();

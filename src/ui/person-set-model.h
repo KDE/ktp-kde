@@ -40,6 +40,8 @@ public:
         GroupsRole,
         CapabilitiesRole,
         AvatarRole,
+        PresenceNameRole,
+        PresenceMessageRole,
     };
 
     explicit PersonSetModel(QObject *parent = 0);
