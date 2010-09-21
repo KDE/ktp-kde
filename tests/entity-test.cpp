@@ -22,6 +22,9 @@
 #include "entity-test.h"
 
 #include "entity.h"
+#include "test-backdoors.h"
+
+#include "ontologies/nco.h"
 
 #include <qtest_kde.h>
 
@@ -34,11 +37,11 @@ using namespace KTelepathy;
 EntityTest::EntityTest(QObject* parent)
 : Tp::NepomukTest(parent)
 {
-    
+
 }
 EntityTest::~EntityTest()
 {
-    
+
 }
 
 void EntityTest::initTestCase()
@@ -59,6 +62,72 @@ void EntityTest::cleanup()
 void EntityTest::cleanupTestCase()
 {
     cleanupTestCaseImpl();
+}
+
+void EntityTest::testConstructorDestructor()
+{
+    // Test the invalid constructor
+    EntityPtr entity1 = TestBackdoors::entityConstruct();
+    QVERIFY(!entity1.isNull());
+
+    QWeakPointer<Entity> weakPtr1 = entity1.toWeakRef();
+    QVERIFY(!weakPtr1.isNull());
+
+    entity1.clear();
+    QVERIFY(entity1.isNull());
+    QVERIFY(weakPtr1.isNull());
+
+    // Test the constructor that takes a Nepomuk Resource.
+    Nepomuk::Resource resource(QUrl::fromEncoded("nepomuk:/entity-test-constructor"));
+    resource.addType(Nepomuk::Vocabulary::NCO::PersonContact());
+    QVERIFY(resource.exists());
+    QVERIFY(resource.hasType(Nepomuk::Vocabulary::NCO::PersonContact()));
+
+    EntityPtr entity2 = TestBackdoors::entityConstruct(resource);
+    QVERIFY(!entity2.isNull());
+
+    QWeakPointer<Entity> weakPtr2 = entity2.toWeakRef();
+    QVERIFY(!weakPtr2.isNull());
+
+    entity2.clear();
+    QVERIFY(entity2.isNull());
+    QVERIFY(weakPtr2.isNull());
+
+    // Cleanup
+    resource.remove();
+}
+
+void EntityTest::testOperatorsEqualsNotEqual()
+{
+    // Try equating two invalid Entities.
+
+    // Try equating two different valid entities
+
+    // Try equating two same valid entities
+
+    // Try equating two same valid, but removed from nepomuk entities
+
+    // Try equating two different valid, but removed from nepomuk entities.
+}
+
+void EntityTest::testqHash()
+{
+
+}
+
+void EntityTest::testResource()
+{
+
+}
+
+void EntityTest::testResourceUri()
+{
+
+}
+
+void EntityTest::testValidSetValid()
+{
+
 }
 
 

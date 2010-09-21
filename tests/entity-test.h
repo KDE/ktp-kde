@@ -38,7 +38,12 @@ private Q_SLOTS:
     void initTestCase();
     void init();
 
-    
+    void testConstructorDestructor();
+    void testResource();
+    void testResourceUri();
+    void testOperatorsEqualsNotEqual();
+    void testValidSetValid();
+    void testqHash();
 
     void cleanup();
     void cleanupTestCase();
