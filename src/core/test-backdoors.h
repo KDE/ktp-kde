@@ -22,6 +22,7 @@
 #ifndef LIBKTELEPATHY_TEST_BACKDOORS_H
 #define LIBKTELEPATHY_TEST_BACKDOORS_H
 
+#include "entity.h"
 #include "person-set.h"
 
 #include <kdemacros.h>
@@ -35,6 +36,9 @@ public:
     static void personSetAddPerson(PersonSetPtr personSet, PersonPtr person);
     static void personSetRemovePerson(PersonSetPtr personSet, PersonPtr person);
     static void personSetRemovePerson(PersonSetPtr personSet, const QUrl &url);
+    static void entitySetValid(EntityPtr entity, bool valid);
+    static EntityPtr entityConstruct(const Nepomuk::Resource &resource);
+    static EntityPtr entityConstruct();
 };
 
 }  // namespace KTelepathy

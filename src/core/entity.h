@@ -104,6 +104,7 @@ private:
     Q_DISABLE_COPY(Entity);
 
     friend class PeopleManager;
+    friend class TestBackdoors;
 
     class Private;
     Private * const d;

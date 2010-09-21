@@ -49,3 +49,21 @@ void TestBackdoors::personSetRemovePerson(PersonSetPtr personSet, const QUrl &ur
     personSet->removePerson(url);
 }
 
+EntityPtr TestBackdoors::entityConstruct(const Nepomuk::Resource &resource)
+{
+    return EntityPtr(new Entity(resource));
+}
+
+EntityPtr TestBackdoors::entityConstruct()
+{
+    return EntityPtr(new Entity());
+}
+
+void TestBackdoors::entitySetValid(EntityPtr entity, bool valid)
+{
+    Q_ASSERT(entity);
+
+    entity->setValid(valid);
+}
+
+
