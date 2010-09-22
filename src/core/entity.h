@@ -78,9 +78,6 @@ public:
      */
     virtual QUrl resourceUri() const;
 
-    bool operator==(const Entity &other) const;
-    bool operator!=(const Entity &other) const;
-
 protected:
     /**
      * Constructor is protected since only PeopleManager can create Entity instances.

@@ -84,18 +84,8 @@ void Entity::setValid(bool valid)
     d->valid = valid;
 }
 
-bool Entity::operator==(const Entity &other) const
-{
-    return (this->resourceUri() == other.resourceUri());
-}
-
-bool Entity::operator!=(const Entity &other) const
-{
-    return !(*this == other);
-}
-
 uint qHash(EntityPtr key) {
-    return qHash(key->resourceUri());
+    return qHash(key.data());
 }
 
 
