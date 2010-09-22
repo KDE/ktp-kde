@@ -41,7 +41,6 @@ private Q_SLOTS:
     void testConstructorDestructor();
     void testResource();
     void testResourceUri();
-    void testOperatorsEqualsNotEqual();
     void testValidSetValid();
     void testqHash();
 
