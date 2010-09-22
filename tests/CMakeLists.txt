@@ -108,6 +108,29 @@ add_ktelepathy_nepomuk_test (EveryonePersonSetTest
 )
 
 ################################
+# Simple Person Set test
+kde4_add_executable (simple-person-set-test
+                     simple-person-set-test.cpp
+                     fake-person.cpp
+)
+
+target_link_libraries (simple-person-set-test
+                       ${KTELEPATHYTESTLIB_LIBRARIES}
+                       ${QT_LIBRARIES}
+                       ${KDE4_KDEUI_LIBS}
+                       ${TELEPATHY_QT4_LIBRARIES}
+                       ${NEPOMUK_LIBRARIES}
+                       ${NEPOMUK_QUERY_LIBRARIES}
+                       ${QT_QTTEST_LIBRARY}
+                       ktelepathy
+                       ontologies
+)
+
+add_ktelepathy_nepomuk_test (SimplePersonSetTest
+                             ${CMAKE_CURRENT_BINARY_DIR}/simple-person-set-test
+)
+
+################################
 # Person Set Model test
 kde4_add_executable (person-set-model-test
                      person-set-model-test.cpp
