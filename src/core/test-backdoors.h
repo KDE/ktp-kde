@@ -32,7 +32,7 @@ namespace KTelepathy {
 class KDE_EXPORT TestBackdoors {
 
 public:
-    static PersonSetPtr createPersonSet();
+    static PersonSetPtr personSetCreate();
     static void personSetAddPerson(PersonSetPtr personSet, PersonPtr person);
     static void personSetRemovePerson(PersonSetPtr personSet, PersonPtr person);
     static void personSetRemovePerson(PersonSetPtr personSet, const QUrl &url);

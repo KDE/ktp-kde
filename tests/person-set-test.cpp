@@ -60,7 +60,7 @@ void PersonSetTest::init()
 void PersonSetTest::testConstructorDestructorCreate()
 {
     // Create a PersonSet.
-    PersonSetPtr personSet = TestBackdoors::createPersonSet();
+    PersonSetPtr personSet = TestBackdoors::personSetCreate();
     QVERIFY(!personSet.isNull());
 
     // Get a QWeakPointer to it, for testing destruction.
@@ -77,7 +77,7 @@ void PersonSetTest::testConstructorDestructorCreate()
 void PersonSetTest::testAddRemove()
 {
     // First, create the PersonSet.
-    m_addRemovePersonSet = TestBackdoors::createPersonSet();
+    m_addRemovePersonSet = TestBackdoors::personSetCreate();
     QVERIFY(!m_addRemovePersonSet.isNull());
     QCOMPARE(m_addRemovePersonSet->people().size(), 0);
 
@@ -285,7 +285,7 @@ void PersonSetTest::addRemoveOnPersonRemoved4(const PersonPtr &person)
 void PersonSetTest::testPeople()
 {
     // Create a person set.
-    PersonSetPtr personSet = TestBackdoors::createPersonSet();
+    PersonSetPtr personSet = TestBackdoors::personSetCreate();
     QVERIFY(personSet);
     QVERIFY(personSet->people().isEmpty());
 

@@ -23,7 +23,7 @@
 
 using namespace KTelepathy;
 
-PersonSetPtr TestBackdoors::createPersonSet()
+PersonSetPtr TestBackdoors::personSetCreate()
 {
     return QSharedPointer<PersonSet>(new PersonSet());
 }
