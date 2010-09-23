@@ -10,6 +10,7 @@ include_directories (${CMAKE_CURRENT_BINARY_DIR}
 set (ktelepathy_SRCS
      core/contact.cpp
      core/contact-set.cpp
+     core/contactable.cpp
      core/entity.cpp
      core/everyone-person-set.cpp
      core/people-manager.cpp
@@ -49,6 +50,7 @@ set (ktelepathy_SRCS
 set (ktelepathy_INST_HDRS
      core/contact.h
      core/contact-set.h
+     core/contactable.h
      core/entity.h
      core/people-manager.h
      core/person-set.h
@@ -94,6 +96,7 @@ set (ktelepathy_PRETTY_HDRS
      KTelepathy/AddContactsToGroupJob
      KTelepathy/AddMetaContactJob
      KTelepathy/Contact
+     KTelepathy/Contactable
      KTelepathy/ContactItem
      KTelepathy/ContactSet
      KTelepathy/ContactsListModel
