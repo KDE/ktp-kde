@@ -15,6 +15,7 @@ set (ktelepathy_SRCS
      core/people-manager.cpp
      core/person-set.cpp
      core/person.cpp
+     core/simple-contact-set.cpp
      core/simple-person-set.cpp
      core/test-backdoors.cpp
      jobs/abstracthandlechanneljob.cpp
@@ -52,6 +53,7 @@ set (ktelepathy_INST_HDRS
      core/people-manager.h
      core/person-set.h
      core/person.h
+     core/simple-contact-set.h
      core/simple-person-set.h
      jobs/abstracthandlechanneljob.h
      jobs/abstractrequestchanneljob.h
@@ -111,6 +113,7 @@ set (ktelepathy_PRETTY_HDRS
      KTelepathy/RequestGenericChannelJob
      KTelepathy/RequestTextChatJob
      KTelepathy/RequestTextChatroomJob
+     KTelepathy/SimpleContactSet
      KTelepathy/SimplePersonSet
      KTelepathy/TelepathyAccountProxy
      KTelepathy/TelepathyBaseJob
