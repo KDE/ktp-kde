@@ -42,7 +42,6 @@ private Q_SLOTS:
     void testResource();
     void testResourceUri();
     void testValidSetValid();
-    void testqHash();
 
     void cleanup();
     void cleanupTestCase();

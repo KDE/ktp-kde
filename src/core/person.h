@@ -28,9 +28,10 @@
 #include <kdemacros.h>
 
 #include <QtCore/QObject>
-#include <QtCore/QSharedPointer>
 #include <QtCore/QString>
 #include <QtCore/QStringList>
+
+#include <TelepathyQt4/SharedPtr>
 
 namespace Nepomuk {
     class Resource;
@@ -142,12 +143,13 @@ private:
 
 };
 
-typedef QSharedPointer<Person> PersonPtr;
+typedef Tp::SharedPtr<Person> PersonPtr;
 
 }  // namespace KTelepathy
 
-Q_DECLARE_METATYPE(QSharedPointer<KTelepathy::Person>);
+Q_DECLARE_METATYPE(Tp::SharedPtr<KTelepathy::Person>);
 
+uint KDE_EXPORT qHash(const KTelepathy::PersonPtr &key);
 
 #endif  // Header guard
 

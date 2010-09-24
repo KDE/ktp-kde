@@ -67,15 +67,8 @@ void EntityTest::cleanupTestCase()
 void EntityTest::testConstructorDestructor()
 {
     // Test the invalid constructor
-    EntityPtr entity1 = TestBackdoors::entityConstruct();
-    QVERIFY(!entity1.isNull());
-
-    QWeakPointer<Entity> weakPtr1 = entity1.toWeakRef();
-    QVERIFY(!weakPtr1.isNull());
-
-    entity1.clear();
-    QVERIFY(entity1.isNull());
-    QVERIFY(weakPtr1.isNull());
+    Entity *entity1 = TestBackdoors::entityConstruct();
+    QVERIFY(entity1);
 
     // Test the constructor that takes a Nepomuk Resource.
     Nepomuk::Resource resource(QUrl::fromEncoded("nepomuk:/entity-test-constructor"));
@@ -83,106 +76,11 @@ void EntityTest::testConstructorDestructor()
     QVERIFY(resource.exists());
     QVERIFY(resource.hasType(Nepomuk::Vocabulary::NCO::PersonContact()));
 
-    EntityPtr entity2 = TestBackdoors::entityConstruct(resource);
-    QVERIFY(!entity2.isNull());
-
-    QWeakPointer<Entity> weakPtr2 = entity2.toWeakRef();
-    QVERIFY(!weakPtr2.isNull());
-
-    entity2.clear();
-    QVERIFY(entity2.isNull());
-    QVERIFY(weakPtr2.isNull());
+    Entity *entity2 = TestBackdoors::entityConstruct(resource);
+    QVERIFY(entity2);
 
     // Cleanup
     resource.remove();
-}
-
-void EntityTest::testqHash()
-{
-    // Use a QSet to test the qHash implementation
-    QSet<EntityPtr> entities;
-
-    // Add a valid Entity Ptr
-    Nepomuk::Resource resource1(QUrl::fromEncoded("nepomuk:/entity-test-qHash-1"));
-    resource1.addType(Nepomuk::Vocabulary::NCO::PersonContact());
-
-    QVERIFY(resource1.exists());
-    QVERIFY(resource1.hasType(Nepomuk::Vocabulary::NCO::PersonContact()));
-
-    EntityPtr entity1 = TestBackdoors::entityConstruct(resource1);
-
-    entities.insert(entity1);
-
-    QCOMPARE(entities.size(), 1);
-    QVERIFY(entities.contains(entity1));
-
-    // Add another valid Entity Ptr
-    Nepomuk::Resource resource2(QUrl::fromEncoded("nepomuk:/entity-test-qHash-2"));
-    resource2.addType(Nepomuk::Vocabulary::NCO::PersonContact());
-
-    QVERIFY(resource2.exists());
-    QVERIFY(resource2.hasType(Nepomuk::Vocabulary::NCO::PersonContact()));
-
-    EntityPtr entity2 = TestBackdoors::entityConstruct(resource2);
-
-    entities.insert(entity2);
-
-    QCOMPARE(entities.size(), 2);
-    QVERIFY(entities.contains(entity1));
-    QVERIFY(entities.contains(entity2));
-
-    // Add the same EntityPtr again
-    entities.insert(entity2);
-
-    QCOMPARE(entities.size(), 2);
-    QVERIFY(entities.contains(entity1));
-    QVERIFY(entities.contains(entity2));
-
-    // Add a different EntityPtr to the same Entity again.
-    EntityPtr entity3 = TestBackdoors::entityConstruct(resource2);
-
-    entities.insert(entity3);
-
-    QCOMPARE(entities.size(), 3);
-    QVERIFY(entities.contains(entity1));
-    QVERIFY(entities.contains(entity2));
-    QVERIFY(entities.contains(entity3));
-
-    // Add an invalid EntityPtr
-    EntityPtr entity4 = TestBackdoors::entityConstruct();
-
-    entities.insert(entity4);
-
-    QCOMPARE(entities.size(), 4);
-    QVERIFY(entities.contains(entity1));
-    QVERIFY(entities.contains(entity2));
-    QVERIFY(entities.contains(entity3));
-    QVERIFY(entities.contains(entity4));
-
-    // Add the same invalid EntityPtr again
-    entities.insert(entity4);
-
-    QCOMPARE(entities.size(), 4);
-    QVERIFY(entities.contains(entity1));
-    QVERIFY(entities.contains(entity2));
-    QVERIFY(entities.contains(entity3));
-    QVERIFY(entities.contains(entity4));
-
-    // Add another invalid EntityPtr
-    EntityPtr entity5 = TestBackdoors::entityConstruct();
-
-    entities.insert(entity5);
-
-    QCOMPARE(entities.size(), 5);
-    QVERIFY(entities.contains(entity1));
-    QVERIFY(entities.contains(entity2));
-    QVERIFY(entities.contains(entity3));
-    QVERIFY(entities.contains(entity4));
-    QVERIFY(entities.contains(entity5));
-
-    // Cleanup Nepomuk data
-    resource1.remove();
-    resource2.remove();
 }
 
 void EntityTest::testResource()
@@ -193,7 +91,7 @@ void EntityTest::testResource()
     QVERIFY(resource.exists());
     QVERIFY(resource.hasType(Nepomuk::Vocabulary::NCO::PersonContact()));
 
-    EntityPtr entity1 = TestBackdoors::entityConstruct(resource);
+    Entity *entity1 = TestBackdoors::entityConstruct(resource);
 
     // The resource should be invalid until we setValid the entity.
     QCOMPARE(entity1->resource(), Nepomuk::Resource());
@@ -209,7 +107,7 @@ void EntityTest::testResource()
     QCOMPARE(entity1->resource(), Nepomuk::Resource());
 
     // An invalid entity should return an invalid resource
-    EntityPtr entity2 = TestBackdoors::entityConstruct();
+    Entity *entity2 = TestBackdoors::entityConstruct();
     QCOMPARE(entity2->resource(), Nepomuk::Resource());
 
     // Cleanup Nepomuk data
@@ -219,7 +117,7 @@ void EntityTest::testResource()
 void EntityTest::testResourceUri()
 {
     // Create an invalid Entity Ptr
-    EntityPtr entity1 = TestBackdoors::entityConstruct();
+    Entity *entity1 = TestBackdoors::entityConstruct();
 
     // Check the resourceUri() is invalid
     QCOMPARE(entity1->resourceUri(), QUrl());
@@ -231,7 +129,7 @@ void EntityTest::testResourceUri()
     QVERIFY(resource.exists());
     QVERIFY(resource.hasType(Nepomuk::Vocabulary::NCO::PersonContact()));
 
-    EntityPtr entity2 = TestBackdoors::entityConstruct(resource);
+    Entity *entity2 = TestBackdoors::entityConstruct(resource);
 
     // The resourceUri should be valid immediately
     QCOMPARE(entity2->resourceUri(), resourceUri);
@@ -254,7 +152,7 @@ void EntityTest::testValidSetValid()
     QVERIFY(resource.exists());
     QVERIFY(resource.hasType(Nepomuk::Vocabulary::NCO::PersonContact()));
 
-    EntityPtr entity1 = TestBackdoors::entityConstruct(resource);
+    Entity *entity1 = TestBackdoors::entityConstruct(resource);
 
     // Check that it is invalid
     QVERIFY(!entity1->isValid());
@@ -272,7 +170,7 @@ void EntityTest::testValidSetValid()
     QVERIFY(!entity1->isValid());
 
     // Check that a newly constructed invalid entity is valid() == false
-    EntityPtr entity2 = TestBackdoors::entityConstruct();
+    Entity *entity2 = TestBackdoors::entityConstruct();
     QVERIFY(!entity2->isValid());
 
     // Cleanup Nepomuk data

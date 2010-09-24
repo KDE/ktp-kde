@@ -28,9 +28,11 @@
 #include <kdemacros.h>
 
 #include <QtCore/QObject>
-#include <QtCore/QSharedPointer>
 #include <QtCore/QString>
 #include <QtCore/QStringList>
+
+#include <TelepathyQt4/RefCounted>
+#include <TelepathyQt4/SharedPtr>
 
 namespace Nepomuk {
     class Resource;
@@ -52,7 +54,7 @@ namespace KTelepathy {
  * local account/buddy combination that should be used when opening a channel, rather than allowing
  * libktelepathy to automagically use the most suitable one.
  */
-class KDE_EXPORT Contact : public QObject, public Entity, public NepomukSignalWatcher::Watcher {
+class KDE_EXPORT Contact : public QObject, public Entity, public Tp::RefCounted, public NepomukSignalWatcher::Watcher {
 
     Q_OBJECT
 
@@ -183,11 +185,13 @@ private:
 
 };
 
-typedef QSharedPointer<Contact> ContactPtr;
+typedef Tp::SharedPtr<Contact> ContactPtr;
 
 }  // namespace KTelepathy
 
-Q_DECLARE_METATYPE(QSharedPointer<KTelepathy::Contact>);
+Q_DECLARE_METATYPE(Tp::SharedPtr<KTelepathy::Contact>);
+
+uint KDE_EXPORT qHash(const KTelepathy::ContactPtr &key);
 
 
 #endif  // Header guard

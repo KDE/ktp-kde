@@ -64,10 +64,10 @@ void PersonSetTest::testConstructorDestructorCreate()
     QVERIFY(!personSet.isNull());
 
     // Get a QWeakPointer to it, for testing destruction.
-    QWeakPointer<PersonSet> weakPtr = personSet.toWeakRef();
+    Tp::WeakPtr<PersonSet> weakPtr = Tp::WeakPtr<PersonSet>(personSet);
 
     // Remove the only strong ref.
-    personSet.clear();
+    personSet.reset();
 
     // Check the PersonSet was deleted OK
     QVERIFY(personSet.isNull());

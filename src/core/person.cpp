@@ -418,6 +418,10 @@ void Person::updatePresenceName()
     Q_EMIT presenceNameChanged(d->presenceName);
 }
 
+uint qHash(const PersonPtr &key) {
+    return qHash(key.data());
+}
+
 
 #include "person.moc"
 

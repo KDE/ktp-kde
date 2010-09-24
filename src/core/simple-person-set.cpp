@@ -32,9 +32,9 @@ public:
     { }
 };
 
-QSharedPointer<SimplePersonSet> SimplePersonSet::create()
+SimplePersonSetPtr SimplePersonSet::create()
 {
-    return QSharedPointer<SimplePersonSet>(new SimplePersonSet);
+    return SimplePersonSetPtr(new SimplePersonSet);
 }
 
 SimplePersonSet::SimplePersonSet()

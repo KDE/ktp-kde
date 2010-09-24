@@ -28,7 +28,8 @@
 
 #include <QtCore/QObject>
 #include <QtCore/QSet>
-#include <QtCore/QSharedPointer>
+
+#include <TelepathyQt4/SharedPtr>
 
 class QUrl;
 
@@ -45,7 +46,7 @@ class KDE_EXPORT SimpleContactSet : public ContactSet {
 public:
     /**
      */
-    static QSharedPointer<SimpleContactSet> create();
+    static Tp::SharedPtr<SimpleContactSet> create();
 
     /**
      * Destrcutor
@@ -80,7 +81,7 @@ private:
 
 };
 
-typedef QSharedPointer<SimpleContactSet> SimpleContactSetPtr;
+typedef Tp::SharedPtr<SimpleContactSet> SimpleContactSetPtr;
 
 }  // namespace KTelepathy
 

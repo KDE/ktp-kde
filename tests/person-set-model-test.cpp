@@ -73,15 +73,15 @@ void PersonSetModelTest::testConstructorDestructor()
     mLoop->exec();
 
     // Construct a model with a PersonSet
-    QSharedPointer<FakePersonSet> fakePersonSet(new FakePersonSet);
+    Tp::SharedPtr<FakePersonSet> fakePersonSet(new FakePersonSet);
     QVERIFY(fakePersonSet.data());
-    QSharedPointer<FakePerson> fakePerson1(new FakePerson(QUrl::fromEncoded("nepomuk:/test1")));
+    Tp::SharedPtr<FakePerson> fakePerson1(new FakePerson(QUrl::fromEncoded("nepomuk:/test1")));
     QVERIFY(fakePerson1.data());
     QCOMPARE(fakePerson1->resourceUri(), QUrl::fromEncoded("nepomuk:/test1"));
-    QSharedPointer<FakePerson> fakePerson2(new FakePerson(QUrl::fromEncoded("nepomuk:/test2")));
+    Tp::SharedPtr<FakePerson> fakePerson2(new FakePerson(QUrl::fromEncoded("nepomuk:/test2")));
     QVERIFY(fakePerson2.data());
     QCOMPARE(fakePerson2->resourceUri(), QUrl::fromEncoded("nepomuk:/test2"));
-    QSharedPointer<FakePerson> fakePerson3(new FakePerson(QUrl::fromEncoded("nepomuk:/test3")));
+    Tp::SharedPtr<FakePerson> fakePerson3(new FakePerson(QUrl::fromEncoded("nepomuk:/test3")));
     QVERIFY(fakePerson3.data());
     QCOMPARE(fakePerson3->resourceUri(), QUrl::fromEncoded("nepomuk:/test3"));
 

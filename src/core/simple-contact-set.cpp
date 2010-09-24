@@ -32,9 +32,9 @@ public:
     { }
 };
 
-QSharedPointer<SimpleContactSet> SimpleContactSet::create()
+SimpleContactSetPtr SimpleContactSet::create()
 {
-    return QSharedPointer<SimpleContactSet>(new SimpleContactSet);
+    return SimpleContactSetPtr(new SimpleContactSet);
 }
 
 SimpleContactSet::SimpleContactSet()

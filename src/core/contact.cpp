@@ -289,6 +289,10 @@ void Contact::updatePresenceIcon()
     Q_EMIT presenceIconChanged(*d->presenceIcon);
 }
 
+uint qHash(const ContactPtr &key) {
+    return qHash(key.data());
+}
+
 
 #include "contact.moc"
 

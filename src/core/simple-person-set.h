@@ -28,7 +28,8 @@
 
 #include <QtCore/QObject>
 #include <QtCore/QSet>
-#include <QtCore/QSharedPointer>
+
+#include <TelepathyQt4/SharedPtr>
 
 class QUrl;
 
@@ -53,7 +54,7 @@ public:
      *
      * This method creates a new empty PersonSet and returns a shared pointer to it.
      */
-    static QSharedPointer<SimplePersonSet> create();
+    static Tp::SharedPtr<SimplePersonSet> create();
 
     /**
      * Destrcutor
@@ -96,7 +97,7 @@ private:
 
 };
 
-typedef QSharedPointer<SimplePersonSet> SimplePersonSetPtr;
+typedef Tp::SharedPtr<SimplePersonSet> SimplePersonSetPtr;
 
 }  // namespace KTelepathy
 

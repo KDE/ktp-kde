@@ -25,7 +25,7 @@ using namespace KTelepathy;
 
 PersonSetPtr TestBackdoors::personSetCreate()
 {
-    return QSharedPointer<PersonSet>(new PersonSet());
+    return PersonSetPtr(new PersonSet());
 }
 
 void TestBackdoors::personSetAddPerson(PersonSetPtr personSet, PersonPtr person)
@@ -49,17 +49,17 @@ void TestBackdoors::personSetRemovePerson(PersonSetPtr personSet, const QUrl &ur
     personSet->removePerson(url);
 }
 
-EntityPtr TestBackdoors::entityConstruct(const Nepomuk::Resource &resource)
+Entity *TestBackdoors::entityConstruct(const Nepomuk::Resource &resource)
 {
-    return EntityPtr(new Entity(resource));
+    return new Entity(resource);
 }
 
-EntityPtr TestBackdoors::entityConstruct()
+Entity *TestBackdoors::entityConstruct()
 {
-    return EntityPtr(new Entity());
+    return new Entity();
 }
 
-void TestBackdoors::entitySetValid(EntityPtr entity, bool valid)
+void TestBackdoors::entitySetValid(Entity *entity, bool valid)
 {
     Q_ASSERT(entity);
 

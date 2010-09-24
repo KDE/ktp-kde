@@ -31,8 +31,10 @@
 #include <QtCore/QList>
 #include <QtCore/QObject>
 #include <QtCore/QSet>
-#include <QtCore/QSharedPointer>
 #include <QtCore/QUrl>
+
+#include <TelepathyQt4/RefCounted>
+#include <TelepathyQt4/SharedPtr>
 
 class QUrl;
 
@@ -46,7 +48,7 @@ namespace KTelepathy {
  * are added and removed from the PersonSet, allowing subclasses which provide dynamically updated
  * sets of Persons.
  */
-class KDE_EXPORT ContactSet : public QObject {
+class KDE_EXPORT ContactSet : public QObject, public Tp::RefCounted {
 
     Q_OBJECT
 
@@ -114,7 +116,7 @@ private:
 
 };
 
-typedef QSharedPointer<ContactSet> ContactSetPtr;
+typedef Tp::SharedPtr<ContactSet> ContactSetPtr;
 
 }  // namespace KTelepathy
 

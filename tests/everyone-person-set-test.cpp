@@ -415,7 +415,7 @@ void EveryonePersonSetTest::testAddRemove()
                SLOT(addRemoveOnPersonRemoved7(KTelepathy::PersonPtr)));
 
     // Cleanup
-    m_addRemovePersonSet.clear();
+    m_addRemovePersonSet.reset();
 
     // TODO: Cleanup properly
 

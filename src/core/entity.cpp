@@ -84,10 +84,3 @@ void Entity::setValid(bool valid)
     d->valid = valid;
 }
 
-uint qHash(EntityPtr key) {
-    return qHash(key.data());
-}
-
-
-#include "entity.moc"
-

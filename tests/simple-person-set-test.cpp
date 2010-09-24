@@ -61,10 +61,10 @@ void SimplePersonSetTest::testConstructorDestructorCreate()
     QVERIFY(!personSet.isNull());
 
     // Get a QWeakPointer to it, for testing destruction.
-    QWeakPointer<PersonSet> weakPtr = personSet.toWeakRef();
+    Tp::WeakPtr<PersonSet> weakPtr = Tp::WeakPtr<PersonSet>(personSet);
 
     // Remove the only strong ref.
-    personSet.clear();
+    personSet.reset();
 
     // Check the PersonSet was deleted OK
     QVERIFY(personSet.isNull());
@@ -81,8 +81,8 @@ void SimplePersonSetTest::testAddRemove()
     // Create a couple of Fake Persons
     m_addRemovePersonUri1 = QUrl::fromEncoded("nepomuk:/p1");
     m_addRemovePersonUri2 = QUrl::fromEncoded("nepomuk:/p2");
-    m_addRemovePerson1 = QSharedPointer<Person>(new FakePerson(m_addRemovePersonUri1));
-    m_addRemovePerson2 = QSharedPointer<Person>(new FakePerson(m_addRemovePersonUri2));
+    m_addRemovePerson1 = PersonPtr(new FakePerson(m_addRemovePersonUri1));
+    m_addRemovePerson2 = PersonPtr(new FakePerson(m_addRemovePersonUri2));
 
     // Add them (one at a time) to the person set.
     connect(m_addRemovePersonSet.data(),

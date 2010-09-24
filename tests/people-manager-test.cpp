@@ -124,11 +124,11 @@ void PeopleManagerTest::testPersonForResource()
     QCOMPARE(person1.data(), person4.data());
 
     // Check that clearing the cache works
-    QWeakPointer<Person> weakPerson1 = person1.toWeakRef();
+    Tp::WeakPtr<Person> weakPerson1 = Tp::WeakPtr<Person>(person1);
     QVERIFY(!weakPerson1.isNull());
-    person1.clear();
+    person1.reset();
     QVERIFY(person1.isNull());
-    person4.clear();
+    person4.reset();
     QVERIFY(person4.isNull());
 
     // And that re-requesting one of the resoures after this still works
@@ -166,9 +166,9 @@ void PeopleManagerTest::testEveryone()
     QCOMPARE(personSet.data(), everyonePersonSet.data());
 
     // Check the cache gets cleared properly
-    QWeakPointer<PersonSet> weakPtr = everyonePersonSet.toWeakRef();
-    everyonePersonSet.clear();
-    personSet.clear();
+    Tp::WeakPtr<PersonSet> weakPtr = Tp::WeakPtr<PersonSet>(everyonePersonSet);
+    everyonePersonSet.reset();
+    personSet.reset();
 
     PersonSetPtr newPersonSet = pm->everyone();
     QVERIFY(!newPersonSet.isNull());

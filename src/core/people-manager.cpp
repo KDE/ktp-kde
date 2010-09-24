@@ -30,6 +30,8 @@
 
 #include <QtCore/QHash>
 
+#include <TelepathyQt4/WeakPtr>
+
 using namespace KTelepathy;
 
 
@@ -49,11 +51,11 @@ public:
 
     PeopleManager * const q;
 
-    QWeakPointer<EveryonePersonSet> everyonePersonSet;
+    Tp::WeakPtr<EveryonePersonSet> everyonePersonSet;
 
     Nepomuk::Resource mePimoPerson;
 
-    QHash<QUrl, QWeakPointer<Person> > personCache;
+    QHash<QUrl, Tp::WeakPtr<Person> > personCache;
 
 };
 
@@ -108,11 +110,11 @@ PersonSetPtr PeopleManager::everyone()
     kDebug();
 
     if (d->everyonePersonSet.isNull()) {
-        QSharedPointer<EveryonePersonSet> everyonePersonSet(new EveryonePersonSet(d->mePimoPerson));
-        d->everyonePersonSet = everyonePersonSet.toWeakRef();
+        Tp::SharedPtr<EveryonePersonSet> everyonePersonSet(new EveryonePersonSet(d->mePimoPerson));
+        d->everyonePersonSet = Tp::WeakPtr<EveryonePersonSet>(everyonePersonSet);
         // Must return from here otherwise the only strong ref (everyonePersonSet above) goes out of
         // scope and the everyonePersonSet gets destroyed.
-        return d->everyonePersonSet.toStrongRef();
+        return Tp::SharedPtr<EveryonePersonSet>(d->everyonePersonSet);
     }
 
     return d->everyonePersonSet.toStrongRef();
@@ -122,24 +124,24 @@ PersonPtr PeopleManager::personForResource(const Nepomuk::Resource &resource)
 {
     // If the Nepomuk::Resource does not have a valid URI, then return a null Person.
     if (resource.resourceUri().isEmpty()) {
-        return QSharedPointer<Person>();
+        return PersonPtr();
     }
 
     // Look in the cache to see if the person exists already.
-    QWeakPointer<Person> weakPerson = d->personCache.value(resource.resourceUri());
-    if (!weakPerson.isNull() && weakPerson.data()->isValid()) {
+    Tp::WeakPtr<Person> weakPerson = d->personCache.value(resource.resourceUri());
+    if (!weakPerson.isNull() && weakPerson.toStrongRef()->isValid()) {
         return weakPerson.toStrongRef();
     }
 
     // Person is not in the cache. Create a new one and insert it into the cache
-    QSharedPointer<Person> person(new Person(resource));
+    PersonPtr person(new Person(resource));
 
     if (person->isValid()) {
         d->personCache.insert(resource.resourceUri(), person);
         return person;
     }
 
-    return QSharedPointer<Person>();
+    return PersonPtr();
 }
 
 

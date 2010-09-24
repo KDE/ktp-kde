@@ -36,9 +36,9 @@ public:
     static void personSetAddPerson(PersonSetPtr personSet, PersonPtr person);
     static void personSetRemovePerson(PersonSetPtr personSet, PersonPtr person);
     static void personSetRemovePerson(PersonSetPtr personSet, const QUrl &url);
-    static void entitySetValid(EntityPtr entity, bool valid);
-    static EntityPtr entityConstruct(const Nepomuk::Resource &resource);
-    static EntityPtr entityConstruct();
+    static void entitySetValid(Entity *entity, bool valid);
+    static Entity *entityConstruct(const Nepomuk::Resource &resource);
+    static Entity *entityConstruct();
 };
 
 }  // namespace KTelepathy
