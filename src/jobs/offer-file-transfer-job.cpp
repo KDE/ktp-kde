@@ -315,7 +315,7 @@ case Tp::FileTransferStateChangeReasonRemoteError:
     {
         case Tp::FileTransferStateNone:
             // This is bad
-            kWarning() << i18n("An error occourred.");
+            kWarning() << i18n("An error occurred.");
             q->setError(TelepathyBridge::InvalidOperationError);
             QTimer::singleShot(0, q, SLOT(__k__doEmitResult()));
         case Tp::FileTransferStateCompleted:
@@ -324,9 +324,9 @@ case Tp::FileTransferStateChangeReasonRemoteError:
             QTimer::singleShot(0, q, SLOT(__k__doEmitResult())); //TODO here?
             break;
         case Tp::FileTransferStateCancelled:
-            kWarning() << i18n("Transfer was cancelled.");
+            kWarning() << i18n("Transfer was canceled.");
             q->setError(TelepathyBridge::InvalidOperationError); //TODO
-            q->setErrorText(i18n("Transfer was cancelled."));
+            q->setErrorText(i18n("Transfer was canceled."));
             QTimer::singleShot(0, q, SLOT(__k__doEmitResult()));
             break;
         case Tp::FileTransferStatePending:
@@ -342,9 +342,9 @@ void OfferFileTransferJobPrivate::__k__onFileTransferChannelTransferredBytesChan
 {
     Q_Q(OfferFileTransferJob);
 
-    kDebug() << i18n("Tranferred bytes") << count << " - " << ((int) (((double) count / channel->size()) * 100)) << "%" << i18n("done");
+    kDebug() << i18n("Transferred bytes") << count << " - " << ((int) (((double) count / channel->size()) * 100)) << "%" << i18n("done");
     q->setProcessedAmount(KJob::Bytes, count);
-//    Q_EMIT q->infoMessage(q, i18n("Tranferred bytes"));
+//    Q_EMIT q->infoMessage(q, i18n("Transferred bytes"));
 }
 
 

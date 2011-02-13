@@ -278,7 +278,7 @@ void AbstractRequestChannelJobPrivate::__k__onRequestChannelFinished(Tp::Pending
                    << op->errorName()
                    << op->errorMessage();
         q->setError(KJob::UserDefinedError);
-        q->setErrorText(i18n("An error occourred requesting the channel."));
+        q->setErrorText(i18n("An error occurred requesting the channel."));
         QTimer::singleShot(0, q, SLOT(__k__doEmitResult()));
     }
 

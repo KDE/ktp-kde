@@ -238,7 +238,7 @@ void AbstractHandleChannelJobPrivate::__k__onHandleChannelFinished( Tp::PendingO
                    << op->errorName()
                    << op->errorMessage();
         q->setError(KJob::UserDefinedError);
-        q->setErrorText(i18n("An error occourred handling the channel."));
+        q->setErrorText(i18n("An error occurred handling the channel."));
     }
 
     //TODO methods to get nepomuk resources from the channel
