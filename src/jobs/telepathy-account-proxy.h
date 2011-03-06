@@ -38,7 +38,7 @@ class KDE_EXPORT TelepathyAccountProxy : public QObject
     Q_DECLARE_PRIVATE(TelepathyAccountProxy)
     Q_DISABLE_COPY(TelepathyAccountProxy)
 public:
-    TelepathyAccountProxy(const QString &path, const Tp::AccountManagerPtr &accountManager, QObject* parent = 0);
+    TelepathyAccountProxy(const Tp::AccountPtr& account, QObject* parent = 0);
     virtual ~TelepathyAccountProxy();
 
     bool isReady() const;
@@ -53,7 +53,7 @@ private:
     TelepathyAccountProxyPrivate * const d_ptr;
 
     Q_PRIVATE_SLOT(d_func(), void __k__onAccountReady(Tp::PendingOperation*))
-    Q_PRIVATE_SLOT(d_func(), void __k__onHaveConnectionChanged(bool))
+    Q_PRIVATE_SLOT(d_func(), void __k__onConnectionChanged(const Tp::ConnectionPtr&))
     Q_PRIVATE_SLOT(d_func(), void __k__onConnectionReady(Tp::PendingOperation*))
 };
 

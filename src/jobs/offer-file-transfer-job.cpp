@@ -16,6 +16,8 @@
 * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
+#define TP_QT4_ENABLE_LOWLEVEL_API
+
 #include "offer-file-transfer-job.h"
 #include "telepathy-base-job_p.h"
 #include "telepathy-bridge_p.h"
@@ -37,6 +39,7 @@
 #include <TelepathyQt4/PendingReady>
 #include <TelepathyQt4/Feature>
 #include <TelepathyQt4/ConnectionCapabilities>
+#include <TelepathyQt4/ConnectionLowlevel>
 
 namespace KTelepathy {
 
@@ -200,7 +203,7 @@ void OfferFileTransferJobPrivate::__k__offerFileTransferContact()
                 request.insert(QLatin1String(TELEPATHY_INTERFACE_CHANNEL_TYPE_FILE_TRANSFER ".ContentType"), QLatin1String("application/octet-stream"));
                 kDebug() << i18n("Request:") << request;
 
-                Tp::PendingChannel* pndChan = i.key()->account()->connection()->createChannel(request);
+                Tp::PendingChannel* pndChan = i.key()->account()->connection()->lowlevel()->createChannel(request);
                 q->connect(pndChan,
                            SIGNAL(finished(Tp::PendingOperation*)),
                            SLOT(__k__onFileTransferChannelCreated(Tp::PendingOperation*)));

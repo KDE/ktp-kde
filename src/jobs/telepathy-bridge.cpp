@@ -151,22 +151,22 @@ void TelepathyBridgePrivate::__k__onAccountManagerReady(Tp::PendingOperation* op
 
     // Account Manager is now ready. We should watch for any new accounts being created.
     q->connect(accountManager.data(),
-            SIGNAL(accountCreated(QString)),
-            SLOT(__k__onAccountCreated(QString)));
+            SIGNAL(newAccount(Tp::AccountPtr)),
+            SLOT(__k__onAccountCreated(Tp::AccountPtr)));
 
     // Take into account (ha ha) the accounts that already existed when the AM object became ready.
-    foreach (const QString &path, accountManager.data()->allAccountPaths()) {
-        __k__onAccountCreated(path);
+    foreach (const Tp::AccountPtr &account, accountManager->allAccounts()) {
+        __k__onAccountCreated(account);
     }
 
     // Hey, initialization finished
     Q_EMIT q->ready(true);
 }
 
-void TelepathyBridgePrivate::__k__onAccountCreated(const QString& path)
+void TelepathyBridgePrivate::__k__onAccountCreated(const Tp::AccountPtr& account)
 {
     Q_Q(TelepathyBridge);
-    accountProxies.append(new TelepathyAccountProxy(path, accountManager, q));
+    accountProxies.append(new TelepathyAccountProxy(account, q));
 }
 
 TelepathyAccountProxy* TelepathyBridgePrivate::accountProxyForAccount(const Nepomuk::IMAccount& imAccount) const

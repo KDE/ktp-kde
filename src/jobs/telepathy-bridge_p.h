@@ -47,7 +47,7 @@ public:
     QList< Nepomuk::PersonContact > contactsForMetaContact(const Nepomuk::Person &metacontact) const;
 
     void __k__onAccountManagerReady(Tp::PendingOperation* op);
-    void __k__onAccountCreated(const QString &path);
+    void __k__onAccountCreated(const Tp::AccountPtr& account);
 };
 
 } // namespace KTelepathy

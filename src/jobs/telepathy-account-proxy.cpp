@@ -36,18 +36,14 @@ class TelepathyAccountProxyPrivate
     TelepathyAccountProxy * const q_ptr;
 
 public:
-    TelepathyAccountProxyPrivate(const QString &p, const Tp::AccountManagerPtr &aM, TelepathyAccountProxy *parent)
+    TelepathyAccountProxyPrivate(const Tp::AccountPtr &acc, TelepathyAccountProxy *parent)
         : q_ptr(parent)
-        , path(p)
-        , accountManager(aM)
+        , account(acc)
         , ready(false)
     {
-        // We need to get the Tp::Account ready before we do any other stuff.
-        account = accountManager->accountForPath(path);
     }
     ~TelepathyAccountProxyPrivate() {}
 
-    QString path;
     Tp::AccountManagerPtr accountManager;
     Tp::AccountPtr account;
     Tp::ConnectionPtr connection;
@@ -56,7 +52,7 @@ public:
     void setReady(bool ready);
 
     void __k__onAccountReady(Tp::PendingOperation*);
-    void __k__onHaveConnectionChanged(bool);
+    void __k__onConnectionChanged(const Tp::ConnectionPtr&);
     void __k__onConnectionReady(Tp::PendingOperation*);
 };
 
@@ -68,7 +64,7 @@ void TelepathyAccountProxyPrivate::__k__onAccountReady(Tp::PendingOperation* op)
 {
     if (op->isError()) {
         kWarning() << "Account"
-                   << path
+                   << account->displayName()
                    << "cannot become ready:"
                    << op->errorName()
                    << "-"
@@ -81,17 +77,17 @@ void TelepathyAccountProxyPrivate::__k__onAccountReady(Tp::PendingOperation* op)
 
     // Connect to signals that indicate the account is online.
     q->connect(account.data(),
-               SIGNAL(haveConnectionChanged(bool)),
-               SLOT(__k__onHaveConnectionChanged(bool)));
+               SIGNAL(connectionChanged(Tp::ConnectionPtr)),
+               SLOT(__k__onConnectionChanged(Tp::ConnectionPtr)));
 
-    if (account.data()->haveConnection() && connection.isNull()) {
-        __k__onHaveConnectionChanged(true);
+    if (account->connection() && connection.isNull()) {
+        __k__onConnectionChanged(account->connection());
     }
 }
 
-void TelepathyAccountProxyPrivate::__k__onHaveConnectionChanged(bool haveConnection)
+void TelepathyAccountProxyPrivate::__k__onConnectionChanged(const Tp::ConnectionPtr& _connection)
 {
-    if (haveConnection) {
+    if (_connection) {
         // We now have a connection to the account. Get the connection ready to use.
         if (!connection.isNull()) {
             kWarning() << "Connection should be null, but is not :/ Do nowt.";
@@ -99,7 +95,7 @@ void TelepathyAccountProxyPrivate::__k__onHaveConnectionChanged(bool haveConnect
             return;
         }
 
-        connection = account->connection();
+        connection = _connection;
 
         Tp::Features features;
         features << Tp::Connection::FeatureCore
@@ -152,9 +148,9 @@ void TelepathyAccountProxyPrivate::setReady(bool r)
     }
 }
 
-TelepathyAccountProxy::TelepathyAccountProxy(const QString& path, const Tp::AccountManagerPtr& accountManager, QObject* parent)
+TelepathyAccountProxy::TelepathyAccountProxy(const Tp::AccountPtr& account, QObject* parent)
     : QObject(parent)
-    , d_ptr(new TelepathyAccountProxyPrivate(path, accountManager, this))
+    , d_ptr(new TelepathyAccountProxyPrivate(account, this))
 {
     Tp::Features features;
     features << Tp::Account::FeatureCore

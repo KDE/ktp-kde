@@ -746,7 +746,7 @@ private:
     TelepathyBridgePrivate * const d_ptr;
 
     Q_PRIVATE_SLOT(d_func(), void __k__onAccountManagerReady(Tp::PendingOperation*))
-    Q_PRIVATE_SLOT(d_func(), void __k__onAccountCreated(const QString &path))
+    Q_PRIVATE_SLOT(d_func(), void __k__onAccountCreated(const Tp::AccountPtr &account))
 
     friend class RemoveContactsFromGroupJobPrivate;
     friend class AddContactsToGroupJobPrivate;
