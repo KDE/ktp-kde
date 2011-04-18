@@ -152,11 +152,7 @@ const KIcon &Contact::presenceIcon() const
 
 QString Contact::presenceMessage() const
 {
-    if (d->imAccount.imStatusMessages().isEmpty()) {
-        return QString();
-    }
-
-    return d->imAccount.imStatusMessages().first();
+    return d->imAccount.imStatusMessage();
 }
 
 QString Contact::presenceName() const
@@ -220,7 +216,7 @@ void Contact::updateAvatar()
     kDebug() << "Attempt to build the avatar" << d->personContact.resourceUri();
     // Ok, now build the avatar
     d->avatar = QPixmap();
-    if (!d->personContact.avatarTokens().isEmpty()) {
+/*    if (!d->personContact.avatarTokens().isEmpty()) {
         // Load the image then
         if (!d->personContact.photos().isEmpty()) {
             if (!d->personContact.photos().first().interpretedAses().isEmpty()) {
@@ -235,6 +231,7 @@ void Contact::updateAvatar()
     }
 
     Q_EMIT avatarChanged(d->avatar);
+*/
 }
 
 void Contact::updateDisplayName()
@@ -251,19 +248,10 @@ void Contact::updatePresenceIcon()
 
     // FIXME: Use the correct way to calculate the presence state (not just the PresenceType enum)
 
-    // Now find out the current status.
-    QList<qint64> statusTypes = d->imAccount.statusTypes();
-
-    // If no presenceType set, then null KIcon.
-    if (statusTypes.size() == 0) {
-        d->presenceIcon = new KIcon();
-        return;
-    }
-
     // Get the presence type and set the icon appropriately from it.
     QString iconName;
 
-    switch (statusTypes.first()) {
+    switch (d->imAccount.statusType()) {
         case Tp::ConnectionPresenceTypeAvailable:
             iconName = QLatin1String("user-online");
             break;

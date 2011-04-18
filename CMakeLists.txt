@@ -4,7 +4,9 @@ set (CMAKE_MODULE_PATH
 )
 
 set(KDE_MIN_VERSION "4.4.75")
+set(SDO_MIN_VERSION "0.6.50")
 find_package (KDE4 4.4.75 REQUIRED)
+find_package (SharedDesktopOntologies ${SDO_MIN_VERSION} REQUIRED)
 find_package (TelepathyQt4 REQUIRED)
 find_package (Nepomuk REQUIRED)
 find_package (Soprano REQUIRED)
@@ -48,7 +50,7 @@ add_subdirectory (src)
 add_subdirectory (icons)
 
 if (KTelepathyTestLib_DIR)
-    add_subdirectory (tests)
+#    add_subdirectory (tests)
     add_subdirectory (tools)
 endif (KTelepathyTestLib_DIR)
 

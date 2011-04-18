@@ -119,13 +119,14 @@ Person::Person(const Nepomuk::Resource &pimoPerson)
             impcgoterm.setInverted(true);
             
             // now look for all buddies of the accounts
-            ComparisonTerm buddyTerm(Telepathy::isBuddyOf(),
+            ComparisonTerm buddyTerm(NCO::publishesPresenceTo(),
                                      impcgoterm);
             // set the name of the variable (i.e. the buddies) to be able to match it later
             buddyTerm.setVariableName(QLatin1String("t"));
+            buddyTerm.setInverted(true);
             
             // same comparison, other property, but use the same variable name to match them
-            ComparisonTerm ppterm(Telepathy::publishesPresenceTo(),
+            ComparisonTerm ppterm(NCO::publishesPresenceTo(),
                                   ResourceTypeTerm(NCO::IMAccount()));
             ppterm.setVariableName(QLatin1String("t"));
             
