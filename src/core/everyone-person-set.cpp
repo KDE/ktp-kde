@@ -81,48 +81,49 @@ EveryonePersonSet::EveryonePersonSet(const Nepomuk::Resource &mePimoPerson)
     {
         using namespace Nepomuk::Query;
         using namespace Nepomuk::Vocabulary;
-        // subquery to match grouding occurrences of me
-        ComparisonTerm goterm(PIMO::groundingOccurrence(),
-                              ResourceTerm(d->mePimoPerson));
-        goterm.setInverted(true);
 
-        // combine that with only nco:PersonContacts
-        AndTerm pcgoterm(ResourceTypeTerm(NCO::PersonContact()),
-                         goterm);
+        // Find grounding occurrences of ME
+        ComparisonTerm meGroundingOccurrencesTerm(PIMO::groundingOccurrence(),
+                                                  ResourceTerm(d->mePimoPerson));
+        meGroundingOccurrencesTerm.setInverted(true);
 
-        // now look for im accounts of those grounding occurrences (pcgoterm will become the subject of this comparison,
-        // thus the comparison will match the im accounts)
-        ComparisonTerm impcgoterm(NCO::hasIMAccount(),
-                                  pcgoterm);
-        impcgoterm.setInverted(true);
+        // Filter the grounding occurrences to include only those that are PersonContacts.
+        AndTerm mePersonContactsTerm(ResourceTypeTerm(NCO::PersonContact()),
+                                     meGroundingOccurrencesTerm);
 
-        // now look for all buddies of the accounts
-        ComparisonTerm buddyTerm(NCO::publishesPresenceTo(),
-                                 impcgoterm);
-        // set the name of the variable (i.e. the buddies) to be able to match it later
-        buddyTerm.setVariableName(QLatin1String("t"));
-        buddyTerm.setInverted(true);
+        // Find all the IMAccounts of these person contacts
+        ComparisonTerm meImAccountsTerm(NCO::hasIMAccount(),
+                                        mePersonContactsTerm);
+        meImAccountsTerm.setInverted(true);
 
-        // same comparison, other property, but use the same variable name to match them
-        ComparisonTerm ppterm(NCO::publishesPresenceTo(),
-                              ResourceTypeTerm(NCO::IMAccount()));
-        ppterm.setVariableName(QLatin1String("t"));
+        // Find all other-people's IM Accounts that are accessed by our IM Accounts.
+        ComparisonTerm isAccessedByTerm(NCO::isAccessedBy(),
+                                        meImAccountsTerm);
+        isAccessedByTerm.setVariableName(QLatin1String("t"));
 
-        // combine both to complete the matching of the im account ?account
-        AndTerm accountTerm(ResourceTypeTerm(NCO::IMAccount()),
-                            buddyTerm, ppterm);
+        // Only include the ones who publish their presence to us.
+        // FIXME: Do we want to do this filtering or should we be including everyone who there
+        //        is any connection with in this list, since it is the *Everyone*PersonSet?
+        ComparisonTerm publishesPresenceToTerm(NCO::publishesPresenceTo(),
+                                               meImAccountsTerm);
+        publishesPresenceToTerm.setVariableName(QLatin1String("t"));
 
-        // match the account and select it for the results
-        ComparisonTerm imaccountTerm(NCO::hasIMAccount(), accountTerm);
-        imaccountTerm.setVariableName(QLatin1String("account"));
+        // Ensure that the resource accessed through us are IM Accounts.
+        AndTerm themImAccountsTerm(ResourceTypeTerm(NCO::IMAccount()),
+                                   isAccessedByTerm,
+                                   publishesPresenceToTerm);
 
-        // the resulting person contact should be a grounding occurrence of something
-        ComparisonTerm isgoterm(PIMO::groundingOccurrence(),
-                                AndTerm(ResourceTypeTerm(NCO::PersonContact()), imaccountTerm));
+        // Get the PersonContact associated with that IM Account.
+        ComparisonTerm themPersonContactsTerm(NCO::hasIMAccount(), themImAccountsTerm);
 
-        // Get the pimo:person of which the imaccountTerm is the grounding occurence.
+        // Check that the PersonContact is a grounding occurrence of something.
+        ComparisonTerm themGroundingOccurrencesTerm(PIMO::groundingOccurrence(),
+                                                    AndTerm(ResourceTypeTerm(NCO::PersonContact()),
+                                                                             themPersonContactsTerm));
+
+        // Get the PIMO person which the PersonContact was a grounding occurrence of.
         Query query(AndTerm(ResourceTypeTerm(PIMO::Person()),
-                            isgoterm));
+                            themGroundingOccurrencesTerm));
 
         bool queryResult = d->query->query(query);
 
@@ -157,6 +158,7 @@ void EveryonePersonSet::onEntriesRemoved(const QList<QUrl> &entries)
     kDebug();
 
     foreach (const QUrl &entry, entries) {
+        kDebug() << entry;
         removePerson(entry);
     }
 }
