@@ -28,7 +28,7 @@
 
 #include <Nepomuk/Resource>
 
-class PersonSetTest : public Tp::NepomukTest
+class PersonSetTest : public NepomukTest
 {
     Q_OBJECT
 

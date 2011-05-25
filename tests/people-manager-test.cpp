@@ -37,7 +37,7 @@
 using namespace KTelepathy;
 
 PeopleManagerTest::PeopleManagerTest(QObject* parent)
-    : Tp::NepomukTest(parent)
+    : NepomukTest(parent)
 {
 
 }
@@ -124,7 +124,7 @@ void PeopleManagerTest::testPersonForResource()
     QCOMPARE(person1.data(), person4.data());
 
     // Check that clearing the cache works
-    Tp::WeakPtr<Person> weakPerson1 = Tp::WeakPtr<Person>(person1);
+    QWeakPointer<Person> weakPerson1 = QWeakPointer<Person>(person1.data());
     QVERIFY(!weakPerson1.isNull());
     person1.reset();
     QVERIFY(person1.isNull());
@@ -166,7 +166,7 @@ void PeopleManagerTest::testEveryone()
     QCOMPARE(personSet.data(), everyonePersonSet.data());
 
     // Check the cache gets cleared properly
-    Tp::WeakPtr<PersonSet> weakPtr = Tp::WeakPtr<PersonSet>(everyonePersonSet);
+    QWeakPointer<PersonSet> weakPtr = QWeakPointer<PersonSet>(everyonePersonSet.data());
     everyonePersonSet.reset();
     personSet.reset();
 

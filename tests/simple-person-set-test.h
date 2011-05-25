@@ -28,7 +28,7 @@
 
 #include <QtCore/QUrl>
 
-class SimplePersonSetTest : public Tp::NepomukTest
+class SimplePersonSetTest : public NepomukTest
 {
     Q_OBJECT
 
