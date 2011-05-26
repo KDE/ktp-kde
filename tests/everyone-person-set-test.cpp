@@ -1,7 +1,7 @@
 /*
  * This file is part of libktelepathy
  *
- * Copyright (C) 2010 Collabora Ltd. <info@collabora.co.uk>
+ * Copyright (C) 2010-2011 Collabora Ltd. <info@collabora.co.uk>
  *   @author George Goldberg <george.goldberg@collabora.co.uk>
  *
  * This library is free software; you can redistribute it and/or
@@ -334,33 +334,6 @@ void EveryonePersonSetTest::testAddRemove()
                this,
                SLOT(addRemoveOnPersonRemoved4(KTelepathy::PersonPtr)));
 
-    // Break the publishesPresenceTo relationship
-    imaccount4.removeProperty(Nepomuk::Vocabulary::NCO::publishesPresenceTo(), meIMAccount);
-    QCOMPARE(imaccount4.properties().count(Nepomuk::Vocabulary::NCO::publishesPresenceTo()), 0);
-
-    // Connect to the signals
-    connect(m_addRemovePersonSet.data(),
-            SIGNAL(personAdded(KTelepathy::PersonPtr)),
-            SLOT(addRemoveOnPersonAdded5(KTelepathy::PersonPtr)));
-    connect(m_addRemovePersonSet.data(),
-            SIGNAL(personRemoved(KTelepathy::PersonPtr)),
-            SLOT(addRemoveOnPersonRemoved5(KTelepathy::PersonPtr)));
-
-    // Launch the mainloop
-    mLoop->exec();
-
-    QCOMPARE(m_addRemovePersonSet->people().size(), 1);
-
-    // Disconnect the signals from part three of the test.
-    disconnect(m_addRemovePersonSet.data(),
-               SIGNAL(personAdded(KTelepathy::PersonPtr)),
-               this,
-               SLOT(addRemoveOnPersonAdded5(KTelepathy::PersonPtr)));
-    disconnect(m_addRemovePersonSet.data(),
-               SIGNAL(personRemoved(KTelepathy::PersonPtr)),
-               this,
-               SLOT(addRemoveOnPersonRemoved5(KTelepathy::PersonPtr)));
-
     // Re-add the isBuddyOf relationship
     imaccount1.addProperty(Nepomuk::Vocabulary::NCO::isAccessedBy(), meIMAccount);
     QCOMPARE(imaccount1.properties().count(Nepomuk::Vocabulary::NCO::isAccessedBy()), 1);
@@ -376,7 +349,7 @@ void EveryonePersonSetTest::testAddRemove()
     // Launch the mainloop
     mLoop->exec();
 
-    QCOMPARE(m_addRemovePersonSet->people().size(), 2);
+    QCOMPARE(m_addRemovePersonSet->people().size(), 3);
 
     // Disconnect the signals from part three of the test.
     disconnect(m_addRemovePersonSet.data(),
@@ -387,33 +360,6 @@ void EveryonePersonSetTest::testAddRemove()
                SIGNAL(personRemoved(KTelepathy::PersonPtr)),
                this,
                SLOT(addRemoveOnPersonRemoved6(KTelepathy::PersonPtr)));
-
-    // Re-add the publishesPresenceTo relationship
-    imaccount4.addProperty(Nepomuk::Vocabulary::NCO::publishesPresenceTo(), meIMAccount);
-    QCOMPARE(imaccount4.properties().count(Nepomuk::Vocabulary::NCO::publishesPresenceTo()), 1);
-
-    // Connect to the signals
-    connect(m_addRemovePersonSet.data(),
-            SIGNAL(personAdded(KTelepathy::PersonPtr)),
-            SLOT(addRemoveOnPersonAdded7(KTelepathy::PersonPtr)));
-    connect(m_addRemovePersonSet.data(),
-            SIGNAL(personRemoved(KTelepathy::PersonPtr)),
-            SLOT(addRemoveOnPersonRemoved7(KTelepathy::PersonPtr)));
-
-    // Launch the mainloop
-    mLoop->exec();
-
-    QCOMPARE(m_addRemovePersonSet->people().size(), 3);
-
-    // Disconnect the signals from part three of the test.
-    disconnect(m_addRemovePersonSet.data(),
-               SIGNAL(personAdded(KTelepathy::PersonPtr)),
-               this,
-               SLOT(addRemoveOnPersonAdded7(KTelepathy::PersonPtr)));
-    disconnect(m_addRemovePersonSet.data(),
-               SIGNAL(personRemoved(KTelepathy::PersonPtr)),
-               this,
-               SLOT(addRemoveOnPersonRemoved7(KTelepathy::PersonPtr)));
 
     // Cleanup
     m_addRemovePersonSet.reset();

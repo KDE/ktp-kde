@@ -1,7 +1,7 @@
 /*
  * This file is part of libktelepathy
  *
- * Copyright (C) 2010 Collabora Ltd. <info@collabora.co.uk>
+ * Copyright (C) 2010-2011 Collabora Ltd. <info@collabora.co.uk>
  *   @author George Goldberg <george.goldberg@collabora.co.uk>
  *
  * This library is free software; you can redistribute it and/or
@@ -97,21 +97,16 @@ EveryonePersonSet::EveryonePersonSet(const Nepomuk::Resource &mePimoPerson)
         meImAccountsTerm.setInverted(true);
 
         // Find all other-people's IM Accounts that are accessed by our IM Accounts.
+        // We include everyone in this query, no matter whether there are presence publishing
+        // links or not, because this PersonSet is the central PersonSet for all Telepathy enabled
+        // people. It can be filtered later by proxy models.
         ComparisonTerm isAccessedByTerm(NCO::isAccessedBy(),
                                         meImAccountsTerm);
         isAccessedByTerm.setVariableName(QLatin1String("t"));
 
-        // Only include the ones who publish their presence to us.
-        // FIXME: Do we want to do this filtering or should we be including everyone who there
-        //        is any connection with in this list, since it is the *Everyone*PersonSet?
-        ComparisonTerm publishesPresenceToTerm(NCO::publishesPresenceTo(),
-                                               meImAccountsTerm);
-        publishesPresenceToTerm.setVariableName(QLatin1String("t"));
-
         // Ensure that the resource accessed through us are IM Accounts.
         AndTerm themImAccountsTerm(ResourceTypeTerm(NCO::IMAccount()),
-                                   isAccessedByTerm,
-                                   publishesPresenceToTerm);
+                                   isAccessedByTerm);
 
         // Get the PersonContact associated with that IM Account.
         ComparisonTerm themPersonContactsTerm(NCO::hasIMAccount(), themImAccountsTerm);
