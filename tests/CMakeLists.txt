@@ -137,7 +137,7 @@ add_ktelepathy_nepomuk_test (SimplePersonSetTest
 #                      fake-person.cpp
 #                      fake-person-set.cpp
 # )
-# 
+#
 # target_link_libraries (person-set-model-test
 #                        ${KTELEPATHYTESTLIB_LIBRARIES}
 #                        ${QT_LIBRARIES}
@@ -150,7 +150,7 @@ add_ktelepathy_nepomuk_test (SimplePersonSetTest
 #                        ontologies
 #                        modeltest
 # )
-# 
+#
 # add_ktelepathy_nepomuk_test (PersonSetModelTest
 #                              ${CMAKE_CURRENT_BINARY_DIR}/person-set-model-test
 # )
