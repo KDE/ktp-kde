@@ -37,11 +37,17 @@ class KDE_EXPORT PersonSetModel : public QAbstractItemModel
 public:
     enum {
         PersonRole = Qt::UserRole,
+        ItemTypeRole,
         GroupsRole,
         CapabilitiesRole,
         AvatarRole,
         PresenceNameRole,
         PresenceMessageRole,
+    };
+
+    enum ItemType {
+        PersonType,
+        CustomType,
     };
 
     explicit PersonSetModel(QObject *parent = 0);
@@ -80,6 +86,7 @@ private:
 }  // Namespace KTelepathy
 
 Q_DECLARE_METATYPE(QSet<QString>);
+Q_DECLARE_METATYPE(KTelepathy::PersonSetModel::ItemType);
 
 
 #endif // LIBKTELEPATHY_PERSON_SET_MODEL_H

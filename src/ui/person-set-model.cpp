@@ -169,6 +169,9 @@ QVariant PersonSetModel::data(const QModelIndex &index, int role) const
     case PersonSetModel::PersonRole:
         data.setValue<PersonPtr>(item->person);
         break;
+    case PersonSetModel::ItemTypeRole:
+        data.setValue(PersonSetModel::PersonType);
+        break;
     case PersonSetModel::GroupsRole:
         data.setValue<QSet<QString> >(item->person->groups());
         break;
