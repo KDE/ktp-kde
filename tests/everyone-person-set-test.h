@@ -29,7 +29,7 @@
 
 #include <Nepomuk/Resource>
 
-class EveryonePersonSetTest : public Tp::NepomukTest
+class EveryonePersonSetTest : public NepomukTest
 {
     Q_OBJECT
 

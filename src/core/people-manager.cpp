@@ -51,11 +51,11 @@ public:
 
     PeopleManager * const q;
 
-    Tp::WeakPtr<EveryonePersonSet> everyonePersonSet;
+    QWeakPointer<EveryonePersonSet> everyonePersonSet;
 
     Nepomuk::Resource mePimoPerson;
 
-    QHash<QUrl, Tp::WeakPtr<Person> > personCache;
+    QHash<QUrl, QWeakPointer<Person> > personCache;
 
 };
 
@@ -111,13 +111,13 @@ PersonSetPtr PeopleManager::everyone()
 
     if (d->everyonePersonSet.isNull()) {
         Tp::SharedPtr<EveryonePersonSet> everyonePersonSet(new EveryonePersonSet(d->mePimoPerson));
-        d->everyonePersonSet = Tp::WeakPtr<EveryonePersonSet>(everyonePersonSet);
+        d->everyonePersonSet = QWeakPointer<EveryonePersonSet>(everyonePersonSet.data());
         // Must return from here otherwise the only strong ref (everyonePersonSet above) goes out of
         // scope and the everyonePersonSet gets destroyed.
         return Tp::SharedPtr<EveryonePersonSet>(d->everyonePersonSet);
     }
 
-    return d->everyonePersonSet.toStrongRef();
+    return Tp::SharedPtr<EveryonePersonSet>(d->everyonePersonSet);
 }
 
 PersonPtr PeopleManager::personForResource(const Nepomuk::Resource &resource)
@@ -128,16 +128,16 @@ PersonPtr PeopleManager::personForResource(const Nepomuk::Resource &resource)
     }
 
     // Look in the cache to see if the person exists already.
-    Tp::WeakPtr<Person> weakPerson = d->personCache.value(resource.resourceUri());
-    if (!weakPerson.isNull() && weakPerson.toStrongRef()->isValid()) {
-        return weakPerson.toStrongRef();
+    QWeakPointer<Person> weakPerson = d->personCache.value(resource.resourceUri());
+    if (!weakPerson.isNull() && weakPerson.data()->isValid()) {
+        return Tp::SharedPtr<Person>(weakPerson);
     }
 
     // Person is not in the cache. Create a new one and insert it into the cache
     PersonPtr person(new Person(resource));
 
     if (person->isValid()) {
-        d->personCache.insert(resource.resourceUri(), person);
+        d->personCache.insert(resource.resourceUri(), QWeakPointer<Person>(person.data()));
         return person;
     }
 

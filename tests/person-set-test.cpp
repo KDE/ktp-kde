@@ -38,7 +38,7 @@
 using namespace KTelepathy;
 
 PersonSetTest::PersonSetTest(QObject* parent)
-    : Tp::NepomukTest(parent)
+    : NepomukTest(parent)
 {
 
 }
@@ -64,7 +64,7 @@ void PersonSetTest::testConstructorDestructorCreate()
     QVERIFY(!personSet.isNull());
 
     // Get a QWeakPointer to it, for testing destruction.
-    Tp::WeakPtr<PersonSet> weakPtr = Tp::WeakPtr<PersonSet>(personSet);
+    QWeakPointer<PersonSet> weakPtr = QWeakPointer<PersonSet>(personSet.data());
 
     // Remove the only strong ref.
     personSet.reset();

@@ -1,7 +1,7 @@
 /*
  * This file is part of libktelepathy
  *
- * Copyright (C) 2010 Collabora Ltd. <info@collabora.co.uk>
+ * Copyright (C) 2010-2011 Collabora Ltd. <info@collabora.co.uk>
  *   @author George Goldberg <george.goldberg@collabora.co.uk>
  *
  * This library is free software; you can redistribute it and/or
@@ -39,7 +39,7 @@
 using namespace KTelepathy;
 
 EveryonePersonSetTest::EveryonePersonSetTest(QObject* parent)
-    : Tp::NepomukTest(parent)
+    : NepomukTest(parent)
 {
 
 }
@@ -174,20 +174,20 @@ void EveryonePersonSetTest::testAddRemove()
     QCOMPARE(mePersonContact.properties().count(Nepomuk::Vocabulary::NCO::hasIMAccount()), 1);
 
     // Create all the relationships between people etc
-    imaccount1.addProperty(Nepomuk::Vocabulary::Telepathy::isBuddyOf(), meIMAccount);
-    imaccount1.addProperty(Nepomuk::Vocabulary::Telepathy::publishesPresenceTo(), meIMAccount);
-    QCOMPARE(imaccount1.properties().count(Nepomuk::Vocabulary::Telepathy::isBuddyOf()), 1);
-    QCOMPARE(imaccount1.properties().count(Nepomuk::Vocabulary::Telepathy::publishesPresenceTo()), 1);
+    imaccount1.addProperty(Nepomuk::Vocabulary::NCO::isAccessedBy(), meIMAccount);
+    imaccount1.addProperty(Nepomuk::Vocabulary::NCO::publishesPresenceTo(), meIMAccount);
+    QCOMPARE(imaccount1.properties().count(Nepomuk::Vocabulary::NCO::isAccessedBy()), 1);
+    QCOMPARE(imaccount1.properties().count(Nepomuk::Vocabulary::NCO::publishesPresenceTo()), 1);
 
-    imaccount2.addProperty(Nepomuk::Vocabulary::Telepathy::isBuddyOf(), meIMAccount);
-    imaccount2.addProperty(Nepomuk::Vocabulary::Telepathy::publishesPresenceTo(), meIMAccount);
-    QCOMPARE(imaccount2.properties().count(Nepomuk::Vocabulary::Telepathy::isBuddyOf()), 1);
-    QCOMPARE(imaccount2.properties().count(Nepomuk::Vocabulary::Telepathy::publishesPresenceTo()), 1);
+    imaccount2.addProperty(Nepomuk::Vocabulary::NCO::isAccessedBy(), meIMAccount);
+    imaccount2.addProperty(Nepomuk::Vocabulary::NCO::publishesPresenceTo(), meIMAccount);
+    QCOMPARE(imaccount2.properties().count(Nepomuk::Vocabulary::NCO::isAccessedBy()), 1);
+    QCOMPARE(imaccount2.properties().count(Nepomuk::Vocabulary::NCO::publishesPresenceTo()), 1);
 
-    imaccount3.addProperty(Nepomuk::Vocabulary::Telepathy::isBuddyOf(), meIMAccount);
-    imaccount3.addProperty(Nepomuk::Vocabulary::Telepathy::publishesPresenceTo(), meIMAccount);
-    QCOMPARE(imaccount3.properties().count(Nepomuk::Vocabulary::Telepathy::isBuddyOf()), 1);
-    QCOMPARE(imaccount3.properties().count(Nepomuk::Vocabulary::Telepathy::publishesPresenceTo()), 1);
+    imaccount3.addProperty(Nepomuk::Vocabulary::NCO::isAccessedBy(), meIMAccount);
+    imaccount3.addProperty(Nepomuk::Vocabulary::NCO::publishesPresenceTo(), meIMAccount);
+    QCOMPARE(imaccount3.properties().count(Nepomuk::Vocabulary::NCO::isAccessedBy()), 1);
+    QCOMPARE(imaccount3.properties().count(Nepomuk::Vocabulary::NCO::publishesPresenceTo()), 1);
 
     // Get the People Manager instance
     PeopleManager *pm = PeopleManager::instance();
@@ -250,10 +250,10 @@ void EveryonePersonSetTest::testAddRemove()
     contact4.addProperty(Nepomuk::Vocabulary::NCO::hasIMAccount(), imaccount4);
     QCOMPARE(contact4.properties().count(Nepomuk::Vocabulary::NCO::hasIMAccount()), 1);
 
-    imaccount4.addProperty(Nepomuk::Vocabulary::Telepathy::isBuddyOf(), meIMAccount);
-    imaccount4.addProperty(Nepomuk::Vocabulary::Telepathy::publishesPresenceTo(), meIMAccount);
-    QCOMPARE(imaccount4.properties().count(Nepomuk::Vocabulary::Telepathy::isBuddyOf()), 1);
-    QCOMPARE(imaccount4.properties().count(Nepomuk::Vocabulary::Telepathy::publishesPresenceTo()), 1);
+    imaccount4.addProperty(Nepomuk::Vocabulary::NCO::isAccessedBy(), meIMAccount);
+    imaccount4.addProperty(Nepomuk::Vocabulary::NCO::publishesPresenceTo(), meIMAccount);
+    QCOMPARE(imaccount4.properties().count(Nepomuk::Vocabulary::NCO::isAccessedBy()), 1);
+    QCOMPARE(imaccount4.properties().count(Nepomuk::Vocabulary::NCO::publishesPresenceTo()), 1);
 
     // Connect to the signals
     connect(m_addRemovePersonSet.data(),
@@ -279,6 +279,7 @@ void EveryonePersonSetTest::testAddRemove()
                SLOT(addRemoveOnPersonRemoved2(KTelepathy::PersonPtr)));
 
     // Next, remove a person from Nepomuk to see if it picks it up.
+    QCOMPARE(m_addRemovePerson2.resourceUri(), QUrl::fromEncoded("nepomuk:/addRemove-test-2"));
     m_addRemovePerson2.remove();
     QVERIFY(!m_addRemovePerson2.exists());
 
@@ -306,9 +307,9 @@ void EveryonePersonSetTest::testAddRemove()
                SLOT(addRemoveOnPersonRemoved3(KTelepathy::PersonPtr)));
 
     // Break the isBuddyOf relationship
-    //imaccount1.removeProperty(Nepomuk::Vocabulary::Telepathy::isBuddyOf(), meIMAccount);
-    imaccount1.removeProperty(Nepomuk::Vocabulary::Telepathy::isBuddyOf());
-    QCOMPARE(imaccount1.properties().count(Nepomuk::Vocabulary::Telepathy::isBuddyOf()), 0);
+    //imaccount1.removeProperty(Nepomuk::Vocabulary::NCO::isAccessedBy(), meIMAccount);
+    imaccount1.removeProperty(Nepomuk::Vocabulary::NCO::isAccessedBy());
+    QCOMPARE(imaccount1.properties().count(Nepomuk::Vocabulary::NCO::isAccessedBy()), 0);
 
     // Connect to the signals
     connect(m_addRemovePersonSet.data(),
@@ -333,36 +334,9 @@ void EveryonePersonSetTest::testAddRemove()
                this,
                SLOT(addRemoveOnPersonRemoved4(KTelepathy::PersonPtr)));
 
-    // Break the publishesPresenceTo relationship
-    imaccount4.removeProperty(Nepomuk::Vocabulary::Telepathy::publishesPresenceTo(), meIMAccount);
-    QCOMPARE(imaccount4.properties().count(Nepomuk::Vocabulary::Telepathy::publishesPresenceTo()), 0);
-
-    // Connect to the signals
-    connect(m_addRemovePersonSet.data(),
-            SIGNAL(personAdded(KTelepathy::PersonPtr)),
-            SLOT(addRemoveOnPersonAdded5(KTelepathy::PersonPtr)));
-    connect(m_addRemovePersonSet.data(),
-            SIGNAL(personRemoved(KTelepathy::PersonPtr)),
-            SLOT(addRemoveOnPersonRemoved5(KTelepathy::PersonPtr)));
-
-    // Launch the mainloop
-    mLoop->exec();
-
-    QCOMPARE(m_addRemovePersonSet->people().size(), 1);
-
-    // Disconnect the signals from part three of the test.
-    disconnect(m_addRemovePersonSet.data(),
-               SIGNAL(personAdded(KTelepathy::PersonPtr)),
-               this,
-               SLOT(addRemoveOnPersonAdded5(KTelepathy::PersonPtr)));
-    disconnect(m_addRemovePersonSet.data(),
-               SIGNAL(personRemoved(KTelepathy::PersonPtr)),
-               this,
-               SLOT(addRemoveOnPersonRemoved5(KTelepathy::PersonPtr)));
-
     // Re-add the isBuddyOf relationship
-    imaccount1.addProperty(Nepomuk::Vocabulary::Telepathy::isBuddyOf(), meIMAccount);
-    QCOMPARE(imaccount1.properties().count(Nepomuk::Vocabulary::Telepathy::isBuddyOf()), 1);
+    imaccount1.addProperty(Nepomuk::Vocabulary::NCO::isAccessedBy(), meIMAccount);
+    QCOMPARE(imaccount1.properties().count(Nepomuk::Vocabulary::NCO::isAccessedBy()), 1);
 
     // Connect to the signals
     connect(m_addRemovePersonSet.data(),
@@ -375,7 +349,7 @@ void EveryonePersonSetTest::testAddRemove()
     // Launch the mainloop
     mLoop->exec();
 
-    QCOMPARE(m_addRemovePersonSet->people().size(), 2);
+    QCOMPARE(m_addRemovePersonSet->people().size(), 3);
 
     // Disconnect the signals from part three of the test.
     disconnect(m_addRemovePersonSet.data(),
@@ -387,33 +361,6 @@ void EveryonePersonSetTest::testAddRemove()
                this,
                SLOT(addRemoveOnPersonRemoved6(KTelepathy::PersonPtr)));
 
-    // Re-add the publishesPresenceTo relationship
-    imaccount4.addProperty(Nepomuk::Vocabulary::Telepathy::publishesPresenceTo(), meIMAccount);
-    QCOMPARE(imaccount4.properties().count(Nepomuk::Vocabulary::Telepathy::publishesPresenceTo()), 1);
-
-    // Connect to the signals
-    connect(m_addRemovePersonSet.data(),
-            SIGNAL(personAdded(KTelepathy::PersonPtr)),
-            SLOT(addRemoveOnPersonAdded7(KTelepathy::PersonPtr)));
-    connect(m_addRemovePersonSet.data(),
-            SIGNAL(personRemoved(KTelepathy::PersonPtr)),
-            SLOT(addRemoveOnPersonRemoved7(KTelepathy::PersonPtr)));
-
-    // Launch the mainloop
-    mLoop->exec();
-
-    QCOMPARE(m_addRemovePersonSet->people().size(), 3);
-
-    // Disconnect the signals from part three of the test.
-    disconnect(m_addRemovePersonSet.data(),
-               SIGNAL(personAdded(KTelepathy::PersonPtr)),
-               this,
-               SLOT(addRemoveOnPersonAdded7(KTelepathy::PersonPtr)));
-    disconnect(m_addRemovePersonSet.data(),
-               SIGNAL(personRemoved(KTelepathy::PersonPtr)),
-               this,
-               SLOT(addRemoveOnPersonRemoved7(KTelepathy::PersonPtr)));
-
     // Cleanup
     m_addRemovePersonSet.reset();
 
@@ -423,6 +370,7 @@ void EveryonePersonSetTest::testAddRemove()
     m_addRemovePerson1.remove();
     m_addRemovePerson3.remove();
     m_addRemovePerson4.remove();
+
 }
 
 void EveryonePersonSetTest::addRemoveOnPersonAdded1(const PersonPtr &person)

@@ -107,47 +107,48 @@ Person::Person(const Nepomuk::Resource &pimoPerson)
             ComparisonTerm goterm(PIMO::groundingOccurrence(),
                                   ResourceTerm(d->mePimoPerson));
             goterm.setInverted(true);
-            
+
             // combine that with only nco:PersonContacts
             AndTerm pcgoterm(ResourceTypeTerm(NCO::PersonContact()),
                              goterm);
-            
+
             // now look for im accounts of those grounding occurrences (pcgoterm will become the subject of this comparison,
             // thus the comparison will match the im accounts)
             ComparisonTerm impcgoterm(NCO::hasIMAccount(),
                                       pcgoterm);
             impcgoterm.setInverted(true);
-            
+
             // now look for all buddies of the accounts
-            ComparisonTerm buddyTerm(Telepathy::isBuddyOf(),
+            ComparisonTerm buddyTerm(NCO::publishesPresenceTo(),
                                      impcgoterm);
             // set the name of the variable (i.e. the buddies) to be able to match it later
             buddyTerm.setVariableName(QLatin1String("t"));
-            
+            buddyTerm.setInverted(true);
+
             // same comparison, other property, but use the same variable name to match them
-            ComparisonTerm ppterm(Telepathy::publishesPresenceTo(),
+            ComparisonTerm ppterm(NCO::publishesPresenceTo(),
                                   ResourceTypeTerm(NCO::IMAccount()));
             ppterm.setVariableName(QLatin1String("t"));
-            
+
             // combine both to complete the matching of the im account ?account
             AndTerm accountTerm(ResourceTypeTerm(NCO::IMAccount()),
                                 buddyTerm, ppterm);
-            
+
             // match the account and select it for the results
             ComparisonTerm imaccountTerm(NCO::hasIMAccount(), accountTerm);
             imaccountTerm.setVariableName(QLatin1String("account"));
-            
+
             // and finally only include those contacts that are a grounding occurrence of this PIMO:Person
             ComparisonTerm personTerm(PIMO::groundingOccurrence(),
                                       ResourceTerm(d->pimoPerson));
             personTerm.setInverted(true);
-            
+
             // and all combined
             Query query(AndTerm(ResourceTypeTerm(Nepomuk::Vocabulary::NCO::PersonContact()),
                                 imaccountTerm, personTerm));
-            
+
             bool queryResult = d->query->query(query);
-            
+
             if (!queryResult) {
                 kWarning() << "Failed to query the Nepomuk database. QueryServiceClient may not be running";
             }

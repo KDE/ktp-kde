@@ -24,7 +24,7 @@
 
 #include <KTelepathy/TestLib/NepomukTest>
 
-class EntityTest : public Tp::NepomukTest
+class EntityTest : public NepomukTest
 {
     Q_OBJECT
 
