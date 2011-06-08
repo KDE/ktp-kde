@@ -198,7 +198,7 @@ void Contact::onStatementAdded(const Soprano::Statement& statement)
             return;
         }
 
-        kWarning() << "Unrecognised statement added to IMAccount.";
+        kWarning() << "Unrecognised statement added to IMAccount:" << predicate.uri();
         return;
     }
 
