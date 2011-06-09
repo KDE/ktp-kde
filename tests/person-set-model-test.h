@@ -28,7 +28,7 @@
 
 #include "modeltest.h"
 
-class PersonSetModelTest : public Tp::NepomukTest
+class PersonSetModelTest : public NepomukTest
 {
     Q_OBJECT
 

@@ -35,7 +35,7 @@
 using namespace KTelepathy;
 
 PersonSetModelTest::PersonSetModelTest(QObject* parent)
-    : Tp::NepomukTest(parent)
+    : NepomukTest(parent)
 {
 
 }
