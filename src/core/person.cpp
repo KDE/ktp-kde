@@ -1,7 +1,7 @@
 /*
  * This file is part of libktelepathy
  *
- * Copyright (C) 2010 Collabora Ltd. <info@collabora.co.uk>
+ * Copyright (C) 2010-2011 Collabora Ltd. <info@collabora.co.uk>
  *   @author George Goldberg <george.goldberg@collabora.co.uk>
  *
  * This library is free software; you can redistribute it and/or
@@ -70,6 +70,7 @@ public:
     KIcon *presenceIcon;
     QString presenceName;
     QString presenceMessage;
+    uint presenceType;
 };
 
 
@@ -215,6 +216,9 @@ void Person::onContactAdded(const KTelepathy::ContactPtr &contact)
     connect(contact.data(),
             SIGNAL(presenceNameChanged(QString)),
             SLOT(updatePresenceName()));
+    connect(contact.data(),
+            SIGNAL(presenceTypeChange(uint)),
+            SLOT(updatePresenceType()));
 
     // Update all the properties of the Person.
     updateAvatar();
@@ -224,6 +228,7 @@ void Person::onContactAdded(const KTelepathy::ContactPtr &contact)
     updatePresenceIcon();
     updatePresenceMessage();
     updatePresenceName();
+    updatePresenceType();
 }
 
 void Person::onContactRemoved(const KTelepathy::ContactPtr &contact)
@@ -236,6 +241,7 @@ void Person::onContactRemoved(const KTelepathy::ContactPtr &contact)
     disconnect(contact.data(), SLOT(updatePresenceIcon()));
     disconnect(contact.data(), SLOT(updatePresenceMessage()));
     disconnect(contact.data(), SLOT(updatePresenceName()));
+    disconnect(contact.data(), SLOT(updatePresenceType()));
 
     // Update all the properties of the Person.
     updateAvatar();
@@ -245,6 +251,7 @@ void Person::onContactRemoved(const KTelepathy::ContactPtr &contact)
     updatePresenceIcon();
     updatePresenceMessage();
     updatePresenceName();
+    updatePresenceType();
 }
 
 // FIXME: Use flags instead of a bool for withOverlay?
@@ -281,6 +288,11 @@ QString Person::presenceMessage() const
 QString Person::presenceName() const
 {
     return d->presenceName;
+}
+
+uint Person::presenceType() const
+{
+    return d->presenceType;
 }
 
 void Person::updateAvatar()
@@ -411,6 +423,17 @@ void Person::updatePresenceName()
 
     // FIXME: Only emit this signal if the presenceIcon has actually changed.
     Q_EMIT presenceNameChanged(d->presenceName);
+}
+
+void Person::updatePresenceType()
+{
+    // FIXME: Choose sensibly.
+    Q_FOREACH (ContactPtr contact, contacts()) {
+        d->presenceType = contact->presenceType();
+    }
+
+    // FIXME: Only emit this signal if the presenceIcon has actually changed.
+    Q_EMIT presenceTypeChanged(d->presenceType);
 }
 
 uint qHash(const PersonPtr &key) {

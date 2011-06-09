@@ -1,7 +1,7 @@
 /*
  * This file is part of libktelepathy
  *
- * Copyright (C) 2010 Collabora Ltd. <info@collabora.co.uk>
+ * Copyright (C) 2010-2011 Collabora Ltd. <info@collabora.co.uk>
  *   @author George Goldberg <george.goldberg@collabora.co.uk>
  *
  * This library is free software; you can redistribute it and/or
@@ -158,6 +158,11 @@ QString Contact::presenceMessage() const
 QString Contact::presenceName() const
 {
     return d->imAccount.imStatus();
+}
+
+uint Contact::presenceType() const
+{
+    return d->imAccount.statusType();
 }
 
 

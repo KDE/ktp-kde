@@ -1,7 +1,7 @@
 /*
  * This file is part of telepathy-contactslist-prototype
  *
- * Copyright (C) 2010 Collabora Ltd. <info@collabora.co.uk>
+ * Copyright (C) 2010-2011 Collabora Ltd. <info@collabora.co.uk>
  *   @Author George Goldberg <george.goldberg@collabora.co.uk>
  *
  * This library is free software; you can redistribute it and/or
@@ -186,6 +186,9 @@ QVariant PersonSetModel::data(const QModelIndex &index, int role) const
         break;
     case PersonSetModel::PresenceNameRole:
         data.setValue<QString>(item->person->presenceName());
+        break;
+    case PersonSetModel::PresenceTypeRole:
+        data.setValue<QString>(item->person->presenceType());
         break;
     default:
         break;

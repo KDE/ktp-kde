@@ -1,7 +1,7 @@
 /*
  * This file is part of telepathy-contactslist-prototype
  *
- * Copyright (C) 2010 Collabora Ltd. <info@collabora.co.uk>
+ * Copyright (C) 2010-2011 Collabora Ltd. <info@collabora.co.uk>
  *   @Author George Goldberg <george.goldberg@collabora.co.uk>
  *
  * This library is free software; you can redistribute it and/or
@@ -43,6 +43,7 @@ public:
         AvatarRole,
         PresenceNameRole,
         PresenceMessageRole,
+        PresenceTypeRole,
     };
 
     enum ItemType {

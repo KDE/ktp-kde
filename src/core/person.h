@@ -1,7 +1,7 @@
 /*
  * This file is part of libktelepathy
  *
- * Copyright (C) 2010 Collabora Ltd. <info@collabora.co.uk>
+ * Copyright (C) 2010-2011 Collabora Ltd. <info@collabora.co.uk>
  *   @author George Goldberg <george.goldberg@collabora.co.uk>
  *
  * This library is free software; you can redistribute it and/or
@@ -97,6 +97,11 @@ public:
      */
     QString presenceName() const;
 
+    /**
+     * Returns the presence type (integer)
+     */
+    uint presenceType() const;
+
 protected:
     /**
      * Constrcutor is protected because only PeopleManager should directly create Person objects.
@@ -117,6 +122,7 @@ Q_SIGNALS:
     void presenceIconChanged(const KIcon &presenceIcon);
     void presenceNameChanged(const QString &presenceName);
     void presenceMessageChanged(const QString &presenceMessage);
+    void presenceTypeChanged(uint presenceType);
 
 private Q_SLOTS:
     void onContactAdded(const KTelepathy::ContactPtr &contact);
@@ -132,6 +138,7 @@ private Q_SLOTS:
     void updatePresenceIcon();
     void updatePresenceMessage();
     void updatePresenceName();
+    void updatePresenceType();
 
 private:
     Q_DISABLE_COPY(Person);

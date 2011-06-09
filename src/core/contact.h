@@ -1,7 +1,7 @@
 /*
  * This file is part of libktelepathy
  *
- * Copyright (C) 2010 Collabora Ltd. <info@collabora.co.uk>
+ * Copyright (C) 2010-2011 Collabora Ltd. <info@collabora.co.uk>
  *   @author George Goldberg <george.goldberg@collabora.co.uk>
  *
  * This library is free software; you can redistribute it and/or
@@ -96,6 +96,11 @@ public:
      */
     QString presenceMessage() const;
 
+    /**
+     * Returns the presence type for this person
+     */
+    uint presenceType() const;
+
 protected:
     /**
      * Constrcutor is protected because only ContactSet objects should directly create
@@ -157,6 +162,11 @@ Q_SIGNALS:
      * Emitted when the presence name has changed.
      */
     void presenceNameChanged(const QString &presenceName);
+
+    /**
+     * Emitted when the presence type has changed.
+     */
+    void presenceTypeChanged(uint presenceType);
 
 private Q_SLOTS:
     /**
