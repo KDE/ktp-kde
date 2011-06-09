@@ -35,7 +35,7 @@ class KDE_EXPORT PersonSetModel : public QAbstractItemModel
     Q_OBJECT
 
 public:
-    enum {
+    enum Role {
         PersonRole = Qt::UserRole,
         ItemTypeRole,
         GroupsRole,
@@ -86,6 +86,7 @@ private:
 }  // Namespace KTelepathy
 
 Q_DECLARE_METATYPE(QSet<QString>);
+Q_DECLARE_METATYPE(KTelepathy::PersonSetModel::Role);
 Q_DECLARE_METATYPE(KTelepathy::PersonSetModel::ItemType);
 
 
