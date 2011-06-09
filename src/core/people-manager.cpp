@@ -30,8 +30,6 @@
 
 #include <QtCore/QHash>
 
-#include <TelepathyQt4/WeakPtr>
-
 using namespace KTelepathy;
 
 
