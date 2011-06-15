@@ -57,10 +57,17 @@ public:
       : q(parent),
         rootItem(new Item)
     {
+        // Set up the roles <=> keys mapping so they can be accessed from QML.
         QHash<int, QByteArray> roles = q->roleNames();
         roles.insert(PersonRole, QByteArray("person"));
+        roles.insert(ItemTypeRole, QByteArray("itemType"));
+        roles.insert(AvatarRole, QByteArray("avatar"));
+        roles.insert(CapabilitiesRole, QByteArray("capabilities"));
+        roles.insert(DisplayNameRole, QByteArray("displayName"));
+        roles.insert(PresenceIconRole, QByteArray("presenceIcon"));
         roles.insert(PresenceMessageRole, QByteArray("presenceMessage"));
         roles.insert(PresenceNameRole, QByteArray("presenceName"));
+        roles.insert(PresenceTypeRole, QByteArray("presenceType"));
         q->setRoleNames(roles);
     }
 
@@ -160,26 +167,28 @@ QVariant PersonSetModel::data(const QModelIndex &index, int role) const
     QVariant data;
     switch(role)
     {
-    case Qt::DisplayRole:
-        data.setValue(item->person->displayName());
-        break;
-    case Qt::DecorationRole:
-        data.setValue<QIcon>(item->person->presenceIcon());
-        break;
     case PersonSetModel::PersonRole:
         data.setValue<PersonPtr>(item->person);
         break;
     case PersonSetModel::ItemTypeRole:
         data.setValue(PersonSetModel::PersonType);
         break;
-    case PersonSetModel::GroupsRole:
-        data.setValue<QSet<QString> >(item->person->groups());
+    case PersonSetModel::AvatarRole:
+        data.setValue<QString>(item->person->avatar());
         break;
     case PersonSetModel::CapabilitiesRole:
         data.setValue<QSet<QString> >(item->person->capabilities());
         break;
-    case PersonSetModel::AvatarRole:
-        data.setValue<QPixmap>(item->person->avatar());
+    case PersonSetModel::DisplayNameRole:
+    case Qt::DisplayRole:
+        data.setValue(item->person->displayName());
+        break;
+    case PersonSetModel::GroupsRole:
+        data.setValue<QSet<QString> >(item->person->groups());
+        break;
+    case PersonSetModel::PresenceIconRole:
+    case Qt::DecorationRole:
+        data.setValue<QIcon>(item->person->presenceIcon());
         break;
     case PersonSetModel::PresenceMessageRole:
         data.setValue<QString>(item->person->presenceMessage());
@@ -188,7 +197,7 @@ QVariant PersonSetModel::data(const QModelIndex &index, int role) const
         data.setValue<QString>(item->person->presenceName());
         break;
     case PersonSetModel::PresenceTypeRole:
-        data.setValue<QString>(item->person->presenceType());
+        data.setValue<uint>(item->person->presenceType());
         break;
     default:
         break;
@@ -234,6 +243,7 @@ QModelIndex PersonSetModel::index(int row, int column, const QModelIndex &parent
 
 QModelIndex PersonSetModel::parent(const QModelIndex &index) const
 {
+    Q_UNUSED(index);
     // List model, not tree model, so all items have root-item as parent.
     return QModelIndex();
 }
@@ -261,10 +271,7 @@ void PersonSetModel::onPersonAdded(const KTelepathy::PersonPtr &person)
     // Connect to all the properties-changed signals for the person so we can update views when
     // any properties change.
     connect(person.data(),
-            SIGNAL(avatarChanged(QPixmap)),
-            SLOT(onPersonDataChanged()));
-    connect(person.data(),
-            SIGNAL(avatarWithOverlayChanged(QPixmap)),
+            SIGNAL(avatarChanged(QString)),
             SLOT(onPersonDataChanged()));
     connect(person.data(),
             SIGNAL(capabilitiesChanged(QSet<QString>)),
@@ -283,6 +290,9 @@ void PersonSetModel::onPersonAdded(const KTelepathy::PersonPtr &person)
             SLOT(onPersonDataChanged()));
     connect(person.data(),
             SIGNAL(presenceNameChanged(QString)),
+            SLOT(onPersonDataChanged()));
+    connect(person.data(),
+            SIGNAL(presenceTypeChanged(uint)),
             SLOT(onPersonDataChanged()));
 
     // Add the new item to the model data.
@@ -303,9 +313,8 @@ void PersonSetModel::onPersonRemoved(const KTelepathy::PersonPtr &person)
         }
     }
 
-    // FIXME: The assert and the condition appear to contradict here?!
     Q_ASSERT(row >= 0);
-    if (row >= 0) {
+    if (row < 0) {
         kWarning() << "Tried to remove a person from the model which is not in the model.";
         return;
     }
@@ -318,14 +327,14 @@ void PersonSetModel::onPersonRemoved(const KTelepathy::PersonPtr &person)
     d->rootItem->children.removeAt(row);
 
     // Disconnect from all the person's property-change-notification signals.
-    disconnect(person.data(), SIGNAL(avatarChanged(QPixmap)));
-    disconnect(person.data(), SIGNAL(avatarWithOverlayChanged(QPixmap)));
+    disconnect(person.data(), SIGNAL(avatarChanged(QString)));
     disconnect(person.data(), SIGNAL(capabilitiesChanged(QSet<QString>)));
     disconnect(person.data(), SIGNAL(displayNameChanged(QString)));
     disconnect(person.data(), SIGNAL(groupsChanged(QSet<QString>)));
     disconnect(person.data(), SIGNAL(presenceIconChanged(KIcon)));
     disconnect(person.data(), SIGNAL(presenceMessageChanged(QString)));
     disconnect(person.data(), SIGNAL(presenceNameChanged(QString)));
+    disconnect(person.data(), SIGNAL(presenceTypeChanged(uint)));
 
     // Notify the views that we have finished removing rows.
     endRemoveRows();

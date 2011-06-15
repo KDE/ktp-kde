@@ -38,11 +38,13 @@ public:
     enum Role {
         PersonRole = Qt::UserRole,
         ItemTypeRole,
-        GroupsRole,
-        CapabilitiesRole,
         AvatarRole,
-        PresenceNameRole,
+        CapabilitiesRole,
+        DisplayNameRole,
+        GroupsRole,
+        PresenceIconRole,
         PresenceMessageRole,
+        PresenceNameRole,
         PresenceTypeRole,
     };
 
