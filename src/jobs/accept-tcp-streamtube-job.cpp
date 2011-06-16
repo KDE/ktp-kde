@@ -144,14 +144,14 @@ void AcceptTcpStreamTubeJobPrivate::__k__onStreamTubeChannelReady(Tp::PendingOpe
     Q_Q(AcceptTcpStreamTubeJob);
 
     if (op->isError()) {
-        kWarning() << i18n("Unable to make stream tube channel ready") << "-" <<
+        kWarning() << "Unable to make stream tube channel ready -" <<
             op->errorName() << ":" << op->errorMessage();
         __k__onInvalidated();
         return;
     }
 
-    kDebug() << i18n("Stream tube channel ready!");
-    Q_EMIT q->infoMessage(q, i18n("Stream tube channel ready!"));
+    kDebug() << "Stream tube channel ready!";
+    Q_EMIT q->infoMessage(q, i18n("Stream tube channel ready."));
 
     q->connect(channel->acceptTubeAsTcpSocket(),
                SIGNAL(finished(Tp::PendingOperation*)),
@@ -165,14 +165,14 @@ void AcceptTcpStreamTubeJobPrivate::__k__onStreamTubeAccepted(Tp::PendingOperati
     Q_Q(AcceptTcpStreamTubeJob);
 
     if (op->isError()) {
-        qWarning() << i18n("Unable to accept stream tube channel") << "-" <<
+        qWarning() << "Unable to accept stream tube channel -" <<
             op->errorName() << ":" << op->errorMessage();
         __k__onInvalidated();
         return;
     }
 
-    kDebug() << i18n("Stream tube channel accepted and opened!");
-    Q_EMIT q->infoMessage(q, i18n("Stream tube channel accepted and opened!"));
+    kDebug() << "Stream tube channel accepted and opened!";
+    Q_EMIT q->infoMessage(q, i18n("Stream tube channel accepted and opened."));
 
     device = channel->device();
 
@@ -184,8 +184,8 @@ void AcceptTcpStreamTubeJobPrivate::__k__onInvalidated()
 {
     Q_Q(AcceptTcpStreamTubeJob);
 
-    kWarning() << i18n("Stream tube invalidated!");
-    Q_EMIT q->infoMessage(q, i18n("Stream tube invalidated!"));
+    kWarning() << "Stream tube invalidated!";
+    Q_EMIT q->infoMessage(q, i18n("Stream tube invalidated."));
 
     QTimer::singleShot(0, q, SLOT(__k__doEmitResult()));
 }

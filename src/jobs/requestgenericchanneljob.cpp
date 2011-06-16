@@ -178,14 +178,14 @@ void RequestGenericChannelJob::updateRequestTargets()
         case AbstractRequestChannelJob::TargetModeMetaContact:
 
             if (d->request.contains(QLatin1String(TELEPATHY_INTERFACE_CHANNEL ".TargetHandleType"))) {
-                kWarning() << QLatin1String(TELEPATHY_INTERFACE_CHANNEL ".TargetHandleType") << i18n("already set. Removing all values");
+                kWarning() << QLatin1String(TELEPATHY_INTERFACE_CHANNEL ".TargetHandleType") << "already set. Removing all values";
                 d->request.remove(QLatin1String(TELEPATHY_INTERFACE_CHANNEL ".TargetHandleType"));
             }
             d->request.insert(QLatin1String(TELEPATHY_INTERFACE_CHANNEL ".TargetHandleType"),
                         (uint) Tp::HandleTypeContact);
 
             if (d->request.contains(QLatin1String(TELEPATHY_INTERFACE_CHANNEL ".TargetHandle"))) {
-                kWarning() << QLatin1String(TELEPATHY_INTERFACE_CHANNEL ".TargetHandle") << i18n("already set. Removing all values");
+                kWarning() << QLatin1String(TELEPATHY_INTERFACE_CHANNEL ".TargetHandle") << "already set. Removing all values";
                 d->request.remove(QLatin1String(TELEPATHY_INTERFACE_CHANNEL ".TargetHandle"));
             }
             d->request.insert(QLatin1String(TELEPATHY_INTERFACE_CHANNEL ".TargetHandle"),
@@ -198,7 +198,7 @@ void RequestGenericChannelJob::updateRequestTargets()
             kWarning() << __LINE__ << "TODO";
     }
 
-    kDebug() << i18n("Request:") << d->request;
+    kDebug() << "Request:" << d->request;
 }
 
 

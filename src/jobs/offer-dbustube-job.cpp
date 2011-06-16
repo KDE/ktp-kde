@@ -233,7 +233,7 @@ void OfferDBusTubeJobPrivate::__k__offerDBusTubeContact()
                 request.insert(QLatin1String(TELEPATHY_INTERFACE_CHANNEL ".TargetHandleType"), (uint) Tp::HandleTypeContact);
                 request.insert(QLatin1String(TELEPATHY_INTERFACE_CHANNEL ".TargetHandle"), contactHandle);
                 request.insert(QLatin1String(TELEPATHY_INTERFACE_CHANNEL_TYPE_DBUS_TUBE ".ServiceName"), serviceName);
-                kDebug() << i18n("Request:") << request;
+                kDebug() << "Request:" << request;
 
                 Tp::PendingChannel* pndChan = i.key()->account()->connection()->createChannel(request);
                 q->connect(pndChan,
@@ -289,12 +289,12 @@ void OfferDBusTubeJobPrivate::__k__onDBusTubeChannelCreated(Tp::PendingOperation
     Q_Q(OfferDBusTubeJob);
 
     if (op->isError()) {
-        kWarning() << i18n("Unable to create dbus tube channel") << "-" <<
+        kWarning() << "Unable to create dbus tube channel -" <<
             op->errorName() << ": " << op->errorMessage();
         return;
     }
-    kDebug() << i18n("DBus tube channel created!");
-    Q_EMIT q->infoMessage(q, i18n("DBus tube channel created!"));
+    kDebug() << "DBus tube channel created!";
+    Q_EMIT q->infoMessage(q, i18n("D-Bus tube channel created."));
 
     Tp::PendingChannel* pc = qobject_cast<Tp::PendingChannel*>(op);
     channel = Tp::OutgoingDBusTubeChannelPtr::dynamicCast(pc->channel());
@@ -318,13 +318,13 @@ void OfferDBusTubeJobPrivate::__k__onDBusTubeChannelReady(Tp::PendingOperation* 
     Q_Q(OfferDBusTubeJob);
 
     if (op->isError()) {
-        kWarning() << i18n("Unable to make dbus tube channel ready") << "-" <<
+        kWarning() << "Unable to make dbus tube channel ready -" <<
             op->errorName() << ": " << op->errorMessage();
         return;
     }
 
-    kDebug() << i18n("DBus tube channel ready!");
-    Q_EMIT q->infoMessage(q, i18n("DBus tube channel ready!"));
+    kDebug() << "DBus tube channel ready!";
+    Q_EMIT q->infoMessage(q, i18n("D-Bus tube channel ready."));
 
     q->connect(channel.data(),
                SIGNAL(busNamesChanged(QHash<Tp::ContactPtr,QString>,QList<Tp::ContactPtr>)),
@@ -343,15 +343,15 @@ void OfferDBusTubeJobPrivate::__k__onOfferTubeFinished(Tp::PendingOperation* op)
     Q_Q(OfferDBusTubeJob);
 
     if (op->isError()) {
-        kWarning() << i18n("Unable to open dbus tube channel") <<"-" <<
+        kWarning() << "Unable to open dbus tube channel -" <<
             op->errorName() << ": " << op->errorMessage();
         return;
     }
 
     connection = channel->connection();
 
-    kDebug() << i18n("DBus tube channel opened!");
-    Q_EMIT q->infoMessage(q, i18n("DBus tube channel opened!"));
+    kDebug() << "DBus tube channel opened!";
+    Q_EMIT q->infoMessage(q, i18n("D-Bus tube channel opened."));
 }
 
 
@@ -365,8 +365,8 @@ void OfferDBusTubeJobPrivate::__k__onInvalidated()
 {
     Q_Q(OfferDBusTubeJob);
 
-    kWarning() << i18n("DBus tube invalidated!");
-    Q_EMIT q->infoMessage(q, i18n("DBus tube invalidated!"));
+    kWarning() << "DBus tube invalidated!";
+    Q_EMIT q->infoMessage(q, i18n("D-Bus tube invalidated."));
 
     QTimer::singleShot(0, q, SLOT(__k__doEmitResult()));
 }

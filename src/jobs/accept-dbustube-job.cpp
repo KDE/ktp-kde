@@ -125,14 +125,14 @@ void AcceptDBusTubeJobPrivate::__k__onDBusTubeChannelReady(Tp::PendingOperation*
     Q_Q(AcceptDBusTubeJob);
 
     if (op->isError()) {
-        kWarning() << i18n("Unable to make dbus tube channel ready") << "-" <<
+        kWarning() << "Unable to make D-Bus tube channel ready -"
             op->errorName() << ":" << op->errorMessage();
         __k__onInvalidated();
         return;
     }
 
-    kDebug() << i18n("DBus tube channel ready!");
-    Q_EMIT q->infoMessage(q, i18n("DBus tube channel ready!"));
+    kDebug() << "DBus tube channel ready!";
+    Q_EMIT q->infoMessage(q, i18n("D-Bus tube channel ready."));
 
     q->connect(channel->acceptTube(),
                SIGNAL(finished(Tp::PendingOperation*)),
@@ -146,7 +146,7 @@ void AcceptDBusTubeJobPrivate::__k__onDBusTubeAccepted(Tp::PendingOperation* op)
     Q_Q(AcceptDBusTubeJob);
 
     if (op->isError()) {
-        qWarning() << i18n("Unable to accept dbus tube channel") << "-" <<
+        qWarning() << "Unable to accept dbus tube channel -" <<
             op->errorName() << ":" << op->errorMessage();
         __k__onInvalidated();
         return;
@@ -154,8 +154,8 @@ void AcceptDBusTubeJobPrivate::__k__onDBusTubeAccepted(Tp::PendingOperation* op)
 
     connection = channel->connection();
 
-    kDebug() << i18n("DBus tube channel accepted and opened!");
-    Q_EMIT q->infoMessage(q, i18n("DBus tube channel accepted and opened!"));
+    kDebug() << "DBus tube channel accepted and opened!";
+    Q_EMIT q->infoMessage(q, i18n("D-Bus tube channel accepted and opened."));
 
     QTimer::singleShot(0, q, SLOT(__k__doEmitResult()));
 }
@@ -165,8 +165,8 @@ void AcceptDBusTubeJobPrivate::__k__onInvalidated()
 {
     Q_Q(AcceptDBusTubeJob);
 
-    kWarning() << i18n("DBus tube invalidated!");
-    Q_EMIT q->infoMessage(q, i18n("DBus tube invalidated!"));
+    kWarning() << "DBus tube invalidated!";
+    Q_EMIT q->infoMessage(q, i18n("D-Bus tube invalidated."));
 
     QTimer::singleShot(0, q, SLOT(__k__doEmitResult()));
 }

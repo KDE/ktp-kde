@@ -308,7 +308,7 @@ void OfferTcpStreamTubeJobPrivate::__k__offerTcpStreamTubeContactTcpServer()
                 request.insert(QLatin1String(TELEPATHY_INTERFACE_CHANNEL ".TargetHandleType"), (uint) Tp::HandleTypeContact);
                 request.insert(QLatin1String(TELEPATHY_INTERFACE_CHANNEL ".TargetHandle"), contactHandle);
                 request.insert(QLatin1String(TELEPATHY_INTERFACE_CHANNEL_TYPE_STREAM_TUBE ".Service"), QLatin1String("rsync"));
-                kDebug() << i18n("Request:") << request;
+                kDebug() << "Request:" << request;
 
                 Tp::PendingChannel* pndChan = i.key()->account()->connection()->createChannel(request);
                 q->connect(pndChan,
@@ -367,13 +367,13 @@ void OfferTcpStreamTubeJobPrivate::__k__onStreamTubeChannelCreated(Tp::PendingOp
     Q_Q(OfferTcpStreamTubeJob);
 
     if (op->isError()) {
-        kWarning() << i18n("Unable to create stream tube channel") << "-" <<
+        kWarning() << "Unable to create stream tube channel -" <<
             op->errorName() << ": " << op->errorMessage();
         return;
     }
 
-    kDebug() << i18n("Stream tube channel created!");
-    Q_EMIT q->infoMessage(q, i18n("Stream tube channel created!"));
+    kDebug() << "Stream tube channel created!";
+    Q_EMIT q->infoMessage(q, i18n("Stream tube channel created."));
 
     Tp::PendingChannel* pc = qobject_cast<Tp::PendingChannel*>(op);
     channel = Tp::OutgoingStreamTubeChannelPtr::dynamicCast(pc->channel());
@@ -397,13 +397,13 @@ void OfferTcpStreamTubeJobPrivate::__k__onStreamTubeChannelReady(Tp::PendingOper
     Q_Q(OfferTcpStreamTubeJob);
 
     if (op->isError()) {
-        kWarning() << i18n("Unable to make stream tube channel ready") << "-" <<
+        kWarning() << "Unable to make stream tube channel ready -" <<
             op->errorName() << ": " << op->errorMessage();
         return;
     }
 
-    kDebug() << i18n("Stream tube channel ready!");
-    Q_EMIT q->infoMessage(q, i18n("Stream tube channel ready!"));
+    kDebug() << "Stream tube channel ready!";
+    Q_EMIT q->infoMessage(q, i18n("Stream tube channel ready."));
 
     q->connect(channel.data(),
             SIGNAL(newConnection(uint)),
@@ -422,13 +422,13 @@ void OfferTcpStreamTubeJobPrivate::__k__onOfferTubeFinished(Tp::PendingOperation
     Q_Q(OfferTcpStreamTubeJob);
 
     if (op->isError()) {
-        kWarning() << i18n("Unable to open stream tube channel") <<"-" <<
+        kWarning() << "Unable to open stream tube channel -" <<
             op->errorName() << ": " << op->errorMessage();
         return;
     }
 
-    kDebug() << i18n("Stream tube channel opened!");
-    Q_EMIT q->infoMessage(q, i18n("Stream tube channel opened!"));
+    kDebug() << "Stream tube channel opened!";
+    Q_EMIT q->infoMessage(q, i18n("Stream tube channel opened."));
 }
 
 
@@ -436,10 +436,10 @@ void OfferTcpStreamTubeJobPrivate::__k__onStreamTubeChannelNewConnection(uint co
 {
     Q_Q(OfferTcpStreamTubeJob);
 
-    kDebug() << i18n("New remote connection with ID") << connectionId;
+    kDebug() << "New remote connection with ID" << connectionId;
     kDebug() << channel->connectionsForSourceAddresses();
     kDebug() << channel->contactsForConnections();
-    Q_EMIT q->infoMessage(q, i18n("New remote connection!"));
+    Q_EMIT q->infoMessage(q, i18n("New remote connection."));
 }
 
 
@@ -447,8 +447,8 @@ void OfferTcpStreamTubeJobPrivate::__k__onInvalidated()
 {
     Q_Q(OfferTcpStreamTubeJob);
 
-    kWarning() << i18n("Stream tube invalidated!");
-    Q_EMIT q->infoMessage(q, i18n("Stream tube invalidated!"));
+    kWarning() << "Stream tube invalidated!";
+    Q_EMIT q->infoMessage(q, i18n("Stream tube invalidated."));
 
     QTimer::singleShot(0, q, SLOT(__k__doEmitResult()));
 }

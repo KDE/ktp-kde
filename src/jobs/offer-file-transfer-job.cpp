@@ -126,7 +126,7 @@ void OfferFileTransferJob::start()
 
 bool OfferFileTransferJob::doKill()
 {
-    kDebug() << i18n("Killing file transfer");
+    kDebug() << "Killing file transfer";
     //TODO suspend the transfer?
     QTimer::singleShot(0, this, SLOT(__k__doEmitResult()));
     return true;
@@ -198,7 +198,7 @@ void OfferFileTransferJobPrivate::__k__offerFileTransferContact()
                 request.insert(QLatin1String(TELEPATHY_INTERFACE_CHANNEL_TYPE_FILE_TRANSFER ".Filename"), fileInfo.fileName());
                 request.insert(QLatin1String(TELEPATHY_INTERFACE_CHANNEL_TYPE_FILE_TRANSFER ".Size"), (qulonglong) fileInfo.size());
                 request.insert(QLatin1String(TELEPATHY_INTERFACE_CHANNEL_TYPE_FILE_TRANSFER ".ContentType"), QLatin1String("application/octet-stream"));
-                kDebug() << i18n("Request:") << request;
+                kDebug() << "Request:" << request;
 
                 Tp::PendingChannel* pndChan = i.key()->account()->connection()->createChannel(request);
                 q->connect(pndChan,
@@ -235,7 +235,7 @@ void OfferFileTransferJobPrivate::__k__onFileTransferChannelCreated(Tp::PendingO
     Q_Q(OfferFileTransferJob);
 
     if (op->isError()) {
-        kWarning() << i18n("Unable to create file transfer channel") << "-" <<
+        kWarning() << "Unable to create file transfer channel -" <<
             op->errorName() << ": " << op->errorMessage();
         //TODO Error number
         q->setError(TelepathyBridge::InvalidOperationError);
@@ -244,8 +244,8 @@ void OfferFileTransferJobPrivate::__k__onFileTransferChannelCreated(Tp::PendingO
         return;
     }
 
-    kDebug() << i18n("File transfer channel created!");
-    Q_EMIT q->infoMessage(q, i18n("File transfer channel created!"));
+    kDebug() << "File transfer channel created!";
+    Q_EMIT q->infoMessage(q, i18n("File transfer channel created."));
 
     Tp::PendingChannel* pc = qobject_cast<Tp::PendingChannel*>(op);
     channel = Tp::OutgoingFileTransferChannelPtr::dynamicCast(pc->channel());
@@ -266,7 +266,7 @@ void OfferFileTransferJobPrivate::__k__onFileTransferChannelReady(Tp::PendingOpe
     Q_Q(OfferFileTransferJob);
 
     if (op->isError()) {
-        kWarning() << i18n("Unable to make file transfer channel ready") << "-" <<
+        kWarning() << "Unable to make file transfer channel ready -" <<
             op->errorName() << ": " << op->errorMessage();
         //TODO Error number
         q->setError(TelepathyBridge::InvalidOperationError);
@@ -274,8 +274,8 @@ void OfferFileTransferJobPrivate::__k__onFileTransferChannelReady(Tp::PendingOpe
         QTimer::singleShot(0, q, SLOT(__k__doEmitResult()));
     }
 
-    kDebug() << i18n("File transfer channel ready!");
-    Q_EMIT q->infoMessage(q, i18n("File transfer channel ready!"));
+    kDebug() << "File transfer channel ready!";
+    Q_EMIT q->infoMessage(q, i18n("File transfer channel ready."));
 
     q->connect(channel.data(),
                SIGNAL(stateChanged(Tp::FileTransferState, Tp::FileTransferStateChangeReason)),
@@ -299,7 +299,7 @@ void OfferFileTransferJobPrivate::__k__onFileTransferChannelStateChanged(Tp::Fil
 {
     Q_Q(OfferFileTransferJob);
 
-    kDebug() << i18n("File transfer channel state changed to") << state << i18n("with reason") << stateReason;
+    kDebug() << "File transfer channel state changed to" << state << "with reason" << stateReason;
     Q_EMIT q->infoMessage(q, i18n("File transfer channel state changed"));
 
 //TODO better handling
@@ -315,16 +315,16 @@ case Tp::FileTransferStateChangeReasonRemoteError:
     {
         case Tp::FileTransferStateNone:
             // This is bad
-            kWarning() << i18n("An error occurred.");
+            kWarning() << "An error occurred.";
             q->setError(TelepathyBridge::InvalidOperationError);
             QTimer::singleShot(0, q, SLOT(__k__doEmitResult()));
         case Tp::FileTransferStateCompleted:
-            kDebug() << i18n("Transfer completed");
+            kDebug() << "Transfer completed";
             Q_EMIT q->infoMessage(q, i18n("Transfer completed"));
             QTimer::singleShot(0, q, SLOT(__k__doEmitResult())); //TODO here?
             break;
         case Tp::FileTransferStateCancelled:
-            kWarning() << i18n("Transfer was canceled.");
+            kWarning() << "Transfer was canceled.";
             q->setError(TelepathyBridge::InvalidOperationError); //TODO
             q->setErrorText(i18n("Transfer was canceled."));
             QTimer::singleShot(0, q, SLOT(__k__doEmitResult()));
@@ -342,7 +342,7 @@ void OfferFileTransferJobPrivate::__k__onFileTransferChannelTransferredBytesChan
 {
     Q_Q(OfferFileTransferJob);
 
-    kDebug() << i18n("Transferred bytes") << count << " - " << ((int) (((double) count / channel->size()) * 100)) << "%" << i18n("done");
+    kDebug() << "Transferred bytes" << count << " - " << ((int) (((double) count / channel->size()) * 100)) << "%" << "done";
     q->setProcessedAmount(KJob::Bytes, count);
 //    Q_EMIT q->infoMessage(q, i18n("Transferred bytes"));
 }
@@ -352,8 +352,8 @@ void OfferFileTransferJobPrivate::__k__onInvalidated()
 {
     Q_Q(OfferFileTransferJob);
 
-    kWarning() << i18n("File transfer invalidated!");
-    Q_EMIT q->infoMessage(q, i18n("File transfer invalidated!"));
+    kWarning() << "File transfer invalidated!";
+    Q_EMIT q->infoMessage(q, i18n("File transfer invalidated."));
 
     //TODO error file transfer not supported
     q->setError(TelepathyBridge::InvalidOperationError);

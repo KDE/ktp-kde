@@ -207,7 +207,7 @@ void AbstractHandleChannelJobPrivate::__k__onChannelReady(Tp::PendingOperation* 
     }
 
     kDebug() << "Channel ready!";
-    Q_EMIT q->infoMessage(q, i18n("Channel ready!"));
+    Q_EMIT q->infoMessage(q, i18n("Channel ready."));
 
     if (!requested) {
         pendingoperation = q->handleIncomingChannel();
