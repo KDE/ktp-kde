@@ -164,7 +164,7 @@ void AcceptFileTransferJobPrivate::__k__onFileTransferChannelTransferredBytesCha
     Q_Q(AcceptFileTransferJob);
 
     kDebug().nospace() << "Receiving " << channel->fileName() << " - " << "transferred bytes=" << count << " (" << ((int) (((double) count / channel->size()) * 100)) << "%" << "done)";
-    Q_EMIT q->infoMessage(q, i18n("Transferred bytes"));
+    Q_EMIT q->infoMessage(q, i18n("Transferred bytes."));
 }
 
 void AcceptFileTransferJobPrivate::__k__onAcceptFileFinished(Tp::PendingOperation* op)

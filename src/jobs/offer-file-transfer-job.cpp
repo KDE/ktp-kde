@@ -300,7 +300,7 @@ void OfferFileTransferJobPrivate::__k__onFileTransferChannelStateChanged(Tp::Fil
     Q_Q(OfferFileTransferJob);
 
     kDebug() << "File transfer channel state changed to" << state << "with reason" << stateReason;
-    Q_EMIT q->infoMessage(q, i18n("File transfer channel state changed"));
+    Q_EMIT q->infoMessage(q, i18n("File transfer channel state changed."));
 
 //TODO better handling
 /*
@@ -320,7 +320,7 @@ case Tp::FileTransferStateChangeReasonRemoteError:
             QTimer::singleShot(0, q, SLOT(__k__doEmitResult()));
         case Tp::FileTransferStateCompleted:
             kDebug() << "Transfer completed";
-            Q_EMIT q->infoMessage(q, i18n("Transfer completed"));
+            Q_EMIT q->infoMessage(q, i18n("Transfer completed."));
             QTimer::singleShot(0, q, SLOT(__k__doEmitResult())); //TODO here?
             break;
         case Tp::FileTransferStateCancelled:
@@ -344,7 +344,7 @@ void OfferFileTransferJobPrivate::__k__onFileTransferChannelTransferredBytesChan
 
     kDebug() << "Transferred bytes" << count << " - " << ((int) (((double) count / channel->size()) * 100)) << "%" << "done";
     q->setProcessedAmount(KJob::Bytes, count);
-//    Q_EMIT q->infoMessage(q, i18n("Transferred bytes"));
+//    Q_EMIT q->infoMessage(q, i18n("Transferred bytes."));
 }
 
 

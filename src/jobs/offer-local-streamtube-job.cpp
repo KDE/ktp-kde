@@ -445,7 +445,7 @@ void OfferLocalStreamTubeJobPrivate::__k__onStreamTubeChannelNewConnection(uint 
     kDebug() << "New remote connection with ID" << connectionId;
     kDebug() << channel->connectionsForSourceAddresses();
     kDebug() << channel->contactsForConnections();
-    Q_EMIT q->infoMessage(q, i18n("New remote connection!"));
+    Q_EMIT q->infoMessage(q, i18n("New remote connection."));
 }
 
 
