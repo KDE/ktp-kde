@@ -174,7 +174,7 @@ void AbstractHandleChannelJobPrivate::__k__handleChannel()
         if ( !(handlechannelflags & KTelepathy::HandleChannelOutgoing) ) {
             kWarning() << "I'm not supposed to handle outgoing channels.";
             q->setError(KJob::UserDefinedError);
-            q->setErrorText(i18n("This job is not supposed to outgoing channels."));
+            q->setErrorText(i18n("This job is not supposed to handle outgoing channels."));
             QTimer::singleShot(0, q, SLOT(__k__doEmitResult()));
             return;
         }
