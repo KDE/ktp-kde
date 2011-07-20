@@ -1,7 +1,7 @@
 /*
  * This file is part of telepathy-contactslist-prototype
  *
- * Copyright (C) 2010 Collabora Ltd. <info@collabora.co.uk>
+ * Copyright (C) 2010-2011 Collabora Ltd. <info@collabora.co.uk>
  *   @Author George Goldberg <george.goldberg@collabora.co.uk>
  *
  * This library is free software; you can redistribute it and/or
@@ -35,13 +35,22 @@ class KDE_EXPORT PersonSetModel : public QAbstractItemModel
     Q_OBJECT
 
 public:
-    enum {
+    enum Role {
         PersonRole = Qt::UserRole,
-        GroupsRole,
-        CapabilitiesRole,
+        ItemTypeRole,
         AvatarRole,
-        PresenceNameRole,
+        CapabilitiesRole,
+        DisplayNameRole,
+        GroupsRole,
+        PresenceIconRole,
         PresenceMessageRole,
+        PresenceNameRole,
+        PresenceTypeRole,
+    };
+
+    enum ItemType {
+        PersonType,
+        CustomType,
     };
 
     explicit PersonSetModel(QObject *parent = 0);
@@ -80,6 +89,8 @@ private:
 }  // Namespace KTelepathy
 
 Q_DECLARE_METATYPE(QSet<QString>);
+Q_DECLARE_METATYPE(KTelepathy::PersonSetModel::Role);
+Q_DECLARE_METATYPE(KTelepathy::PersonSetModel::ItemType);
 
 
 #endif // LIBKTELEPATHY_PERSON_SET_MODEL_H

@@ -1,7 +1,7 @@
 /*
  * This file is part of libktelepathy
  *
- * Copyright (C) 2010 Collabora Ltd. <info@collabora.co.uk>
+ * Copyright (C) 2010-2011 Collabora Ltd. <info@collabora.co.uk>
  *   @author George Goldberg <george.goldberg@collabora.co.uk>
  *
  * This library is free software; you can redistribute it and/or
@@ -28,9 +28,9 @@
 #include <kdemacros.h>
 
 #include <QtCore/QObject>
-#include <QtCore/QString>
-#include <QtCore/QStringList>
+#include <QtCore/QSet>
 
+#include <TelepathyQt4/Presence>
 #include <TelepathyQt4/RefCounted>
 #include <TelepathyQt4/SharedPtr>
 
@@ -39,7 +39,8 @@ namespace Nepomuk {
 }
 
 class KIcon;
-class QPixmap;
+
+class QString;
 
 namespace KTelepathy {
 
@@ -58,43 +59,57 @@ class KDE_EXPORT Contact : public QObject, public Entity, public Tp::RefCounted,
 
     Q_OBJECT
 
+    Q_PROPERTY(QString avatar READ avatar NOTIFY avatarChanged)
+    Q_PROPERTY(QSet<QString> capabilities READ capabilities NOTIFY capabilitiesChanged)
+    Q_PROPERTY(QString displayName READ displayName NOTIFY displayNameChanged)
+    Q_PROPERTY(QSet<QString> groups READ groups NOTIFY groupsChanged)
+    Q_PROPERTY(KIcon presenceIcon READ presenceIcon NOTIFY presenceIconChanged)
+    Q_PROPERTY(QString presenceMessage READ presenceMessage NOTIFY presenceMessageChanged)
+    Q_PROPERTY(QString presenceName READ presenceName NOTIFY presenceNameChanged)
+    Q_PROPERTY(QString presenceType READ presenceType NOTIFY presenceTypeChanged)
+
 public:
     virtual ~Contact();
 
     /**
-     * Returns the avatar of this person
+     * Returns the avatar of this contact
      */
-    const QPixmap &avatar() const;
+    const QString &avatar() const;
 
     /**
-     * Returns the capabilities of this person
+     * Returns the capabilities of this contact
      */
-    QSet<QString> capabilities() const;
+    const QSet<QString> &capabilities() const;
 
     /**
-     * Returns the display name of the person
+     * Returns the display name of the contact
      */
-    QString displayName() const;
+    const QString &displayName() const;
 
     /**
-     * Returns the groups to which this person belongs
+     * Returns the groups to which this contact belongs
      */
-    QSet<QString> groups() const;
+    const QSet<QString> &groups() const;
 
     /**
-     * Returns the presence Icon for this person
+     * Returns the presence Icon for this contact
      */
     const KIcon &presenceIcon() const;
 
     /**
-     * Returns the presence name for this person
+     * Returns the presence name for this contact
      */
-    QString presenceName() const;
+    const QString &presenceName() const;
 
     /**
-     * Returns the presence message for this person
+     * Returns the presence message for this contact
      */
-    QString presenceMessage() const;
+    const QString &presenceMessage() const;
+
+    /**
+     * Returns the presence type for this contact
+     */
+    Tp::ConnectionPresenceType presenceType() const;
 
 protected:
     /**
@@ -126,7 +141,7 @@ Q_SIGNALS:
     /**
      * Emitted when the avatar has changed.
      */
-    void avatarChanged(const QPixmap &avatar);
+    void avatarChanged(const QString &fileName);
 
     /**
      * Emitted when the capabilities have changed
@@ -158,27 +173,58 @@ Q_SIGNALS:
      */
     void presenceNameChanged(const QString &presenceName);
 
+    /**
+     * Emitted when the presence type has changed.
+     */
+    void presenceTypeChanged(Tp::ConnectionPresenceType presenceType);
+
 private Q_SLOTS:
     /**
-     * Updates the avatar.
+     * Internal slot to handle avatar changes.
      */
     void updateAvatar();
 
     /**
-     * Updates the presence icon.
+     * Internal slot to handle capability changes.
+     */
+    void updateCapabilities();
+
+    /**
+     * Internal slot to handle display name changes.
+     */
+    void updateDisplayName();
+
+    /**
+     * Internal slot to handle group changes.
+     */
+    void updateGroups();
+
+    /**
+     * Internal slot to handle presence icon changes.
      */
     void updatePresenceIcon();
 
     /**
-     * Updates the display name property.
+     * Internal slot to handle presence message changes.
      */
-    void updateDisplayName();
+    void updatePresenceMessage();
+
+    /**
+     * Internal slot to handle presence name changes.
+     */
+    void updatePresenceName();
+
+    /**
+     * Internal slot to handle presence type changes.
+     */
+    void updatePresenceType();
 
 private:
     Q_DISABLE_COPY(Contact);
 
     friend class ContactSet;
     friend class Person;
+    friend class TestBackdoors;
 
     class Private;
     Private * const d;

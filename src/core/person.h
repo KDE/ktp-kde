@@ -1,7 +1,7 @@
 /*
  * This file is part of libktelepathy
  *
- * Copyright (C) 2010 Collabora Ltd. <info@collabora.co.uk>
+ * Copyright (C) 2010-2011 Collabora Ltd. <info@collabora.co.uk>
  *   @author George Goldberg <george.goldberg@collabora.co.uk>
  *
  * This library is free software; you can redistribute it and/or
@@ -28,9 +28,9 @@
 #include <kdemacros.h>
 
 #include <QtCore/QObject>
-#include <QtCore/QString>
-#include <QtCore/QStringList>
+#include <QtCore/QSet>
 
+#include <TelepathyQt4/Presence>
 #include <TelepathyQt4/SharedPtr>
 
 namespace Nepomuk {
@@ -38,7 +38,7 @@ namespace Nepomuk {
 }
 
 class KIcon;
-class QPixmap;
+class QString;
 
 namespace KTelepathy {
 
@@ -52,12 +52,14 @@ class KDE_EXPORT Person : public ContactSet, public Entity {
 
     Q_OBJECT
 
-//    Q_PROPERTY(ContactSetPtr contacts READ contacts /* TODO NOTIFY countChanged */)
-    Q_PROPERTY(QPixmap avatar READ avatar NOTIFY avatarChanged) /* TODO With overlay? */
+    Q_PROPERTY(QString avatar READ avatar NOTIFY avatarChanged)
     Q_PROPERTY(QSet<QString> capabilities READ capabilities NOTIFY capabilitiesChanged)
     Q_PROPERTY(QString displayName READ displayName NOTIFY displayNameChanged)
     Q_PROPERTY(QSet<QString> groups READ groups NOTIFY groupsChanged)
     Q_PROPERTY(KIcon presenceIcon READ presenceIcon NOTIFY presenceIconChanged)
+    Q_PROPERTY(QString presenceMessage READ presenceMessage NOTIFY presenceMessageChanged)
+    Q_PROPERTY(QString presenceName READ presenceName NOTIFY presenceNameChanged)
+    Q_PROPERTY(QString presenceType READ presenceType NOTIFY presenceTypeChanged)
 
 public:
     virtual ~Person();
@@ -65,22 +67,22 @@ public:
     /**
      * Returns the avatar of this person
      */
-    const QPixmap &avatar(bool withOverlay = false) const;
+    const QString &avatar() const;
 
     /**
      * Returns the capabilities of this person
      */
-    QSet<QString> capabilities() const;
+    const QSet<QString> &capabilities() const;
 
     /**
-     * Returns the display name of the person
+     * Returns the display name of this person
      */
-    QString displayName() const;
+    const QString &displayName() const;
 
     /**
      * Returns the groups to which this person belongs
      */
-    QSet<QString> groups() const;
+    const QSet<QString> &groups() const;
 
     /**
      * Returns the presence Icon for this person
@@ -88,14 +90,19 @@ public:
     const KIcon &presenceIcon() const;
 
     /**
-     * Returns the presence message
+     * Returns the presence message for this person
      */
-    QString presenceMessage() const;
+    const QString &presenceMessage() const;
 
     /**
-     * Returns the presence name
+     * Returns the presence name for this person
      */
-    QString presenceName() const;
+    const QString &presenceName() const;
+
+    /**
+     * Returns the presence type (integer) for this person
+     */
+    Tp::ConnectionPresenceType presenceType() const;
 
 protected:
     /**
@@ -109,14 +116,45 @@ protected:
     Person();
 
 Q_SIGNALS:
-    void avatarChanged(const QPixmap &avatar);
-    void avatarWithOverlayChanged(const QPixmap &avatar);
+    /**
+     * Emitted when the avatar has changed.
+     */
+    void avatarChanged(const QString &fileName);
+
+    /**
+     * Emitted when the capabilities have changed
+     */
     void capabilitiesChanged(const QSet<QString> &capabilities);
+
+    /**
+     * Emitted when the display name has changed
+     */
     void displayNameChanged(const QString &displayName);
+
+    /**
+     * Emitted when the groups have changed
+     */
     void groupsChanged(const QSet<QString> &groups);
+
+    /**
+     * Emitted when the presence Icon has changed.
+     */
     void presenceIconChanged(const KIcon &presenceIcon);
-    void presenceNameChanged(const QString &presenceName);
+
+    /**
+     * Emitted when the presence message has changed.
+     */
     void presenceMessageChanged(const QString &presenceMessage);
+
+    /**
+     * Emitted when the presence name has changed.
+     */
+    void presenceNameChanged(const QString &presenceName);
+
+    /**
+     * Emitted when the presence type has changed.
+     */
+    void presenceTypeChanged(Tp::ConnectionPresenceType presenceType);
 
 private Q_SLOTS:
     void onContactAdded(const KTelepathy::ContactPtr &contact);
@@ -124,19 +162,51 @@ private Q_SLOTS:
     void onNewEntries(const QList<Nepomuk::Query::Result> &entries);
     void onEntriesRemoved(const QList<QUrl> &entries);
 
+    /**
+     * Internal slot to handle avatar changes.
+     */
     void updateAvatar();
-    void updateAvatarWithOverlay();
+
+    /**
+     * Internal slot to handle capability changes.
+     */
     void updateCapabilities();
+
+    /**
+     * Internal slot to handle display name changes.
+     */
     void updateDisplayName();
+
+    /**
+     * Internal slot to handle group changes.
+     */
     void updateGroups();
+
+    /**
+     * Internal slot to handle presence icon changes.
+     */
     void updatePresenceIcon();
+
+    /**
+     * Internal slot to handle presence message changes.
+     */
     void updatePresenceMessage();
+
+    /**
+     * Internal slot to handle presence name changes.
+     */
     void updatePresenceName();
+
+    /**
+     * Internal slot to handle presence type changes.
+     */
+    void updatePresenceType();
 
 private:
     Q_DISABLE_COPY(Person);
 
     friend class PeopleManager;
+    friend class TestBackdoors;
 
     class Private;
     Private * const d;
@@ -150,6 +220,7 @@ typedef Tp::SharedPtr<Person> PersonPtr;
 Q_DECLARE_METATYPE(Tp::SharedPtr<KTelepathy::Person>);
 
 uint KDE_EXPORT qHash(const KTelepathy::PersonPtr &key);
+
 
 #endif  // Header guard
 

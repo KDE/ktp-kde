@@ -1,7 +1,7 @@
 /*
  * This file is part of libktelepathy
  *
- * Copyright (C) 2010 Collabora Ltd. <info@collabora.co.uk>
+ * Copyright (C) 2010-2011 Collabora Ltd. <info@collabora.co.uk>
  *   @author George Goldberg <george.goldberg@collabora.co.uk>
  *
  * This library is free software; you can redistribute it and/or
@@ -43,11 +43,6 @@
 #include <Nepomuk/Query/ResourceTerm>
 #include <Nepomuk/Query/ResourceTypeTerm>
 
-#include <QtCore/QSet>
-
-#include <QtGui/QPainter>
-#include <QtGui/QPixmap>
-
 using namespace KTelepathy;
 
 class Person::Private {
@@ -62,14 +57,14 @@ public:
     Nepomuk::Thing mePimoPerson;
     Nepomuk::Query::QueryServiceClient *query;
 
-    QPixmap avatar;
-    QPixmap avatarWithOverlay;
+    QString avatar;
     QSet<QString> capabilities;
     QString displayName;
     QSet<QString> groups;
     KIcon *presenceIcon;
     QString presenceName;
     QString presenceMessage;
+    Tp::ConnectionPresenceType presenceType;
 };
 
 
@@ -215,6 +210,9 @@ void Person::onContactAdded(const KTelepathy::ContactPtr &contact)
     connect(contact.data(),
             SIGNAL(presenceNameChanged(QString)),
             SLOT(updatePresenceName()));
+    connect(contact.data(),
+            SIGNAL(presenceTypeChange(Tp::ConnectionPresenceType)),
+            SLOT(updatePresenceType()));
 
     // Update all the properties of the Person.
     updateAvatar();
@@ -224,6 +222,7 @@ void Person::onContactAdded(const KTelepathy::ContactPtr &contact)
     updatePresenceIcon();
     updatePresenceMessage();
     updatePresenceName();
+    updatePresenceType();
 }
 
 void Person::onContactRemoved(const KTelepathy::ContactPtr &contact)
@@ -236,6 +235,7 @@ void Person::onContactRemoved(const KTelepathy::ContactPtr &contact)
     disconnect(contact.data(), SLOT(updatePresenceIcon()));
     disconnect(contact.data(), SLOT(updatePresenceMessage()));
     disconnect(contact.data(), SLOT(updatePresenceName()));
+    disconnect(contact.data(), SLOT(updatePresenceType()));
 
     // Update all the properties of the Person.
     updateAvatar();
@@ -245,25 +245,25 @@ void Person::onContactRemoved(const KTelepathy::ContactPtr &contact)
     updatePresenceIcon();
     updatePresenceMessage();
     updatePresenceName();
+    updatePresenceType();
 }
 
-// FIXME: Use flags instead of a bool for withOverlay?
-const QPixmap &Person::avatar(bool withOverlay) const
+const QString &Person::avatar() const
 {
-    return withOverlay ? d->avatarWithOverlay : d->avatar;
+    return d->avatar;
 }
 
-QSet<QString> Person::capabilities() const
+const QSet<QString> &Person::capabilities() const
 {
     return d->capabilities;
 }
 
-QString Person::displayName() const
+const QString &Person::displayName() const
 {
     return d->displayName;
 }
 
-QSet<QString> Person::groups() const
+const QSet<QString> &Person::groups() const
 {
     return d->groups;
 }
@@ -273,77 +273,49 @@ const KIcon &Person::presenceIcon() const
     return *(d->presenceIcon);
 }
 
-QString Person::presenceMessage() const
+const QString &Person::presenceMessage() const
 {
     return d->presenceMessage;
 }
 
-QString Person::presenceName() const
+const QString &Person::presenceName() const
 {
     return d->presenceName;
 }
 
+Tp::ConnectionPresenceType Person::presenceType() const
+{
+    return d->presenceType;
+}
+
 void Person::updateAvatar()
 {
-    d->avatar = QPixmap();
-
     // FIXME: clever way to pick which avatar, rather than the last in the list?
+    QString avatar;
+
     Q_FOREACH (ContactPtr contact, contacts()) {
-        if (!contact->avatar().isNull()) {
-            d->avatar = contact->avatar();
+        if (!contact->avatar().isEmpty()) {
+            avatar = contact->avatar();
         }
     }
 
-    // If the avatar is null on all child contacts, put a generic avatar image for the Person.
-    if (d->avatar.isNull()) {
-        // try to load the action icon
-        d->avatar = KIconLoader::global()->loadIcon(QLatin1String("im-user"),
-                                                    KIconLoader::NoGroup,
-                                                    32,
-                                                    KIconLoader::DefaultState,
-                                                    QStringList(),
-                                                    0,
-                                                    true);
+    // Only signal if an actual change has occurred
+    if (avatar != d->avatar) {
+        d->avatar = avatar;
+        Q_EMIT avatarChanged(d->avatar);
     }
-
-    Q_EMIT avatarChanged(d->avatar);
-
-    // Since the avatar has changed, we must update the avatar with overlay too.
-    updateAvatarWithOverlay();
-}
-
-void Person::updateAvatarWithOverlay()
-{
-    // Copy the avatar pixmap ready for updating the overlayed version.
-    d->avatarWithOverlay = d->avatar;
-
-    // create a painter to paint the action icon over the key icon
-    QPainter painter(&d->avatarWithOverlay);
-    // the the emblem icon to size 12
-    int overlaySize = 12;
-    // try to load the action icon
-    const QPixmap iconPixmap = d->presenceIcon->pixmap(overlaySize);
-    // if we're able to load the action icon paint it over
-    if (!d->avatarWithOverlay.isNull()) {
-        QPoint startPoint;
-        // bottom right corner
-        startPoint = QPoint(32 - overlaySize - 1,
-                            32 - overlaySize - 1);
-        painter.drawPixmap(startPoint, iconPixmap);
-    }
-
-    Q_EMIT avatarWithOverlayChanged(d->avatarWithOverlay);
 }
 
 void Person::updateCapabilities()
 {
     // Person's capabilities are the union of the capabilities of the child contacts.
     QSet<QString> capabilities;
+
     Q_FOREACH (ContactPtr contact, contacts()) {
         capabilities.unite(contact->capabilities());
     }
 
-    // Only signal the change if something actually changed.
+    // Only signal if an actual change has occurred.
     if (d->capabilities != capabilities) {
         d->capabilities = capabilities;
         Q_EMIT capabilitiesChanged(d->capabilities);
@@ -353,23 +325,31 @@ void Person::updateCapabilities()
 void Person::updateDisplayName()
 {
     // FIXME: Choose the most suitable overall displayName some better way.
+    QString displayName;
+
     Q_FOREACH (ContactPtr contact, contacts()) {
-        d->displayName = contact->displayName();
+        if (!contact->displayName().isEmpty()) {
+            displayName = contact->displayName();
+        }
     }
 
-    // FIXME: Only emit this signal if the display name actually changed.
-    Q_EMIT displayNameChanged(d->displayName);
+    // Only signal if an actual change has occurred.
+    if (displayName != d->displayName) {
+        d->displayName = displayName;
+        Q_EMIT displayNameChanged(d->displayName);
+    }
 }
 
 void Person::updateGroups()
 {
     // Person's groups are the union of all groups of the child contacts.
     QSet<QString> groups;
+
     Q_FOREACH (ContactPtr contact, contacts()) {
         groups.unite(contact->groups());
     }
 
-    // Only signal the change if something has actually changed.
+    // Only signal if an actual change has occurred.
     if (d->groups != groups) {
         d->groups = groups;
         Q_EMIT groupsChanged(d->groups);
@@ -379,38 +359,65 @@ void Person::updateGroups()
 void Person::updatePresenceIcon()
 {
     // FIXME: Choose the most suitable overall presence some better way.
+    KIcon *presenceIcon = 0;
+
     Q_FOREACH (ContactPtr contact, contacts()) {
-        *(d->presenceIcon) = contact->presenceIcon();
+        *(presenceIcon) = contact->presenceIcon();
     }
 
-    // FIXME: Only emit this signal if the presenceIcon has actually changed.
-    Q_EMIT presenceIconChanged(*(d->presenceIcon));
-
-    // Since the presence icon has changed, we must now update the avatar with the presence
-    // icon overlayed on it.
-    updateAvatarWithOverlay();
+    // Only signal if an actual change has occurred.
+    if (presenceIcon != d->presenceIcon) {
+        d->presenceIcon = presenceIcon;
+        Q_EMIT presenceIconChanged(*(d->presenceIcon));
+    }
 }
 
 void Person::updatePresenceMessage()
 {
     // FIXME: Choose sensibly.
+    QString presenceMessage;
+
     Q_FOREACH (ContactPtr contact, contacts()) {
-        d->presenceMessage = contact->presenceMessage();
+        presenceMessage = contact->presenceMessage();
     }
 
-    // FIXME: Only emit this signal if the presenceIcon has actually changed.
-    Q_EMIT presenceMessageChanged(d->presenceMessage);
+    // Only signal if an actual change has occurred
+    if (presenceMessage != d->presenceMessage) {
+        d->presenceMessage = presenceMessage;
+        Q_EMIT presenceMessageChanged(d->presenceMessage);
+    }
 }
 
 void Person::updatePresenceName()
 {
     // FIXME: Choose sensibly.
+    QString presenceName;
+
     Q_FOREACH (ContactPtr contact, contacts()) {
-        d->presenceName = contact->presenceName();
+        presenceName = contact->presenceName();
     }
 
-    // FIXME: Only emit this signal if the presenceIcon has actually changed.
-    Q_EMIT presenceNameChanged(d->presenceName);
+    // Only signal if an actual change has occurred
+    if (presenceName != d->presenceName) {
+        d->presenceName = presenceName;
+        Q_EMIT presenceNameChanged(d->presenceName);
+    }
+}
+
+void Person::updatePresenceType()
+{
+    // FIXME: Choose sensibly.
+    Tp::ConnectionPresenceType presenceType = Tp::ConnectionPresenceTypeUnknown;
+
+    Q_FOREACH (ContactPtr contact, contacts()) {
+        presenceType = contact->presenceType();
+    }
+
+    // Only signal if an actual change has occurred
+    if (presenceType != d->presenceType) {
+        d->presenceType = presenceType;
+        Q_EMIT presenceTypeChanged(d->presenceType);
+    }
 }
 
 uint qHash(const PersonPtr &key) {

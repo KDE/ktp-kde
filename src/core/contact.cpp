@@ -1,7 +1,7 @@
 /*
  * This file is part of libktelepathy
  *
- * Copyright (C) 2010 Collabora Ltd. <info@collabora.co.uk>
+ * Copyright (C) 2010-2011 Collabora Ltd. <info@collabora.co.uk>
  *   @author George Goldberg <george.goldberg@collabora.co.uk>
  *
  * This library is free software; you can redistribute it and/or
@@ -24,9 +24,10 @@
 #include "ontologies/nco.h"
 #include "ontologies/telepathy.h"
 
+#include "ontologies/contactgroup.h"
 #include "ontologies/dataobject.h"
 #include "ontologies/imaccount.h"
-#include "ontologies/informationelement.h"
+#include "ontologies/imcapability.h"
 #include "ontologies/personcontact.h"
 
 #include <KDebug>
@@ -35,14 +36,6 @@
 
 #include <Nepomuk/Resource>
 
-#include <QtCore/QByteArray>
-#include <QtCore/QPoint>
-
-#include <QtGui/QImage>
-#include <QtGui/QPainter>
-#include <QtGui/QPixmap>
-
-#include <Soprano/Node>
 #include <Soprano/Statement>
 
 #include <TelepathyQt4/Constants>
@@ -59,8 +52,14 @@ public:
     Nepomuk::PersonContact personContact;
     Nepomuk::IMAccount imAccount;
 
+    QString avatar;
+    QSet<QString> capabilities;
+    QString displayName;
+    QSet<QString> groups;
     KIcon *presenceIcon;
-    QPixmap avatar;
+    QString presenceMessage;
+    QString presenceName;
+    Tp::ConnectionPresenceType presenceType;
 };
 
 
@@ -88,9 +87,14 @@ Contact::Contact(const Nepomuk::Resource &ncoPersonContact, const Nepomuk::Resou
         kWarning() << "Person object requires a valid NCO:PersonContact and NCO:IMAccount";
     }
 
-    updatePresenceIcon();
     updateAvatar();
+    updateCapabilities();
     updateDisplayName();
+    updateGroups();
+    updatePresenceIcon();
+    updatePresenceMessage();
+    updatePresenceName();
+    updatePresenceType();
 }
 
 Contact::Contact()
@@ -116,33 +120,24 @@ Contact::~Contact()
     delete d;
 }
 
-// FIXME: Use a flag, not a bool
-const QPixmap &Contact::avatar() const
+const QString &Contact::avatar() const
 {
-    // FIXME: Change notification
     return d->avatar;
 }
 
-QSet<QString> Contact::capabilities() const
+const QSet<QString> &Contact::capabilities() const
 {
-    // TODO: Implement me!
-    return QSet<QString>();
+    return d->capabilities;
 }
 
-QString Contact::displayName() const
+const QString &Contact::displayName() const
 {
-    // FIXME: Change notification
-    if (d->imAccount.imNicknames().isEmpty()) {
-        return QString();
-    }
-
-    return d->imAccount.imNicknames().first();
+    return d->displayName;
 }
 
-QSet<QString> Contact::groups() const
+const QSet<QString> &Contact::groups() const
 {
-    // TODO: Implement me!
-    return QSet<QString>();
+    return d->groups;
 }
 
 const KIcon &Contact::presenceIcon() const
@@ -150,16 +145,20 @@ const KIcon &Contact::presenceIcon() const
     return *(d->presenceIcon);
 }
 
-QString Contact::presenceMessage() const
+const QString &Contact::presenceMessage() const
 {
-    return d->imAccount.imStatusMessage();
+    return d->presenceMessage;
 }
 
-QString Contact::presenceName() const
+const QString &Contact::presenceName() const
 {
-    return d->imAccount.imStatus();
+    return d->presenceName;
 }
 
+Tp::ConnectionPresenceType Contact::presenceType() const
+{
+    return d->presenceType;
+}
 
 void Contact::onStatementAdded(const Soprano::Statement& statement)
 {
@@ -171,7 +170,10 @@ void Contact::onStatementAdded(const Soprano::Statement& statement)
     // Deal with the statement if it is added to the personContact.
     if (subject.uri() == d->personContact.resourceUri()) {
 
-        // TODO: Implement me!
+        // Changes affecting the contact groups
+        if (predicate.uri() == Nepomuk::Vocabulary::NCO::belongsToGroup()) {
+            updateGroups();
+        }
 
         kWarning() << "Unrecognised statement added to PersonContact.";
         return;
@@ -179,21 +181,36 @@ void Contact::onStatementAdded(const Soprano::Statement& statement)
 
     // Deal with the statement if it is added to the imAccount
     if (subject.uri() == d->imAccount.resourceUri()) {
+
+        // Changes affecting the display name
         if (predicate.uri() == Nepomuk::Vocabulary::NCO::imNickname()) {
             updateDisplayName();
             return;
         }
 
+        // Changes affecting the presenceName, presenceType and presenceIcon
         if ((predicate.uri() == Nepomuk::Vocabulary::NCO::imStatus())
             || (predicate.uri() == Nepomuk::Vocabulary::Telepathy::statusType()))
         {
-            // FIXME: separate out presence icon and avatar update methods.
             updatePresenceIcon();
-            updateAvatar();
+            updatePresenceName();
+            updatePresenceType();
             return;
         }
 
-        if (predicate.uri() == Nepomuk::Vocabulary::NCO::photo()) {
+        // Changes affecting the capabilities
+        if (predicate.uri() == Nepomuk::Vocabulary::NCO::hasIMCapability()) {
+            updateCapabilities();
+            return;
+        }
+
+        // Changes affecting the presence Message
+        if (predicate.uri() == Nepomuk::Vocabulary::NCO::imStatusMessage()) {
+            updatePresenceMessage();
+            return;
+        }
+
+        if (predicate.uri() == Nepomuk::Vocabulary::Telepathy::avatar()) {
             updateAvatar();
             return;
         }
@@ -208,45 +225,87 @@ void Contact::onStatementAdded(const Soprano::Statement& statement)
 void Contact::onStatementRemoved(const Soprano::Statement& statement)
 {
     kDebug() << "Statement removed.";
+
+    // Assume that the same properties are affected whether the statement is being added or removed.
+    onStatementAdded(statement);
 }
 
 void Contact::updateAvatar()
 {
-    // FIXME: Only update the avatar if it has actually changed
-    kDebug() << "Attempt to build the avatar" << d->personContact.resourceUri();
-    // Ok, now build the avatar
-    d->avatar = QPixmap();
-/*    if (!d->personContact.avatarTokens().isEmpty()) {
-        // Load the image then
-        if (!d->personContact.photos().isEmpty()) {
-            if (!d->personContact.photos().first().interpretedAses().isEmpty()) {
-                QByteArray imgdata =
-                QByteArray::fromBase64(
-                                d->personContact.photos().first().interpretedAses().first().plainTextContents().first().toUtf8());
-                QImage image = QImage::fromData(imgdata);
-                d->avatar = QPixmap::fromImage(image);
-                d->avatar = d->avatar.scaled(32,32);
-            }
+    QString avatar;
+
+    avatar = d->imAccount.avatar().resourceUri().toString();
+
+    // Only signal if an actual change has occurred
+    if (avatar != d->avatar) {
+        d->avatar = avatar;
+        Q_EMIT avatarChanged(d->avatar);
+    }
+}
+
+void Contact::updateCapabilities()
+{
+    QList<Nepomuk::IMCapability> caps = d->imAccount.iMCapabilitys();
+
+    QSet<QString> capabilities;
+
+    Q_FOREACH (const Nepomuk::IMCapability &cap, caps) {
+        if (cap == Nepomuk::Vocabulary::NCO::imCapabilityText()) {
+            capabilities.insert(QLatin1String("text"));
+        } else if (cap == Nepomuk::Vocabulary::NCO::imCapabilityAudio()) {
+            capabilities.insert(QLatin1String("audio"));
+        } else if (cap == Nepomuk::Vocabulary::NCO::imCapabilityVideo()) {
+            capabilities.insert(QLatin1String("video"));
+        } else {
+            kWarning() << "Unrecognised capability: " << cap.resourceUri();
         }
     }
 
-    Q_EMIT avatarChanged(d->avatar);
-*/
+    // Only signal if an actual change has occurred
+    if (capabilities != d->capabilities) {
+        d->capabilities = capabilities;
+        Q_EMIT capabilitiesChanged(d->capabilities);
+    }
 }
 
 void Contact::updateDisplayName()
 {
-    // TODO: Implement me!
+    QString displayName;
+
+    if (d->imAccount.imNicknames().size() > 0) {
+        displayName = d->imAccount.imNicknames().first();
+    } else {
+        displayName.clear();
+    }
+
+    // Only signal if an actual change has occurred
+    if (displayName != d->displayName) {
+        d->displayName = displayName;
+        Q_EMIT displayNameChanged(d->displayName);
+    }
+}
+
+void Contact::updateGroups()
+{
+     QList<Nepomuk::ContactGroup> contactGroups = d->personContact.belongsToGroups();
+
+     QSet<QString> groups;
+
+     Q_FOREACH (const Nepomuk::ContactGroup &group, contactGroups) {
+         groups.insert(group.contactGroupName());
+     }
+
+    // Only signal if an actual change has occurred
+    if (groups != d->groups) {
+        d->groups = groups;
+        Q_EMIT groupsChanged(d->groups);
+    }
 }
 
 void Contact::updatePresenceIcon()
 {
-    // FIXME: Only recreate the icon if it has actually changed.
-
-    // First, delete the old Icon.
-    delete d->presenceIcon;
-
-    // FIXME: Use the correct way to calculate the presence state (not just the PresenceType enum)
+    // FIXME: We need the code to figure out the Icon to be centrally implemented just once in the
+    // lib so that all KDE/Telepathy applications show the presence in a consistent way.
 
     // Get the presence type and set the icon appropriately from it.
     QString iconName;
@@ -272,10 +331,54 @@ void Contact::updatePresenceIcon()
             break;
     }
 
-    d->presenceIcon = new KIcon(iconName);
+    // Only signal if an actual change has occurred
+    if (!(d->presenceIcon && d->presenceIcon->name() == iconName)) {
+        delete d->presenceIcon;
+        d->presenceIcon = new KIcon(iconName);
 
-    Q_EMIT presenceIconChanged(*d->presenceIcon);
+        Q_EMIT presenceIconChanged(*d->presenceIcon);
+    }
 }
+
+void Contact::updatePresenceMessage()
+{
+    QString presenceMessage;
+
+    presenceMessage = d->imAccount.imStatusMessage();
+
+    // Only signal if an actual change has occurred
+    if (presenceMessage != d->presenceMessage) {
+        d->presenceMessage = presenceMessage;
+        Q_EMIT presenceMessageChanged(d->presenceMessage);
+    }
+}
+
+void Contact::updatePresenceName()
+{
+    QString presenceName;
+
+    presenceName = d->imAccount.imStatus();
+
+    // Only signal if an actual change has occurred
+    if (presenceName != d->presenceName) {
+        d->presenceName = presenceName;
+        Q_EMIT presenceNameChanged(d->presenceName);
+    }
+}
+
+void Contact::updatePresenceType()
+{
+    Tp::ConnectionPresenceType presenceType;
+
+    presenceType = static_cast<Tp::ConnectionPresenceType>(d->imAccount.statusType());
+
+    // Only signal if an actual change has occurred
+    if (presenceType != d->presenceType) {
+        d->presenceType = presenceType;
+        Q_EMIT presenceTypeChanged(d->presenceType);
+    }
+}
+
 
 uint qHash(const ContactPtr &key) {
     return qHash(key.data());
