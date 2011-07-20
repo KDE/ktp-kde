@@ -46,7 +46,6 @@ class Contact::Private {
 
 public:
     Private()
-      : presenceIcon(0)
     { }
 
     Nepomuk::PersonContact personContact;
@@ -56,7 +55,7 @@ public:
     QSet<QString> capabilities;
     QString displayName;
     QSet<QString> groups;
-    KIcon *presenceIcon;
+    KIcon presenceIcon;
     QString presenceMessage;
     QString presenceName;
     Tp::ConnectionPresenceType presenceType;
@@ -142,7 +141,7 @@ const QSet<QString> &Contact::groups() const
 
 const KIcon &Contact::presenceIcon() const
 {
-    return *(d->presenceIcon);
+    return d->presenceIcon;
 }
 
 const QString &Contact::presenceMessage() const
@@ -332,11 +331,10 @@ void Contact::updatePresenceIcon()
     }
 
     // Only signal if an actual change has occurred
-    if (!(d->presenceIcon && d->presenceIcon->name() == iconName)) {
-        delete d->presenceIcon;
-        d->presenceIcon = new KIcon(iconName);
+    if (d->presenceIcon.name() != iconName) {
+        d->presenceIcon = KIcon(iconName);
 
-        Q_EMIT presenceIconChanged(*d->presenceIcon);
+        Q_EMIT presenceIconChanged(d->presenceIcon);
     }
 }
 

@@ -49,8 +49,7 @@ class Person::Private {
 
 public:
     Private()
-      : mePimoPerson(QUrl::fromEncoded("nepomuk:/myself")),
-        presenceIcon(new KIcon)
+      : mePimoPerson(QUrl::fromEncoded("nepomuk:/myself"))
     { }
 
     Nepomuk::Thing pimoPerson;
@@ -61,7 +60,7 @@ public:
     QSet<QString> capabilities;
     QString displayName;
     QSet<QString> groups;
-    KIcon *presenceIcon;
+    KIcon presenceIcon;
     QString presenceName;
     QString presenceMessage;
     Tp::ConnectionPresenceType presenceType;
@@ -270,7 +269,7 @@ const QSet<QString> &Person::groups() const
 
 const KIcon &Person::presenceIcon() const
 {
-    return *(d->presenceIcon);
+    return d->presenceIcon;
 }
 
 const QString &Person::presenceMessage() const
@@ -359,16 +358,16 @@ void Person::updateGroups()
 void Person::updatePresenceIcon()
 {
     // FIXME: Choose the most suitable overall presence some better way.
-    KIcon *presenceIcon = 0;
+    KIcon presenceIcon;
 
     Q_FOREACH (ContactPtr contact, contacts()) {
-        *(presenceIcon) = contact->presenceIcon();
+        presenceIcon = contact->presenceIcon();
     }
 
     // Only signal if an actual change has occurred.
-    if (presenceIcon != d->presenceIcon) {
+    if (presenceIcon.name() != d->presenceIcon.name()) {
         d->presenceIcon = presenceIcon;
-        Q_EMIT presenceIconChanged(*(d->presenceIcon));
+        Q_EMIT presenceIconChanged(d->presenceIcon);
     }
 }
 
