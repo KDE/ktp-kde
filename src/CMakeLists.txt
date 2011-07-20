@@ -34,15 +34,6 @@ set (ktelepathy_SRCS
 #     jobs/telepathy-account-proxy.cpp
 #     jobs/telepathy-base-job.cpp
 #     jobs/telepathy-bridge.cpp
-#     ui/abstract-tree-item.cpp
-#     ui/account-item.cpp
-#     ui/accounts-model.cpp
-#     ui/contact-item.cpp
-#     ui/contacts-list-model.cpp
-#     ui/contacts-modelmenu.cpp
-#     ui/grouped-contacts-proxy-model.cpp
-#     ui/meta-contact-item.cpp
-#     ui/modelmenu.cpp
      ui/nepomuk-signal-watcher.cpp
      ui/person-set-model.cpp
 )
@@ -72,15 +63,6 @@ set (ktelepathy_INST_HDRS
 #     jobs/telepathy-account-proxy.h
 #     jobs/telepathy-base-job.h
 #     jobs/telepathy-bridge.h
-#     ui/abstract-tree-item.h
-#     ui/account-item.h
-#     ui/accounts-model.h
-#     ui/contact-item.h
-#     ui/contacts-list-model.h
-#     ui/contacts-modelmenu.h
-#     ui/grouped-contacts-proxy-model.h
-#     ui/meta-contact-item.h
-#     ui/modelmenu.h
      ui/nepomuk-signal-watcher.h
      ui/person-set-model.h
 )
@@ -88,23 +70,14 @@ set (ktelepathy_INST_HDRS
 set (ktelepathy_PRETTY_HDRS
      KTelepathy/AbstractHandleChannelJob
      KTelepathy/AbstractRequestChannelJob
-     KTelepathy/AbstractTreeItem
      KTelepathy/AcceptFileTransferJob
-     KTelepathy/AccountItem
-     KTelepathy/AccountsModel
      KTelepathy/AddContactJob
      KTelepathy/AddContactsToGroupJob
      KTelepathy/AddMetaContactJob
      KTelepathy/Contact
      KTelepathy/Contactable
-     KTelepathy/ContactItem
      KTelepathy/ContactSet
-     KTelepathy/ContactsListModel
-     KTelepathy/ContactsModelMenu
      KTelepathy/Entity
-     KTelepathy/GroupedContactsProxyModel
-     KTelepathy/MetaContactItem
-     KTelepathy/ModelMenu
      KTelepathy/NepomukSignalWatcher
      KTelepathy/OfferFileTransferJob
      KTelepathy/PeopleManager
