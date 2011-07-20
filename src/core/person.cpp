@@ -64,7 +64,7 @@ public:
     KIcon *presenceIcon;
     QString presenceName;
     QString presenceMessage;
-    uint presenceType;
+    Tp::ConnectionPresenceType presenceType;
 };
 
 
@@ -211,7 +211,7 @@ void Person::onContactAdded(const KTelepathy::ContactPtr &contact)
             SIGNAL(presenceNameChanged(QString)),
             SLOT(updatePresenceName()));
     connect(contact.data(),
-            SIGNAL(presenceTypeChange(uint)),
+            SIGNAL(presenceTypeChange(Tp::ConnectionPresenceType)),
             SLOT(updatePresenceType()));
 
     // Update all the properties of the Person.
@@ -283,7 +283,7 @@ const QString &Person::presenceName() const
     return d->presenceName;
 }
 
-uint Person::presenceType() const
+Tp::ConnectionPresenceType Person::presenceType() const
 {
     return d->presenceType;
 }
@@ -407,7 +407,7 @@ void Person::updatePresenceName()
 void Person::updatePresenceType()
 {
     // FIXME: Choose sensibly.
-    uint presenceType = 0;
+    Tp::ConnectionPresenceType presenceType = Tp::ConnectionPresenceTypeUnknown;
 
     Q_FOREACH (ContactPtr contact, contacts()) {
         presenceType = contact->presenceType();

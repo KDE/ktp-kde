@@ -292,7 +292,7 @@ void PersonSetModel::onPersonAdded(const KTelepathy::PersonPtr &person)
             SIGNAL(presenceNameChanged(QString)),
             SLOT(onPersonDataChanged()));
     connect(person.data(),
-            SIGNAL(presenceTypeChanged(uint)),
+            SIGNAL(presenceTypeChanged(Tp::ConnectionPresenceType)),
             SLOT(onPersonDataChanged()));
 
     // Add the new item to the model data.
@@ -334,7 +334,7 @@ void PersonSetModel::onPersonRemoved(const KTelepathy::PersonPtr &person)
     disconnect(person.data(), SIGNAL(presenceIconChanged(KIcon)));
     disconnect(person.data(), SIGNAL(presenceMessageChanged(QString)));
     disconnect(person.data(), SIGNAL(presenceNameChanged(QString)));
-    disconnect(person.data(), SIGNAL(presenceTypeChanged(uint)));
+    disconnect(person.data(), SIGNAL(presenceTypeChanged(Tp::ConnectionPresenceType)));
 
     // Notify the views that we have finished removing rows.
     endRemoveRows();

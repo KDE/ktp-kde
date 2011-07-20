@@ -30,6 +30,7 @@
 #include <QtCore/QObject>
 #include <QtCore/QSet>
 
+#include <TelepathyQt4/Presence>
 #include <TelepathyQt4/RefCounted>
 #include <TelepathyQt4/SharedPtr>
 
@@ -108,7 +109,7 @@ public:
     /**
      * Returns the presence type for this contact
      */
-    uint presenceType() const;
+    Tp::ConnectionPresenceType presenceType() const;
 
 protected:
     /**
@@ -175,7 +176,7 @@ Q_SIGNALS:
     /**
      * Emitted when the presence type has changed.
      */
-    void presenceTypeChanged(uint presenceType);
+    void presenceTypeChanged(Tp::ConnectionPresenceType presenceType);
 
 private Q_SLOTS:
     /**

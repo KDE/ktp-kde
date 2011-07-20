@@ -59,7 +59,7 @@ public:
     KIcon *presenceIcon;
     QString presenceMessage;
     QString presenceName;
-    uint presenceType;
+    Tp::ConnectionPresenceType presenceType;
 };
 
 
@@ -155,7 +155,7 @@ const QString &Contact::presenceName() const
     return d->presenceName;
 }
 
-uint Contact::presenceType() const
+Tp::ConnectionPresenceType Contact::presenceType() const
 {
     return d->presenceType;
 }
@@ -368,9 +368,9 @@ void Contact::updatePresenceName()
 
 void Contact::updatePresenceType()
 {
-    uint presenceType;
+    Tp::ConnectionPresenceType presenceType;
 
-    presenceType = d->imAccount.statusType();
+    presenceType = static_cast<Tp::ConnectionPresenceType>(d->imAccount.statusType());
 
     // Only signal if an actual change has occurred
     if (presenceType != d->presenceType) {
