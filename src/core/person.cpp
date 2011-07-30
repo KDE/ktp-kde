@@ -189,7 +189,7 @@ void Person::onContactAdded(const KTelepathy::ContactPtr &contact)
 {
     // Connect to the signals of the new contact.
     connect(contact.data(),
-            SIGNAL(avatarChanged(QPixmap)),
+            SIGNAL(avatarChanged(QString)),
             SLOT(updateAvatar()));
     connect(contact.data(),
             SIGNAL(capabilitiesChanged(QSet<QString>)),
@@ -210,7 +210,7 @@ void Person::onContactAdded(const KTelepathy::ContactPtr &contact)
             SIGNAL(presenceNameChanged(QString)),
             SLOT(updatePresenceName()));
     connect(contact.data(),
-            SIGNAL(presenceTypeChange(Tp::ConnectionPresenceType)),
+            SIGNAL(presenceTypeChanged(Tp::ConnectionPresenceType)),
             SLOT(updatePresenceType()));
 
     // Update all the properties of the Person.
