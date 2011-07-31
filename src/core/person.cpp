@@ -116,6 +116,7 @@ Person::Person(const Nepomuk::Resource &pimoPerson)
             // Get all the IM Accounts that are accessed by this IM account of ours.
             ComparisonTerm isAccessedByTerm(NCO::isAccessedBy(),
                                             ResourceTypeTerm(NCO::IMAccount()));
+            isAccessedByTerm.setVariableName(QLatin1String("localAccount"));
 
 
             // Ensure that the resource accessed through us are IM Accounts.
@@ -167,7 +168,9 @@ void Person::onNewEntries(const QList<Nepomuk::Query::Result> &entries)
 
     foreach (const Nepomuk::Query::Result &entry, entries) {
         kDebug() << entry.resource();
-        ContactPtr contact(new Contact(entry.resource(), entry.additionalBinding(QLatin1String("account")).toResource()));
+        ContactPtr contact(new Contact(entry.resource(),
+                                       entry.additionalBinding(QLatin1String("account")).toResource(),
+                                       entry.additionalBinding(QLatin1String("localAccount")).toResource()));
         if (!contact.isNull()) {
             addContact(contact);
         } else {

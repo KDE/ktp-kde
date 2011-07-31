@@ -116,7 +116,9 @@ protected:
      * Constrcutor is protected because only ContactSet objects should directly create
      * Contact objects.
      */
-    explicit Contact(const Nepomuk::Resource &ncoPersonContact, const Nepomuk::Resource &ncoImAccount);
+    explicit Contact(const Nepomuk::Resource &ncoPersonContact,
+                     const Nepomuk::Resource &ncoImAccount,
+                     const Nepomuk::Resource &localNcoImAccount);
 
     /**
      * Construct an invalid Contact object

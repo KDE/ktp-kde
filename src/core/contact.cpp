@@ -50,6 +50,7 @@ public:
 
     Nepomuk::PersonContact personContact;
     Nepomuk::IMAccount imAccount;
+    Nepomuk::IMAccount localImAccount;
 
     QString avatar;
     QSet<QString> capabilities;
@@ -62,7 +63,9 @@ public:
 };
 
 
-Contact::Contact(const Nepomuk::Resource &ncoPersonContact, const Nepomuk::Resource &ncoImAccount)
+Contact::Contact(const Nepomuk::Resource &ncoPersonContact,
+                 const Nepomuk::Resource &ncoImAccount,
+                 const Nepomuk::Resource &localNcoImAccount)
   : QObject(0),
     Entity(ncoPersonContact),
     d(new Private)
@@ -71,12 +74,14 @@ Contact::Contact(const Nepomuk::Resource &ncoPersonContact, const Nepomuk::Resou
 
     // FIXME: Check properly if the contact is a suitable Telepathy contact.
     if (ncoPersonContact.hasType(Nepomuk::Vocabulary::NCO::PersonContact())
-        && ncoImAccount.hasType(Nepomuk::Vocabulary::NCO::IMAccount()))
+        && ncoImAccount.hasType(Nepomuk::Vocabulary::NCO::IMAccount())
+        && localNcoImAccount.hasType(Nepomuk::Vocabulary::NCO::IMAccount()))
     {
         kDebug() << "We have been passed a valid NCO:PersonContact and NCO:IMAccount";
         setValid(true);
         d->personContact = ncoPersonContact;
         d->imAccount = ncoImAccount;
+        d->localImAccount = localNcoImAccount;
 
         // Watch for changes on both the IMAccount and the PersonContact.
         NepomukSignalWatcher *sw = NepomukSignalWatcher::instance();
