@@ -241,6 +241,11 @@ void Contact::onStatementRemoved(const Soprano::Statement& statement)
     onStatementAdded(statement);
 }
 
+const Nepomuk::Resource &Contact::localAccount() const
+{
+    return d->localImAccount;
+}
+
 void Contact::updateAvatar()
 {
     QString avatar;

@@ -145,6 +145,11 @@ protected:
      */
     virtual void onStatementRemoved(const Soprano::Statement &statement);
 
+    /**
+     * Make the localAccount resource available to use in the Contactable class and it's subclasses.
+     */
+    const Nepomuk::Resource &localAccount() const;
+
 Q_SIGNALS:
     /**
      * Emitted when the avatar has changed.
@@ -240,6 +245,7 @@ private Q_SLOTS:
 private:
     Q_DISABLE_COPY(Contact);
 
+    friend class Contactable;
     friend class ContactSet;
     friend class Person;
     friend class TestBackdoors;
