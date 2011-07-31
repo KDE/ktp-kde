@@ -50,6 +50,7 @@ public:
 
     Nepomuk::PersonContact personContact;
     Nepomuk::IMAccount imAccount;
+    Nepomuk::IMAccount localImAccount;
 
     QString avatar;
     QSet<QString> capabilities;
@@ -58,11 +59,14 @@ public:
     KIcon presenceIcon;
     QString presenceMessage;
     QString presenceName;
+    QString id;
     Tp::ConnectionPresenceType presenceType;
 };
 
 
-Contact::Contact(const Nepomuk::Resource &ncoPersonContact, const Nepomuk::Resource &ncoImAccount)
+Contact::Contact(const Nepomuk::Resource &ncoPersonContact,
+                 const Nepomuk::Resource &ncoImAccount,
+                 const Nepomuk::Resource &localNcoImAccount)
   : QObject(0),
     Entity(ncoPersonContact),
     d(new Private)
@@ -71,12 +75,14 @@ Contact::Contact(const Nepomuk::Resource &ncoPersonContact, const Nepomuk::Resou
 
     // FIXME: Check properly if the contact is a suitable Telepathy contact.
     if (ncoPersonContact.hasType(Nepomuk::Vocabulary::NCO::PersonContact())
-        && ncoImAccount.hasType(Nepomuk::Vocabulary::NCO::IMAccount()))
+        && ncoImAccount.hasType(Nepomuk::Vocabulary::NCO::IMAccount())
+        && localNcoImAccount.hasType(Nepomuk::Vocabulary::NCO::IMAccount()))
     {
         kDebug() << "We have been passed a valid NCO:PersonContact and NCO:IMAccount";
         setValid(true);
         d->personContact = ncoPersonContact;
         d->imAccount = ncoImAccount;
+        d->localImAccount = localNcoImAccount;
 
         // Watch for changes on both the IMAccount and the PersonContact.
         NepomukSignalWatcher *sw = NepomukSignalWatcher::instance();
@@ -90,6 +96,7 @@ Contact::Contact(const Nepomuk::Resource &ncoPersonContact, const Nepomuk::Resou
     updateCapabilities();
     updateDisplayName();
     updateGroups();
+    updateId();
     updatePresenceIcon();
     updatePresenceMessage();
     updatePresenceName();
@@ -137,6 +144,11 @@ const QString &Contact::displayName() const
 const QSet<QString> &Contact::groups() const
 {
     return d->groups;
+}
+
+const QString &Contact::id() const
+{
+    return d->id;
 }
 
 const KIcon &Contact::presenceIcon() const
@@ -229,6 +241,11 @@ void Contact::onStatementRemoved(const Soprano::Statement& statement)
     onStatementAdded(statement);
 }
 
+const Nepomuk::Resource &Contact::localAccount() const
+{
+    return d->localImAccount;
+}
+
 void Contact::updateAvatar()
 {
     QString avatar;
@@ -298,6 +315,22 @@ void Contact::updateGroups()
     if (groups != d->groups) {
         d->groups = groups;
         Q_EMIT groupsChanged(d->groups);
+    }
+}
+
+void Contact::updateId()
+{
+    QString id;
+
+    // Pick the first IM ID if there are many
+    if (d->imAccount.imIDs().size() > 0) {
+        id = d->imAccount.imIDs().first();
+    }
+
+    // Only signal if an actual change has occurred
+    if (id != d->id) {
+        d->id = id;
+        Q_EMIT idChanged(d->id);
     }
 }
 

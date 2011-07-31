@@ -63,6 +63,7 @@ class KDE_EXPORT Contact : public QObject, public Entity, public Tp::RefCounted,
     Q_PROPERTY(QSet<QString> capabilities READ capabilities NOTIFY capabilitiesChanged)
     Q_PROPERTY(QString displayName READ displayName NOTIFY displayNameChanged)
     Q_PROPERTY(QSet<QString> groups READ groups NOTIFY groupsChanged)
+    Q_PROPERTY(QString id READ id NOTIFY idChanged)
     Q_PROPERTY(KIcon presenceIcon READ presenceIcon NOTIFY presenceIconChanged)
     Q_PROPERTY(QString presenceMessage READ presenceMessage NOTIFY presenceMessageChanged)
     Q_PROPERTY(QString presenceName READ presenceName NOTIFY presenceNameChanged)
@@ -92,6 +93,11 @@ public:
     const QSet<QString> &groups() const;
 
     /**
+     * Returns the identifier for this contact, e.g. example@jabber.org
+     */
+    const QString &id() const;
+
+    /**
      * Returns the presence Icon for this contact
      */
     const KIcon &presenceIcon() const;
@@ -116,7 +122,9 @@ protected:
      * Constrcutor is protected because only ContactSet objects should directly create
      * Contact objects.
      */
-    explicit Contact(const Nepomuk::Resource &ncoPersonContact, const Nepomuk::Resource &ncoImAccount);
+    explicit Contact(const Nepomuk::Resource &ncoPersonContact,
+                     const Nepomuk::Resource &ncoImAccount,
+                     const Nepomuk::Resource &localNcoImAccount);
 
     /**
      * Construct an invalid Contact object
@@ -136,6 +144,11 @@ protected:
      * Reimplemented from NepomukSignalWatcher::Watcher
      */
     virtual void onStatementRemoved(const Soprano::Statement &statement);
+
+    /**
+     * Make the localAccount resource available to use in the Contactable class and it's subclasses.
+     */
+    const Nepomuk::Resource &localAccount() const;
 
 Q_SIGNALS:
     /**
@@ -157,6 +170,11 @@ Q_SIGNALS:
      * Emitted when the groups have changed
      */
     void groupsChanged(const QSet<QString> &groups);
+
+    /**
+     * Emitted when the id has changed
+     */
+    void idChanged(const QString &id);
 
     /**
      * Emitted when the presence Icon has changed.
@@ -200,6 +218,11 @@ private Q_SLOTS:
     void updateGroups();
 
     /**
+     * Internal slot to handle id changes.
+     */
+    void updateId();
+
+    /**
      * Internal slot to handle presence icon changes.
      */
     void updatePresenceIcon();
@@ -222,6 +245,7 @@ private Q_SLOTS:
 private:
     Q_DISABLE_COPY(Contact);
 
+    friend class Contactable;
     friend class ContactSet;
     friend class Person;
     friend class TestBackdoors;
