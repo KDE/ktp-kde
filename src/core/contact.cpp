@@ -59,6 +59,7 @@ public:
     KIcon presenceIcon;
     QString presenceMessage;
     QString presenceName;
+    QString id;
     Tp::ConnectionPresenceType presenceType;
 };
 
@@ -95,6 +96,7 @@ Contact::Contact(const Nepomuk::Resource &ncoPersonContact,
     updateCapabilities();
     updateDisplayName();
     updateGroups();
+    updateId();
     updatePresenceIcon();
     updatePresenceMessage();
     updatePresenceName();
@@ -142,6 +144,11 @@ const QString &Contact::displayName() const
 const QSet<QString> &Contact::groups() const
 {
     return d->groups;
+}
+
+const QString &Contact::id() const
+{
+    return d->id;
 }
 
 const KIcon &Contact::presenceIcon() const
@@ -303,6 +310,22 @@ void Contact::updateGroups()
     if (groups != d->groups) {
         d->groups = groups;
         Q_EMIT groupsChanged(d->groups);
+    }
+}
+
+void Contact::updateId()
+{
+    QString id;
+
+    // Pick the first IM ID if there are many
+    if (d->imAccount.imIDs().size() > 0) {
+        id = d->imAccount.imIDs().first();
+    }
+
+    // Only signal if an actual change has occurred
+    if (id != d->id) {
+        d->id = id;
+        Q_EMIT idChanged(d->id);
     }
 }
 

@@ -63,6 +63,7 @@ class KDE_EXPORT Contact : public QObject, public Entity, public Tp::RefCounted,
     Q_PROPERTY(QSet<QString> capabilities READ capabilities NOTIFY capabilitiesChanged)
     Q_PROPERTY(QString displayName READ displayName NOTIFY displayNameChanged)
     Q_PROPERTY(QSet<QString> groups READ groups NOTIFY groupsChanged)
+    Q_PROPERTY(QString id READ id NOTIFY idChanged)
     Q_PROPERTY(KIcon presenceIcon READ presenceIcon NOTIFY presenceIconChanged)
     Q_PROPERTY(QString presenceMessage READ presenceMessage NOTIFY presenceMessageChanged)
     Q_PROPERTY(QString presenceName READ presenceName NOTIFY presenceNameChanged)
@@ -90,6 +91,11 @@ public:
      * Returns the groups to which this contact belongs
      */
     const QSet<QString> &groups() const;
+
+    /**
+     * Returns the identifier for this contact, e.g. example@jabber.org
+     */
+    const QString &id() const;
 
     /**
      * Returns the presence Icon for this contact
@@ -161,6 +167,11 @@ Q_SIGNALS:
     void groupsChanged(const QSet<QString> &groups);
 
     /**
+     * Emitted when the id has changed
+     */
+    void idChanged(const QString &id);
+
+    /**
      * Emitted when the presence Icon has changed.
      */
     void presenceIconChanged(const KIcon &presenceIcon);
@@ -200,6 +211,11 @@ private Q_SLOTS:
      * Internal slot to handle group changes.
      */
     void updateGroups();
+
+    /**
+     * Internal slot to handle id changes.
+     */
+    void updateId();
 
     /**
      * Internal slot to handle presence icon changes.
