@@ -5,6 +5,7 @@ include_directories (${CMAKE_CURRENT_BINARY_DIR}
                      ${CMAKE_CURRENT_SOURCE_DIR}/core
                      ${CMAKE_CURRENT_SOURCE_DIR}/jobs
                      ${CMAKE_CURRENT_SOURCE_DIR}/ui
+                     ${CMAKE_CURRENT_SOURCE_DIR}/declarative
 )
 
 set (ktelepathy_SRCS
@@ -13,6 +14,7 @@ set (ktelepathy_SRCS
      core/contactable.cpp
      core/entity.cpp
      core/everyone-person-set.cpp
+     core/everyone-person-set-model.cpp
      core/people-manager.cpp
      core/person-set.cpp
      core/person.cpp
@@ -95,6 +97,8 @@ set (ktelepathy_PRETTY_HDRS
      KTelepathy/TelepathyBaseJob
      KTelepathy/TelepathyBridge
 )
+
+add_subdirectory(declarative)
 
 # if (WITH_STREAMTUBES)
 #     add_definitions(-DWITH_STREAMTUBES)

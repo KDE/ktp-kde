@@ -5,6 +5,7 @@ set (CMAKE_MODULE_PATH
 
 set(KDE_MIN_VERSION "4.6.60")
 set(SDO_MIN_VERSION "0.7.0")
+
 find_package (KDE4 ${KDE_MIN_VERSION} REQUIRED)
 find_package (SharedDesktopOntologies ${SDO_MIN_VERSION} REQUIRED)
 find_package (TelepathyQt4 REQUIRED)
