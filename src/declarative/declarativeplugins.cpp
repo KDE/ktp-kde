@@ -25,7 +25,7 @@
 
 void DeclarativePlugins::registerTypes(const char* uri)
 {
-    Q_ASSERT(uri == QLatin1String("org.kde.telepathy.declarative"));
+    Q_ASSERT(QLatin1String(uri) == QLatin1String("org.kde.telepathy.declarative"));
 
     qmlRegisterType<KTelepathy::EveryonePersonSetModel>(uri, 0, 1, "ContactListModel");
 }
